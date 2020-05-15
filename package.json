@@ -1,0 +1,15 @@
+{
+  "name": "textbooker",
+  "version": "1.0.0",
+  "description": "",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^4.2.5"
+  }
+}
