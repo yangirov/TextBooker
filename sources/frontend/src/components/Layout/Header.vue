@@ -1,23 +1,28 @@
 <template>
-  <header role="banner" class="page-header">
-    <router-link to="/" class="logo" exact>
-      <div>{{ systemName }}</div>
-    </router-link>
+  <header class="navbar header" role="navigation" aria-label="main navigation" id="header">
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-item logo" exact>
+          <div class="logo">
+            <img class= "logo__img" src="@/assets/logo.svg" alt="Logo">
+            <span class="logo__text">TextBooker</span>
+          </div>
+        </router-link>
+      </div>
 
-    <ul role="navigation" class="navigation" v-if="isAuth">
-      <li class="navigation__item">
-        <a class="navigation__link">
-          <i class="fas fa-user-circle" aria-hidden="true"></i>
-          <span>{{ getName(user.lastName, user.firstName, user.middleName).short }}</span>
-        </a>
-      </li>
-
-      <li class="navigation__item">
-        <a class="navigation__link" href="#" @click="logout()" role="menuitem">
-          <i class="fas fa-power-off" aria-hidden="true"></i> Выйти
-        </a>
-      </li>
-    </ul>
+      <div id="nav-menu" class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <router-link class="navbar-item" to="help"><i class="el-icon-question"></i> Руководство</router-link>
+                <!-- <span>{{ getName(user.lastName, user.firstName, user.middleName).short }}</span> -->
+              <router-link class="button is-light" id="login-button" to="login"> Войти </router-link>
+              <router-link class="button bold is-blue is-outlined" id="get-started" to="signup"> Начать </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -39,8 +44,17 @@ export default {
 };
 </script>
 
-<style>
-.el-badge__content.is-fixed {
-  right: -5px;
+<style lang="scss">
+.logo {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    margin-left: 0.3em;
+    font-size: 1.3em;
+  }
+}
+.navbar-menu {
+  display: block !important;
 }
 </style>

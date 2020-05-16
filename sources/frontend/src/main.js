@@ -8,11 +8,9 @@ import './utils'
 import './mixins'
 import './directives';
 
-import ElGrid from './components/ElGrid';
 import ButtonAction from './components/ButtonAction';
 import ButtonDelete from './components/ButtonDelete';
 
-Vue.use(ElGrid);
 Vue.use(ButtonAction);
 Vue.use(ButtonDelete);
 

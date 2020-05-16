@@ -1,23 +1,15 @@
 import Vue from 'vue';
 
 export default {
-    /**
-     * Группировка правил(rules) для обязательных полей при валидации
-     * this.mapRules(['name', 'date'], [{ }])
-     *
-     * @param rulesName {array}
-     * @param option {array}
-     * @returns { password: [{ required: true, message: 'Поле обязательно для заполнения' }]}
-     */
     mapRules(rulesName = [], option = []) {
         if (!rulesName.length) return;
         return rulesName
             .map(nameField => ({
                 [nameField]: [
-                    { required: true, message: 'Поле обязательно для заполнения' },
+                    { required: true, message: 'Required field' },
                     {
                         validator: this.validation('isNotEmpty'),
-                        message: 'Поле не должно начинаться с пустого символа'
+                        message: 'Field cannot be empty'
                     },
                     ...option
                 ]
@@ -25,16 +17,6 @@ export default {
             .reduce((acc, item) => ((acc = { ...acc, ...item }), acc), {});
     },
 
-    /**
-     * Валидация по типу доступных правил, определенных в файле utils/validation.js
-     * Возвращяет функцию для отработки async-validation.js
-     * this.validation('name', this.messageSuccess, this.resetFormError )
-     *
-     * @param type {string} название поля валидации
-     * @param success {function} функции обратного вызова, когда валидация прошла успешно
-     * @param error {function}  функции обратного вызова, когда валидация прошла с ошибкой
-     * @returns { callback() | callback(new Error(rule.message)) } параметры для отработки async-validation.js
-     */
     validation(type = '', success = () => { }, error = () => { }) {
         return (rule, value, callback) => {
             if (!type || !value) return callback();
@@ -51,19 +33,12 @@ export default {
         };
     },
 
-    /**
-     * Валидация уникального имени при добавлении данных
-     * this.validationUniqueName({ data: this.dataGrid, index: this.editIndexRow, form: this.dtoForm })
-     *
-     * @returns { callback() | callback(new Error(rule.message)) } параметры для отработки async-validation.js
-     */
     validationUniqueName(
         { data: dataGrid, index: indexEditRow, form, key = 'name' },
         success = () => { },
         error = () => { }
     ) {
         return (rule, value, callback) => {
-            // Исключим текущуюю добавляемую позицию
             const data = [...dataGrid.filter((_, index) => index !== indexEditRow)];
             for (const item of data) {
                 const isMatchName = this.formatString(form[key]) === this.formatString(item[key]);

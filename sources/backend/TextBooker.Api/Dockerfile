@@ -13,18 +13,20 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY . .
-RUN dotnet restore
+COPY ["TextBooker.Api/TextBooker.Api.csproj", "TextBooker.Api/"]
+COPY ["TextBooker.BusinessLogic/TextBooker.BusinessLogic.csproj", "TextBooker.BusinessLogic/"]
+COPY ["TextBooker.DataAccess/TextBooker.DataAccess.csproj", "TextBooker.DataAccess/"]
+COPY ["TextBooker.Contracts/TextBooker.Contracts.csproj", "TextBooker.Contracts/"]
+RUN dotnet restore "TextBooker.Api/TextBooker.Api.csproj"
 
-WORKDIR /src/TextBooker.Api
-RUN dotnet build -c Release -o /app
+COPY . .
+WORKDIR "/src/TextBooker.Api"
+#RUN dotnet build "TextBooker.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish "TextBooker.Api.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app .
-HEALTHCHECK --interval=6s --timeout=10s --retries=3 CMD curl -sS 127.0.0.1/health || exit 1
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TextBooker.Api.dll"]

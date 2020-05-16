@@ -1,7 +1,21 @@
 <template>
-  <footer role="contentinfo" class="page-footer">
-    <div class="overlay-fade">
-      <span class="overlay-fade">{{ version }}</span>
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="columns is-vcentered">
+            <div class="column is-2">
+              <a href="/">TextBooker</a>
+            </div>
+            <div class="column is-8 text-center">
+              © 2020
+            </div>
+            <div class="column is-2 text-center">
+              {{ version }} | Github
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -16,3 +30,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+footer {
+  margin-top: auto;
+  height: 30px;
+}
+
+.columns {
+  padding: 0 5px;
+}
+</style>

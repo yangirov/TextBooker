@@ -25,7 +25,7 @@ export default {
     props: {
         tooltipText: {
             type: String,
-            default: 'Редактировать'
+            default: 'Edit'
         },
         tooltipVisible: {
             type: Boolean,
