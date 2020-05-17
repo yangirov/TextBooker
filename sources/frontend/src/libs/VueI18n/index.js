@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
-import elementEnLocale from 'element-ui/lib/locale/lang/en' 
+import elementEnLocale from 'element-ui/lib/locale/lang/en'
 import elementRuLocale from 'element-ui/lib/locale/lang/ru-RU'
 
 import { ENGLISH_TRANSLATIONS } from '@/translations/en'

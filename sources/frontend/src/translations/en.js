@@ -1,6 +1,6 @@
 export const ENGLISH_TRANSLATIONS = {
   tabs: {
-    start: { 
+    start: {
       name: 'Getting started',
       createProject: 'Create project',
       openProject: 'Open project'
@@ -11,17 +11,17 @@ export const ENGLISH_TRANSLATIONS = {
       licence: 'Licence'
     },
     settings: {
-      name: 'Site settings',
+      name: 'Site settings'
     },
     pages: {
-      name: 'Pages',
+      name: 'Pages'
     },
     blocks: {
       name: 'Blocks',
       defaultBlockName: 'Block'
     },
     publish: {
-      name: 'Publish',
+      name: 'Publish'
     }
   },
   user: {

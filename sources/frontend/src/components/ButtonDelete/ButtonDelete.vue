@@ -93,14 +93,12 @@ export default {
 }
 </script>
 
-<style>
-.tooltip-button {
-  display: flex;
-}
+<style lang="sass" scoped>
+.tooltip-button
+  display: flex
 
-.button-delete {
-  padding: 5px;
-  font-size: 12px;
-  line-height: 1;
-}
+.button-delete
+  padding: 5px
+  font-size: 12px
+  line-height: 1
 </style>

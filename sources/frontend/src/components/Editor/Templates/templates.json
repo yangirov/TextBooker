@@ -13,7 +13,8 @@
     "block-content-begin": "<div class=\"content\">",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Azul",
     "screenshot": "screenshot.jpg",
     "author": "Switchroyale",
@@ -26,7 +27,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Blue)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -39,7 +41,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Green)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -52,7 +55,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Orange)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -65,7 +69,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Pink)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -78,7 +83,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Red)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -91,7 +97,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Belle (Yellow)",
     "screenshot": "screenshot.jpg",
     "author": "Grigoruta Adrian",
@@ -104,7 +111,8 @@
     "block-content-begin": "<div>",
     "block-content-end": "</div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Boosting",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -117,8 +125,14 @@
     "block-title-end": "</h2>",
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
-    "keys": ["Подзаголовок", "Заголовок-главного-меню", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+    "keys": [
+      "Подзаголовок",
+      "Заголовок-главного-меню",
+      "Заголовок-списка-страниц",
+      "Подвал"
+    ]
+  },
+  {
     "name": "Cattleya",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -132,7 +146,8 @@
     "block-content-begin": "<ul><li>",
     "block-content-end": "</li></ul>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Clear Breeze",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -146,7 +161,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Condition",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -159,8 +175,15 @@
     "block-title-end": "</h2>",
     "block-content-begin": "<ul><li>",
     "block-content-end": "</li></ul>",
-    "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал", "Заголовок-о-сайте", "Коротко-о-сайте"]
-  }, {
+    "keys": [
+      "Подзаголовок",
+      "Заголовок-списка-страниц",
+      "Подвал",
+      "Заголовок-о-сайте",
+      "Коротко-о-сайте"
+    ]
+  },
+  {
     "name": "Conjunction",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -174,7 +197,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Coverage",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -188,7 +212,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Culinary",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -202,7 +227,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Customary",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -216,7 +242,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Customize",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -230,7 +257,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Deviation",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -244,7 +272,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Essence",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -258,7 +287,8 @@
     "block-content-begin": "<div class=\"content\"><ul><li>",
     "block-content-end": "</li></ul></div></div>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Exploitable",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -272,7 +302,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Filaments",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -286,7 +317,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Fresh Scent",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -300,7 +332,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Guarantee",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -314,7 +347,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Improved",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -328,7 +362,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Indication",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -342,7 +377,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Indicator",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -356,7 +392,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Leaf Brush",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -370,7 +407,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Lily Pads",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -384,7 +422,8 @@
     "block-content-begin": "<ul><li><p>",
     "block-content-end": "</p></li></ul>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Marked",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -398,7 +437,8 @@
     "block-content-begin": "<ul><li><p>",
     "block-content-end": "</p></li></ul>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Mountain Breeze",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -412,7 +452,8 @@
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
     "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Подвал"]
-  }, {
+  },
+  {
     "name": "Snowglass",
     "screenshot": "screenshot.jpg",
     "author": "Free CSS Templates",
@@ -425,6 +466,12 @@
     "block-title-end": "</h2>",
     "block-content-begin": "<p>",
     "block-content-end": "</p>",
-    "keys": ["Подзаголовок", "Заголовок-списка-страниц", "Заголовок-о-сайте", "Коротко-о-сайте", "Подвал"]
+    "keys": [
+      "Подзаголовок",
+      "Заголовок-списка-страниц",
+      "Заголовок-о-сайте",
+      "Коротко-о-сайте",
+      "Подвал"
+    ]
   }
 ]

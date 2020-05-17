@@ -12,14 +12,13 @@ export function SET_STATE(context, data) {
 export const setState = (commit, data) => commit('SET_STATE', data)
 
 export function getInfoById(state) {
-  return (id, stateName, key = 'id') => state[stateName]?.find(item => item[key] === id) || {}
+  return (id, stateName, key = 'id') =>
+    state[stateName]?.find(item => item[key] === id) || {}
 }
 
 export const getSexType = (value, type = 'id') => {
-    const [male, female] = 
-      type === 'id' 
-        ? [1, 2] 
-        : [this.$t('user.male'), this.$t('user.female')]
-        
-    return value === 1 ? male : value === 2 ? female : null
+  const [male, female] =
+    type === 'id' ? [1, 2] : [this.$t('user.male'), this.$t('user.female')]
+
+  return value === 1 ? male : value === 2 ? female : null
 }

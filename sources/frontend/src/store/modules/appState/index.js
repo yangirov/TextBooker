@@ -9,7 +9,7 @@ export default {
     isInitAppState: false,
     isAuth: false,
     settings: {},
-    user: {},
+    user: {}
   },
 
   getters: {
@@ -20,7 +20,7 @@ export default {
     user: state => state.user,
     userIsAdmin: state => state.user.isAdmin,
     systemName: ({ settings }) => settings.name,
-    version: ({ settings }) => settings.version,
+    version: ({ settings }) => settings.version
   },
 
   mutations: {
@@ -54,21 +54,19 @@ export default {
       return user
     },
 
-    async login({ commit, dispatch }, {  username, password }) {
+    async login({ commit, dispatch }, { username, password }) {
       try {
         setState(commit, { loading: true })
         let { token } = await api.loginUser({ username, password })
         if (token) {
-          localStorage.setItem("access_token", token)
+          localStorage.setItem('access_token', token)
           setState(commit, { isAuth: true })
           await dispatch('fetchUserInfo')
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error)
         showErrorNotify(this.$t('status.authError'))
-      }
-      finally {
+      } finally {
         setState(commit, { loading: false })
       }
     },
@@ -76,10 +74,9 @@ export default {
     async logout({ commit, dispatch }) {
       try {
         setState(commit, { loading: true })
-        localStorage.removeItem("access_token")
+        localStorage.removeItem('access_token')
         setState(commit, { isAuth: false, user: {} })
-      }
-      finally {
+      } finally {
         setState(commit, { loading: false })
       }
     }

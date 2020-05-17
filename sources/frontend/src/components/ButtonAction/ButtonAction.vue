@@ -69,10 +69,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.buton-action {
-  padding: 5px; 
-  font-size: 12px; 
-  line-height: 1;
-}
+<style lang="sass" scoped>
+.buton-action
+  padding: 5px
+  font-size: 12px
+  line-height: 1
 </style>
