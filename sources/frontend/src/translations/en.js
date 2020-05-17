@@ -18,7 +18,8 @@ export const ENGLISH_TRANSLATIONS = {
     },
     blocks: {
       name: 'Blocks',
-      defaultBlockName: 'Block'
+      defaultBlockName: 'Block',
+      title: 'Block title'
     },
     publish: {
       name: 'Publish'

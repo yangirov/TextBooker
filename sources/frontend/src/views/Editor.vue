@@ -1,5 +1,5 @@
 <template>
-  <el-tabs type="border-card">
+  <el-tabs type="border-card" value="0">
     <el-tab-pane label="Start" class="full-wh">
       <span slot="label">
         <i class="el-icon-s-home"></i> {{ $t('tabs.start.name') }}

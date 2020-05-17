@@ -19,13 +19,13 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <router-link class="navbar-item" to="help"
-                ><i class="el-icon-question"></i>
-                {{ $t('common.help') }}</router-link
-              >
+              <router-link class="navbar-item" to="help">
+                <i class="el-icon-question"></i>
+                {{ $t('common.help') }}
+              </router-link>
               <router-link class="button is-light" id="login-button" to="login">
-                {{ $t('user.login') }}</router-link
-              >
+                {{ $t('user.login') }}
+              </router-link>
               <router-link
                 class="button bold is-blue is-outlined"
                 id="get-started"

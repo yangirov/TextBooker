@@ -43,6 +43,7 @@ export default {
   methods: {
     changeLocale(lang) {
       this.$i18n.locale = lang
+      this.$root.$emit('locale')
     }
   }
 }

@@ -1,6 +1,6 @@
 export const RUSSIAN_TRANSLATIONS = {
   tabs: {
-    start: { 
+    start: {
       name: 'Начало',
       createProject: 'Создать проект',
       openProject: 'Открыть проект'
@@ -11,17 +11,18 @@ export const RUSSIAN_TRANSLATIONS = {
       licence: 'Лицензия'
     },
     settings: {
-      name: 'Параметры сайта',
+      name: 'Параметры сайта'
     },
     pages: {
-      name: 'Страницы',
+      name: 'Страницы'
     },
     blocks: {
       name: 'Блоки',
-      defaultBlockName: 'Блок'
+      defaultBlockName: 'Блок',
+      title: 'Заголовок блока'
     },
     publish: {
-      name: 'Публикация',
+      name: 'Публикация'
     }
   },
   user: {
