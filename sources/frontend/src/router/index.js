@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '@/views/Home.vue'
-import Templates from '@/views/Templates.vue'
+import Editor from '@/views/Editor.vue'
 
 Vue.use(VueRouter)
 
@@ -13,9 +13,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/templates',
-    name: 'templates',
-    component: Templates
+    path: '/editor',
+    name: 'editor',
+    component: Editor
   }
 ]
 

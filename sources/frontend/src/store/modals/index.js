@@ -1,10 +1,10 @@
 const modal = {
   USER_MODAL: 'USER_MODAL'
-};
+}
 
 export const {
   USER_MODAL
-} = modal;
+} = modal
 
 export default {
   namespaced: true,
@@ -13,17 +13,17 @@ export default {
 
   mutations: {
     SET_MODAL(state, payload) {
-      Object.assign(state, payload);
+      Object.assign(state, payload)
     }
   },
 
   actions: {
     open({ commit }, name) {
-      commit('SET_MODAL', { [name]: true });
+      commit('SET_MODAL', { [name]: true })
     },
 
     close({ commit }, name) {
-      commit('SET_MODAL', { [name]: false });
+      commit('SET_MODAL', { [name]: false })
     }
   }
-};
+}

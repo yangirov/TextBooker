@@ -1,7 +1,7 @@
 <template>
   <section class="page">
     <PageHeader />
-    <PageContent />
+    <PageMain />
     <PageFooter />
   </section>
 </template>
@@ -10,23 +10,19 @@
 import { mapGetters } from 'vuex'
 
 import PageHeader from '@/components/Layout/Header'
-import PageContent from '@/components/Layout/Content'
+import PageMain from '@/components/Layout/Main'
 import PageFooter from '@/components/Layout/Footer'
 
 export default {
   components: {
     PageHeader,
-    PageContent,
+    PageMain,
     PageFooter
-  },
-
-  computed: {
-    ...mapGetters('appState', ['isInitAppState', 'isAuth'])
   }
-};
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page {
   width: 100%;
   margin: 0;
@@ -34,6 +30,5 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 98vh;
 }
 </style>

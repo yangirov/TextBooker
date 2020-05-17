@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TextBooker.BusinessLogic.Services;
 
 namespace TextBooker.Api.Controllers
@@ -10,10 +11,12 @@ namespace TextBooker.Api.Controllers
 	[Produces("application/json")]
 	public class SettingsController : ControllerBase
 	{
+		private readonly IConfiguration config;
 		private readonly IVersionService versionService;
 
-		public SettingsController(IVersionService versionService)
+		public SettingsController(IConfiguration config, IVersionService versionService)
 		{
+			this.config = config;
 			this.versionService = versionService;
 		}
 
@@ -23,7 +26,8 @@ namespace TextBooker.Api.Controllers
 		{
 			var settings = new Dictionary<string, string>
 			{
-				{ "version", versionService.Get() }
+				{ "version", versionService.Get() },
+				{ "name", config.GetValue<string>("SystemInfo:Name") }
 			};
 
 			return Ok(settings);
