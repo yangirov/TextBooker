@@ -3,20 +3,35 @@
     <el-form :model="form" :rules="rules" ref="blockEditorForm" size="small">
       <el-form-item prop="title">
         <el-input
+          id="block_title"
           v-model="form.title"
           :placeholder="$t('tabs.blocks.title')"
-        ></el-input>
-      </el-form-item>
-
-      <el-form-item>
-        <vue-editor v-model="form.content" :style="height"></vue-editor>
+        >
+          <template #append>
+            <div id="editorActions">
+              <el-button icon="el-icon-view" @click="drawer = true">
+                {{ $t('common.preview') }}
+              </el-button>
+              <el-button @click="enabledHtmlMode = !enabledHtmlMode">
+                <i :class="editorButtonIcon"></i>
+                {{
+                  enabledHtmlMode
+                    ? $t('common.wysiwygEditor')
+                    : $t('common.htmlEditor')
+                }}
+              </el-button>
+            </div>
+          </template>
+        </el-input>
       </el-form-item>
     </el-form>
+
+    <ContentEditor @change-content="handler" />
   </div>
 </template>
 
 <script>
-import { VueEditor, Quill } from 'vue2-editor'
+import ContentEditor from '@/components/Editor/ContentEditor/ContentEditor.vue'
 
 let initState = {
   title: '',
@@ -27,13 +42,12 @@ export default {
   name: 'BlockEditor',
 
   components: {
-    VueEditor
+    ContentEditor
   },
 
   data() {
     return {
-      form: { ...initState },
-      height: ''
+      form: { ...initState }
     }
   },
 
@@ -42,25 +56,42 @@ export default {
       return {
         ...this.mapRules(['title'])
       }
+    },
+
+    editorButtonIcon() {
+      return this.enabledHtmlMode ? 'el-icon-picture' : 'el-icon-edit-outline'
     }
   },
 
   methods: {
-    heightCss(value) {
-      this.height = `height: ${value}px;`
+    handler(data) {
+      this.form.content = data
+    },
+
+    calculateStyles(height, width) {
+      this.style = `height: calc(${height}px - 7em); width: calc(${width}px + 2.7em);`
+    },
+
+    resizeHandler() {
+      let menuHeight = document.getElementById('blocks_list').clientHeight
+      let inputWidth = document.getElementById('block_title').clientWidth
+      let actionsWidth = document.getElementById('editorActions').clientWidth
+      this.calculateStyles(menuHeight, inputWidth + actionsWidth)
     }
+  },
+
+  created() {
+    window.addEventListener('resize', this.resizeHandler)
   },
 
   mounted() {
     setTimeout(() => {
-      let menuHeight = document.getElementById('blocks_list').offsetHeight - 115
-      this.heightCss(menuHeight)
+      this.resizeHandler()
     }, 100)
+  },
+
+  destroyed() {
+    window.removeEventListener('resize', this.myEventHandler)
   }
 }
 </script>
-
-<style lang="sass">
-#editor
-  height: 500px
-</style>

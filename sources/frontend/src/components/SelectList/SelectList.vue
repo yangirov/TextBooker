@@ -13,7 +13,8 @@
       :label="item.name"
       :class="{ 'is-active': isActiveItem(index) }"
     >
-      <span>{{ item.name }}</span>
+      <span class="noselect">{{ item.name }}</span>
+      <slot name="actions"></slot>
     </el-menu-item>
   </el-menu>
 </template>
@@ -62,13 +63,11 @@ export default {
   overflow-y: scroll
   width: 100%
   height: 100%
-  min-width: 13em
 
 .el-menu-item
   height: auto
   line-height: 1.5
   padding: 10px 15px
-
 
 .el-menu-item.is-active
   outline: 0

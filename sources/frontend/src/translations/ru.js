@@ -43,6 +43,10 @@ export const RUSSIAN_TRANSLATIONS = {
     required: 'Обязательное поле',
     notEmpty: 'Поле не может быть пустым'
   },
+  siteActions: {
+    view: 'Открыть сайт',
+    generate: 'Генерировать сайт'
+  },
   common: {
     donate: 'Я ❤️ TextBooker',
     help: 'Руководство',
@@ -52,6 +56,9 @@ export const RUSSIAN_TRANSLATIONS = {
     delete: 'Удалить',
     yes: 'Да',
     no: 'Нет',
-    deleteWarning: 'Действие необратимо. Удалить?'
+    deleteWarning: 'Действие необратимо. Удалить?',
+    preview: 'Предпросмотр',
+    htmlEditor: 'HTML-код',
+    wysiwygEditor: 'Визуальный редактор'
   }
 }

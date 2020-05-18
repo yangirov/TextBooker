@@ -78,19 +78,6 @@ export default {
     this.$refs[formName] && this.$refs[formName].resetFields()
   },
 
-  debounce(callback, limit = 500) {
-    let wait = false
-    return function() {
-      if (!wait) {
-        callback.call()
-        wait = true
-        setTimeout(function() {
-          wait = false
-        }, limit)
-      }
-    }
-  },
-
   getName(fisrtName = '', middleName = '', lastName = '') {
     let isString = val => val && typeof val === 'string'
     let _upper = value =>
