@@ -43,6 +43,7 @@ export default {
 footer
   margin-top: auto
   margin-bottom: 10px
+  height: 30px
 
 .github-icon
   width: 16px

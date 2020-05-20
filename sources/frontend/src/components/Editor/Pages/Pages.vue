@@ -5,7 +5,7 @@
     </div>
 
     <div class="column">
-      <el-tabs value="1">
+      <el-tabs value="0">
         <el-tab-pane class="full-wh">
           <span slot="label">
             <i class="el-icon-edit"></i> {{ $t('tabs.pages.editor') }}
