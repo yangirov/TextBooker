@@ -26,6 +26,8 @@
           {{ $t('common.delete') }}
         </el-button>
       </el-popconfirm>
+
+      <el-button class="ml-1" type="info" icon="el-icon-dish"></el-button>
     </div>
   </div>
 </template>

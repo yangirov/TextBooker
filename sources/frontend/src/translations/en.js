@@ -11,7 +11,22 @@ export const ENGLISH_TRANSLATIONS = {
       licence: 'Licence'
     },
     settings: {
-      name: 'Site settings'
+      name: 'Site settings',
+      main: 'Main settings',
+      advanced: 'Advanced settings',
+      icon: 'Icon',
+      siteTitle: 'The title of the site',
+      shortDescription: 'Short description of the site',
+      keywords: 'Keyword',
+      customCode: 'Custom code',
+      templateSection: 'Template fields',
+      templateFields: {
+        subtitle: 'Subtitle',
+        menuTitle: 'Menu title',
+        aboutTitle: 'About title',
+        short: 'Short about site',
+        footerText: 'Footer content'
+      }
     },
     pages: {
       name: 'Pages'
@@ -19,10 +34,29 @@ export const ENGLISH_TRANSLATIONS = {
     blocks: {
       name: 'Blocks',
       defaultBlockName: 'Block',
-      title: 'Block title'
+      title: 'Block title',
+      description:
+        'The area on the side of the content for placing categories, archive links, tags, and other information. Located on all pages.'
     },
     publish: {
-      name: 'Publish'
+      name: 'Publication',
+      log: {
+        name: 'Log'
+      },
+      deploy: 'Deploy',
+      ways: {
+        details: 'To learn more',
+        github: {
+          description:
+            'GitHub Pages is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub.',
+          link: 'https://pages.github.com/'
+        },
+        netlify: {
+          description:
+            'Netlify is an all-in-one platform for automating modern web projects.',
+          link: 'https://www.netlify.com/'
+        }
+      }
     }
   },
   user: {
@@ -58,7 +92,7 @@ export const ENGLISH_TRANSLATIONS = {
     no: 'No',
     deleteWarning: 'The action is irreversible. Delete it?',
     preview: 'Preview',
-    htmlEditor: 'HTML-code',
+    htmlEditor: 'HTML editor',
     wysiwygEditor: 'Wysiwyg editor'
   }
 }

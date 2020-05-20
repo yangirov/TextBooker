@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-tabs type="border-card" value="4">
+    <el-tabs type="border-card" value="5">
       <el-tab-pane label="Start" class="full-wh" :lazy="true">
         <span slot="label">
           <i class="el-icon-s-home"></i> {{ $t('tabs.start.name') }}
@@ -40,7 +40,7 @@
         <span slot="label">
           <i class="el-icon-monitor"></i> {{ $t('tabs.publish.name') }}
         </span>
-        {{ $t('common.empty') }}
+        <Publisher />
       </el-tab-pane>
     </el-tabs>
   </section>
@@ -52,6 +52,7 @@ import { mapGetters } from 'vuex'
 import StartWork from '@/components/Editor/StartWork/StartWork.vue'
 import TemplateGallery from '@/components/Editor/Templates/TemplateGallery.vue'
 import Blocks from '@/components/Editor/Blocks/Blocks.vue'
+import Publisher from '@/components/Editor/Publisher/Publisher.vue'
 
 export default {
   name: 'Editor',
@@ -59,7 +60,8 @@ export default {
   components: {
     StartWork,
     TemplateGallery,
-    Blocks
+    Blocks,
+    Publisher
   },
 
   computed: {

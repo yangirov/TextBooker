@@ -11,7 +11,22 @@ export const RUSSIAN_TRANSLATIONS = {
       licence: 'Лицензия'
     },
     settings: {
-      name: 'Параметры сайта'
+      name: 'Параметры сайта',
+      main: 'Основные настройки',
+      advanced: 'Расширенные настройки',
+      icon: 'Иконка',
+      siteTitle: 'Заголовок сайта',
+      shortDescription: 'Короткое описание сайта',
+      keywords: 'Ключевые слова (СЕО)',
+      customCode: 'Пользовательский код',
+      templateSection: 'Поля шаблона',
+      templateFields: {
+        subtitle: 'Подзаголовок',
+        menuTitle: 'Заголовок бокового меню',
+        aboutTitle: 'Заголовок о сайте',
+        short: 'Коротко о сайте',
+        footerText: 'Подвал'
+      }
     },
     pages: {
       name: 'Страницы'
@@ -19,10 +34,27 @@ export const RUSSIAN_TRANSLATIONS = {
     blocks: {
       name: 'Блоки',
       defaultBlockName: 'Блок',
-      title: 'Заголовок блока'
+      title: 'Заголовок блока',
+      description:
+        'Область сбоку от контента для размещения рубрик, ссылок на архив, меток и другой информации. Располагается на всех страницах.'
     },
     publish: {
-      name: 'Публикация'
+      name: 'Публикация в интернете',
+      log: 'Лог',
+      deploy: 'Опубликовать',
+      ways: {
+        details: 'Узнать больше',
+        github: {
+          description:
+            'Cтатический хостинг сайтов, в котором HTML, CSS и JavaScript файлы берутся прямо из репозитория на GitHub.',
+          link: 'https://pages.github.com/'
+        },
+        netlify: {
+          description:
+            'Универсальная платформа для автоматизации современных веб-проектов.',
+          link: 'https://www.netlify.com/'
+        }
+      }
     }
   },
   user: {
@@ -59,6 +91,8 @@ export const RUSSIAN_TRANSLATIONS = {
     deleteWarning: 'Действие необратимо. Удалить?',
     preview: 'Предпросмотр',
     htmlEditor: 'HTML-код',
-    wysiwygEditor: 'Визуальный редактор'
+    wysiwygEditor: 'Визуальный редактор',
+    field: 'Field',
+    value: 'Value'
   }
 }

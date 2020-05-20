@@ -1,14 +1,18 @@
 <template>
   <div class="content_editor">
-    <el-drawer :title="$t('common.preview')" :visible.sync="previewerVisible">
+    <el-drawer
+      :title="title ? title : $t('common.preview')"
+      :visible="previewVisible"
+      @close="closeDrawer"
+    >
       <div v-html="content"></div>
     </el-drawer>
 
     <vue-editor
       v-if="!htmlMode"
       v-model="content"
-      :editorOptions="editorSettings"
-      :editorToolbar="customToolbar"
+      :editor-options="editorSettings"
+      :editor-toolbar="customToolbar"
       :style="style"
     ></vue-editor>
 
@@ -40,15 +44,26 @@ export default {
     PrismEditor
   },
 
-  data() {
-    return {
-      content: '',
-      style: '',
-
-      previewerVisible: false,
-      htmlMode: false,
-
-      customToolbar: [
+  props: {
+    style: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    previewVisible: {
+      type: Boolean,
+      default: false
+    },
+    htmlMode: {
+      type: Boolean,
+      default: false
+    },
+    customToolbar: {
+      type: Array,
+      default: () => [
         ['bold', 'italic', 'underline', 'strike'],
         ['blockquote', 'code-block'],
 
@@ -66,8 +81,11 @@ export default {
         [{ align: [] }],
 
         ['clean']
-      ],
-      editorSettings: {
+      ]
+    },
+    editorSettings: {
+      type: Object,
+      default: () => ({
         modules: {
           blotFormatter: {},
           clipboard: {
@@ -91,7 +109,13 @@ export default {
             keepSelection: true
           }
         }
-      }
+      })
+    }
+  },
+
+  data() {
+    return {
+      content: ''
     }
   },
 
@@ -104,7 +128,23 @@ export default {
   methods: {
     handler: _.debounce(function(data) {
       this.$emit('change-content', data)
-    }, 150)
+    }, 150),
+
+    closeDrawer() {
+      this.$emit('close-previewer')
+    }
   }
 }
 </script>
+
+<style lang="sass">
+.el-drawer__header
+  margin-bottom: 0
+
+.el-drawer__body
+  overflow-y: auto
+  overflow: -moz-scrollbars-none
+  -ms-overflow-style: none
+  &::-webkit-scrollbar
+    width: 0
+</style>
