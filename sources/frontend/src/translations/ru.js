@@ -29,7 +29,10 @@ export const RUSSIAN_TRANSLATIONS = {
       }
     },
     pages: {
-      name: 'Страницы'
+      name: 'Страницы',
+      defaultPageName: 'Страница',
+      editor: 'Редактор',
+      settings: 'Параметры страницы'
     },
     blocks: {
       name: 'Блоки',

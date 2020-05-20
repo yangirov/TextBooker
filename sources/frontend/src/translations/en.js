@@ -29,7 +29,10 @@ export const ENGLISH_TRANSLATIONS = {
       }
     },
     pages: {
-      name: 'Pages'
+      name: 'Pages',
+      defaultPageName: 'Page',
+      editor: 'Editor',
+      settings: 'Settings'
     },
     blocks: {
       name: 'Blocks',
