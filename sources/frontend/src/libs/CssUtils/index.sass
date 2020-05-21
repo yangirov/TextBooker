@@ -422,3 +422,31 @@ i
   font-size: 1.3em
   margin-bottom: 1em
 
+.button
+  &.is-white
+    background-color: #fff
+    border-color: transparent
+    color: #007bff
+    &:hover, &:active, &:focus, &:focus-within, &:active:focus
+      background-color: #f3f3f3
+    &.is-outlined
+      background-color: #fff
+      border-color: #0271e8
+      color: #007bff
+
+      &:active:focus
+        background-color: #007bff
+        color: #fff
+  &.is-blue
+    background-color: #007bff
+    border-color: transparent
+    color: #fff
+    &:hover, &:active, &:focus, &:focus-within, &:active:focus
+      background-color: #0271e8
+    &.is-outlined
+      background-color: #fff
+      border-color: #007bff
+      color: #007bff
+      &:active:focus
+        background-color: #fff
+        color: #007bff

@@ -44,7 +44,6 @@ namespace TextBooker.Api
 							endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters.First(p => p is MetricsPrometheusTextOutputFormatter);
 						};
 					})
-				.UseSerilog()
 				.ConfigureWebHostDefaults(builder =>
 				{
 					builder.UseStartup<Startup>();
