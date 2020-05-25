@@ -62,6 +62,33 @@ export const ENGLISH_TRANSLATIONS = {
       }
     }
   },
+  feedback: {
+    title: 'Feedback',
+    name: 'Name',
+    email: 'Email',
+    message: 'Message',
+    send: 'Send'
+  },
+  about: {
+    title: 'Open Source static sites generator with content management system',
+    shortTitle: 'About',
+    getStarted: 'Get started',
+    vantages: [
+      {
+        title: 'Templates',
+        desc: 'Choose templates from gallery or create your own.'
+      },
+      {
+        title: 'Editor',
+        desc:
+          'Сreate pages and blocks with rich-text editing and real-time preview.'
+      },
+      {
+        title: 'Deploy',
+        desc: 'Publish on FTP, Github Pages, Netlify.'
+      }
+    ]
+  },
   user: {
     register: 'Sign up',
     login: 'Sign in',
@@ -77,8 +104,10 @@ export const ENGLISH_TRANSLATIONS = {
     authError: 'An error occurred during authorization'
   },
   validation: {
-    required: 'Required',
-    notEmpty: 'Field cannot be empty'
+    required: 'Required field',
+    notEmpty: 'Field cannot be empty',
+    email: 'The format does not match the email address — example@mail.com',
+    maxLength: 'Limit on {count} characters'
   },
   siteActions: {
     view: 'Open site',

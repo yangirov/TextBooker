@@ -19,18 +19,23 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="navbar-item" href="help">
+              <a
+                class="navbar-item"
+                href="help"
+                target="_blank"
+                rel="nofollow noreferrer"
+              >
                 <i class="el-icon-question"></i>
                 {{ $t('common.help') }}
               </a>
-              <router-link class="button is-light" id="login-button" to="login">
+              <router-link
+                class="button is-light"
+                id="login-button"
+                to="signin"
+              >
                 {{ $t('user.login') }}
               </router-link>
-              <router-link
-                class="button bold is-blue is-outlined"
-                id="get-started"
-                to="signup"
-              >
+              <router-link class="button bold is-blue is-outlined" to="signup">
                 {{ $t('user.register') }}
               </router-link>
               <LocaleChanger />

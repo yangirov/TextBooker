@@ -60,6 +60,34 @@ export const RUSSIAN_TRANSLATIONS = {
       }
     }
   },
+  feedback: {
+    title: 'Обратная связь',
+    name: 'Ваше имя',
+    email: 'Электронная почта',
+    message: 'Сообщение',
+    send: 'Отправить'
+  },
+  about: {
+    title:
+      'Генератор статических сайтов и системой управления контентом <br>с открытым исходным кодом',
+    shortTitle: 'О сервисе',
+    getStarted: 'Начать',
+    vantages: [
+      {
+        title: 'Шаблоны',
+        desc: 'Выберите шаблон из галереи или создайте свой'
+      },
+      {
+        title: 'Редактор',
+        desc:
+          'Создавайте страницы и блоки с помощью удобного редактора с функцией предпросмотра'
+      },
+      {
+        title: 'Публикация в интернете',
+        desc: 'Публикуйте сайты на FTP, Github Pages или Netlify.'
+      }
+    ]
+  },
   user: {
     register: 'Начать',
     login: 'Войти',
@@ -76,7 +104,9 @@ export const RUSSIAN_TRANSLATIONS = {
   },
   validation: {
     required: 'Обязательное поле',
-    notEmpty: 'Поле не может быть пустым'
+    notEmpty: 'Поле не может быть пустым',
+    email: 'Формат не соответсвует email адресу — example@mail.com',
+    maxLength: 'Ограничение на {count} символов'
   },
   siteActions: {
     view: 'Открыть сайт',

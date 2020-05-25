@@ -1,4 +1,4 @@
-version: "3.6"
+version: '3.6'
 
 networks:
   tb-network:
@@ -45,7 +45,7 @@ services:
     depends_on:
       - tb-postgres
 
-  tb-frontend: 
+  tb-frontend:
     restart: always
     container_name: tb-frontend
     image: tb-frontend:latest
@@ -85,11 +85,11 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
-    restart: unless-stopped
+    restart: always
     networks:
       - tb-network
     labels:
-      org.label-schema.group: "monitoring"
+      org.label-schema.group: 'monitoring'
 
   node-exporter:
     image: prom/node-exporter:v1.0.0-rc.1
@@ -103,14 +103,14 @@ services:
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-    restart: unless-stopped
+    restart: always
     networks:
       - tb-network
     labels:
-      org.label-schema.group: "monitoring"
+      org.label-schema.group: 'monitoring'
 
   nginx-exporter:
-    restart: unless-stopped
+    restart: always
     container_name: nginx-exporter
     image: nginx/nginx-prometheus-exporter:0.7.0
     environment:
@@ -122,16 +122,16 @@ services:
     links:
       - tb-nginx
     logging:
-      driver: "json-file"
+      driver: 'json-file'
       options:
-        max-size: "5m"
+        max-size: '5m'
     labels:
-      org.label-schema.group: "monitoring"
+      org.label-schema.group: 'monitoring'
 
   postgres-exporter:
     container_name: postgres-exporter
     image: wrouesnel/postgres_exporter:v0.8.0
-    restart: unless-stopped
+    restart: always
     environment:
       - DATA_SOURCE_URI=tb-postgres/${POSTGRES_DB}?sslmode=disable
       - DATA_SOURCE_USER=${POSTGRES_USER}
@@ -143,7 +143,7 @@ services:
     links:
       - tb-postgres
     labels:
-      org.label-schema.group: "monitoring"
+      org.label-schema.group: 'monitoring'
 
   prometheus:
     restart: always
@@ -168,8 +168,8 @@ services:
     networks:
       - tb-network
     labels:
-      org.label-schema.group: "monitoring"
-      
+      org.label-schema.group: 'monitoring'
+
   loki:
     image: grafana/loki:master-2739551
     restart: always
@@ -186,8 +186,8 @@ services:
   grafana:
     restart: always
     container_name: grafana
-    image : grafana/grafana:6.4.4
-    depends_on: 
+    image: grafana/grafana:6.4.4
+    depends_on:
       - prometheus
       - loki
     ports:
@@ -201,7 +201,7 @@ services:
     networks:
       - tb-network
     labels:
-      org.label-schema.group: "monitoring"
+      org.label-schema.group: 'monitoring'
 
   promtail:
     image: grafana/promtail:master-2739551

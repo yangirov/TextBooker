@@ -5,12 +5,25 @@
         <div class="column">
           <div class="columns is-vcentered">
             <div class="column text-left">
-              <router-link to="donate">{{ $t('common.donate') }}</router-link>
-            </div>
-            <div class="column text-right">
               © 2020
               <el-divider direction="vertical"></el-divider>
               {{ version }}
+            </div>
+
+            <div class="column text-center">
+              <nav class="footer-menu">
+                <router-link to="about">
+                  {{ $t('about.shortTitle') }}
+                </router-link>
+                <el-divider direction="vertical"></el-divider>
+                <router-link to="feedback">
+                  {{ $t('feedback.title') }}
+                </router-link>
+              </nav>
+            </div>
+
+            <div class="column text-right">
+              <span>Coded with ❤️</span>
               <el-divider direction="vertical"></el-divider>
               <a
                 href="https://github.com/yangirov/TextBooker"
@@ -44,6 +57,11 @@ footer
   margin-top: auto
   margin-bottom: 10px
   height: 30px
+  font-size: .9em
+
+.footer-menu
+  a
+    color: rgba(0, 0, 0, 0.7)
 
 .github-icon
   width: 16px

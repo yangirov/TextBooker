@@ -1,16 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '@/views/Home.vue'
 import Editor from '@/views/Editor.vue'
+import Feedback from '@/views/Feedback.vue'
+import About from '@/views/About.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '*',
-    name: 'Home',
-    component: Home
+    name: 'About',
+    component: About
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/feedback',
+    name: 'feedback',
+    component: Feedback
   },
   {
     path: '/editor',

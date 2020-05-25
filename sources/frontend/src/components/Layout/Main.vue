@@ -11,3 +11,8 @@ export default {
   name: 'PageMain'
 }
 </script>
+
+<style lang="sass">
+main
+  height: 100%
+</style>
