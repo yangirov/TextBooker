@@ -10,14 +10,19 @@
         <el-input
           type="email"
           v-model="signForm.email"
-          placeholder="example@mail.ru"
+          placeholder="example@mail.com"
           v-mask="{ alias: 'email' }"
           clearable
         ></el-input>
       </el-form-item>
 
       <el-form-item :label="$t('common.password')" prop="password" class="mb-2">
-        <el-input :type="passwordType" v-model="signForm.password" clearable>
+        <el-input
+          :type="passwordType"
+          v-model="signForm.password"
+          placeholder="••••••••"
+          clearable
+        >
           <el-button
             slot="append"
             icon="el-icon-view"

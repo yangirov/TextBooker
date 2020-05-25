@@ -68,6 +68,10 @@ export default {
 
   computed: {
     ...mapGetters('appState', ['isAuth'])
+  },
+
+  created() {
+    if (!this.isAuth) this.$router.push('/signin')
   }
 }
 </script>

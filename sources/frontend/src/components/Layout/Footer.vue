@@ -16,6 +16,10 @@
                   {{ $t('about.shortTitle') }}
                 </router-link>
                 <el-divider direction="vertical"></el-divider>
+                <a href="help" target="_blank" rel="nofollow noreferrer">
+                  {{ $t('common.help') }}
+                </a>
+                <el-divider direction="vertical"></el-divider>
                 <router-link to="feedback">
                   {{ $t('feedback.title') }}
                 </router-link>

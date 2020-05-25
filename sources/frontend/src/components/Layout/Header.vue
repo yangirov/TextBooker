@@ -19,25 +19,25 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a
-                class="navbar-item"
-                href="help"
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
-                <i class="el-icon-question"></i>
-                {{ $t('common.help') }}
-              </a>
+              <UserNav v-if="isAuth" />
+
               <router-link
                 class="button is-light"
                 id="login-button"
                 to="signin"
+                v-if="!isAuth"
               >
                 {{ $t('user.login') }}
               </router-link>
-              <router-link class="button bold is-blue is-outlined" to="signup">
+
+              <router-link
+                class="button bold is-blue is-outlined"
+                to="signup"
+                v-if="!isAuth"
+              >
                 {{ $t('user.register') }}
               </router-link>
+
               <LocaleChanger />
             </div>
           </div>
@@ -50,22 +50,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import LocaleChanger from './LocaleChanger.vue'
+import UserNav from '@/components/User/UserNav.vue'
 
 export default {
   name: 'PageHeader',
+
   components: {
-    LocaleChanger
+    LocaleChanger,
+    UserNav
   },
+
   computed: {
-    ...mapGetters('appState', ['isAuth', 'systemName', 'user'])
-  },
-  methods: {
-    async logout() {
-      await this.$store
-        .dispatch('appState/logout')
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
-    }
+    ...mapGetters('appState', ['isAuth', 'systemName'])
   }
 }
 </script>

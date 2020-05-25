@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SignForm from '@/components/User/SignForm.vue'
 
 export default {
@@ -15,6 +16,14 @@ export default {
 
   components: {
     SignForm
+  },
+
+  computed: {
+    ...mapGetters('appState', ['isAuth'])
+  },
+
+  created() {
+    if (this.isAuth) this.$router.push('/editor')
   }
 }
 </script>
