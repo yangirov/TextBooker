@@ -16,7 +16,7 @@
               target="_blank"
               rel="nofollow noreferrer"
             >
-              {{ $t('common.help') }}
+              {{ $t('common.docs') }}
             </a>
           </div>
         </div>

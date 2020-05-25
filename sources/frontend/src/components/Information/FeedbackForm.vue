@@ -11,6 +11,7 @@
 
     <el-form-item :label="$t('feedback.email')" prop="email" class="mb-2">
       <el-input
+        type="email"
         v-model="feedbackForm.email"
         placeholder="example@mail.ru"
         v-mask="{ alias: 'email' }"
