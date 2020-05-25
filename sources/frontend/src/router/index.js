@@ -4,9 +4,12 @@ import VueRouter from 'vue-router'
 import Editor from '@/views/Editor.vue'
 import Feedback from '@/views/Feedback.vue'
 import About from '@/views/About.vue'
-import SignIn from '@/views/SignIn.vue'
-import SignUp from '@/views/SignUp.vue'
 import NotFound from '@/views/NotFound.vue'
+
+import SignIn from '@/views/User/SignIn.vue'
+import SignUp from '@/views/User/SignUp.vue'
+import Projects from '@/views/User/Projects.vue'
+import Settings from '@/views/User/Settings.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +46,16 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp
+  },
+  {
+    path: '/user/projects',
+    name: 'projects',
+    component: Projects
+  },
+  {
+    path: '/user/settings',
+    name: 'settings',
+    component: Settings
   },
   {
     path: '/editor',

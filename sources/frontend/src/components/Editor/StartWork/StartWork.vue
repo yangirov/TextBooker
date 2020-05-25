@@ -4,7 +4,11 @@
       <i class="el-icon-document-add"></i> {{ $t('tabs.start.createProject') }}
     </el-button>
 
-    <el-button type="primary" size="large">
+    <el-button
+      type="primary"
+      size="large"
+      @click="$router.push('/user/projects')"
+    >
       <i class="el-icon-edit-outline"></i> {{ $t('tabs.start.openProject') }}
     </el-button>
   </div>
