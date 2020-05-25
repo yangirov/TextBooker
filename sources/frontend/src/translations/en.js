@@ -89,6 +89,9 @@ export const ENGLISH_TRANSLATIONS = {
       }
     ]
   },
+  notfound: {
+    title: 'Page not found 🙄'
+  },
   user: {
     register: 'Sign up',
     login: 'Sign in',

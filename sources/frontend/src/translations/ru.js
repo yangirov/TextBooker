@@ -88,6 +88,9 @@ export const RUSSIAN_TRANSLATIONS = {
       }
     ]
   },
+  notfound: {
+    title: 'Страница не найдена 🙄'
+  },
   user: {
     register: 'Регистрация',
     login: 'Войти',
