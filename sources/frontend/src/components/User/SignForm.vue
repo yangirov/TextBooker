@@ -13,6 +13,7 @@
           placeholder="example@mail.com"
           v-mask="{ alias: 'email' }"
           clearable
+          autocomplete
         ></el-input>
       </el-form-item>
 
@@ -22,6 +23,7 @@
           v-model="signForm.password"
           placeholder="••••••••"
           clearable
+          autocomplete
         >
           <el-button
             slot="append"
@@ -47,6 +49,13 @@ export default {
   computed: {
     passwordType() {
       return this.passwordVisible ? 'text' : 'password'
+    }
+  },
+
+  props: {
+    action: {
+      type: String,
+      required: true
     }
   },
 
@@ -84,16 +93,29 @@ export default {
   },
 
   methods: {
+    login() {
+      this.$store.dispatch('user/login', this.signForm)
+    },
+
+    register() {
+      this.$store.dispatch('user/register', this.signForm)
+    },
+
     validationEmail(rule, value, callback) {
       if (!value) return callback()
       return window.validation.email(value)
         ? callback()
         : callback(new Error(rule.message))
     },
+
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('Submit!')
+          if (this.action === 'login') {
+            this.login()
+          } else {
+            this.register()
+          }
         } else {
           console.log('Error submit!')
           return false

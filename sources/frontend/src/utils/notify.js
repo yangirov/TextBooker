@@ -1,8 +1,9 @@
 import Vue from 'vue'
+import i18n from '@/libs/VueI18n'
 
 export function showSuccessNotify(text, options = {}) {
   Vue.prototype.$notify({
-    title: this.$t('status.success'),
+    title: i18n.t('status.success'),
     message: text,
     type: 'success',
     customClass: 'notify-success',
@@ -12,7 +13,7 @@ export function showSuccessNotify(text, options = {}) {
 
 export function showErrorNotify(text, options = {}) {
   Vue.prototype.$notify({
-    title: this.$t('status.error'),
+    title: i18n.t('status.error'),
     message: text,
     type: 'error',
     customClass: 'notify-error',

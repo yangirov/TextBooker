@@ -105,7 +105,8 @@ export const RUSSIAN_TRANSLATIONS = {
     error: 'Ошибка',
     info: 'Информация',
     warning: 'Предупреждение',
-    authError: 'Возникла ошибка при авторизации'
+    authError: 'Возникла ошибка при авторизации',
+    registerError: 'Возникла ошибка при регистрации'
   },
   validation: {
     required: 'Обязательное поле',
@@ -135,6 +136,7 @@ export const RUSSIAN_TRANSLATIONS = {
     value: 'Value',
     email: 'Электронная почта',
     password: 'Пароль',
-    continue: 'Продолжить'
+    continue: 'Продолжить',
+    metrics: 'Мы не следим за вами и не собираем никаких данных.'
   }
 }

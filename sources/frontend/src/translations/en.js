@@ -106,7 +106,8 @@ export const ENGLISH_TRANSLATIONS = {
     error: 'Error',
     info: 'Information',
     warning: 'Warning',
-    authError: 'An error occurred during authorization'
+    authError: 'An error occurred during authorization',
+    registerError: 'An error occurred during registration'
   },
   validation: {
     required: 'Required field',
@@ -134,6 +135,7 @@ export const ENGLISH_TRANSLATIONS = {
     wysiwygEditor: 'Wysiwyg editor',
     email: 'Email',
     password: 'Password',
-    continue: 'Continue'
+    continue: 'Continue',
+    metrics: 'We does not track you or collect analytics.'
   }
 }

@@ -61,7 +61,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters('appState', ['isAuth', 'systemName'])
+    ...mapGetters('appState', ['systemName']),
+    ...mapGetters('user', ['isAuth'])
   }
 }
 </script>

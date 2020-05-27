@@ -1,6 +1,8 @@
 <template>
   <el-dropdown @command="handleCommand">
-    <span class="avatar el-dropdown-link">{{ shortUsername }}</span>
+    <span class="el-dropdown-link">
+      {{ shortUsername }} <i class="el-icon-arrow-down el-icon--right"></i>
+    </span>
 
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="projects">
@@ -28,10 +30,10 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('appState', ['user']),
+    ...mapGetters('user', ['user']),
 
     shortUsername() {
-      return 'TU'
+      return this.user.email
     }
   },
 
@@ -52,7 +54,7 @@ export default {
 
     async logout() {
       await this.$store
-        .dispatch('appState/logout')
+        .dispatch('user/logout')
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))
     }
@@ -64,17 +66,7 @@ export default {
 .el-divider--horizontal
   margin: .5em 0 .5em 0
 
-.avatar
-  display: flex
-  width: 2em
-  height: 2em
-  border-radius: 50%
-  align-items: center
-  justify-content: center
-  text-align: center
-  user-select: none
-  background-color: #007bff
-  color: #ffffff
-  min-width: 2em
-  min-height: 2em
+.el-dropdown-link
+  cursor: pointer
+  color: #409EFF
 </style>

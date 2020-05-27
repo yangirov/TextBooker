@@ -67,7 +67,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('appState', ['isAuth'])
+    ...mapGetters('user', ['isAuth'])
   },
 
   created() {
