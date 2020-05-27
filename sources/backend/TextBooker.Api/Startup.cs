@@ -24,8 +24,6 @@ using TextBooker.Api.Infrastructure.Converters;
 using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.DataAccess;
-using TextBooker.Api.Infrastructure.Models;
-using TextBooker.BusinessLogic.Services;
 using TextBooker.Contracts.Dto.Config;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
