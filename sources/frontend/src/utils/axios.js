@@ -15,9 +15,8 @@ axios.isCancel = axiosInstance.isCancel
 
 axios.interceptors.request.use(
   config => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem(
-      'access_token'
-    )}`
+    let token = localStorage.getItem('access_token')
+    config.headers.Authorization = `Bearer ${token}`
     return config
   },
   error => {
@@ -27,16 +26,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   response => {
-    const { status } = response
-
-    if (status >= 500) {
-      return Promise.reject(response)
-    }
-
     return response
   },
   error => {
-    return Promise.reject(error)
+    let { status, detail } = error.response.data
+    return Promise.reject(detail)
   }
 )
 
