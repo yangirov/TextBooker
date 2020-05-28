@@ -6,7 +6,9 @@ using TextBooker.BusinessLogic.Services;
 
 namespace TextBooker.Api.Controllers
 {
+	[ApiController]
 	[Route("user")]
+	[Produces("application/json")]
 	public class UserController : BaseController
 	{
 		private readonly IUserService userService;
