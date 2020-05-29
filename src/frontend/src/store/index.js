@@ -16,7 +16,4 @@ let store = new Vuex.Store({
   }
 })
 
-;(async () => await store.dispatch('appState/init'))()
-;(async () => await store.dispatch('user/init'))()
-
 export default store

@@ -3,7 +3,7 @@ using System.Linq;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 
-namespace TextBooker.BusinessLogic.Services.Infrastructure
+namespace TextBooker.BusinessLogic.Infrastructure
 {
 	public class GenericValidator<T> : AbstractValidator<T>
 	{

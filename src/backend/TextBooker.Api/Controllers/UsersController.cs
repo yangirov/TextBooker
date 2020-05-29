@@ -24,9 +24,8 @@ namespace TextBooker.Api.Controllers
 		public IActionResult IsAuth() => Ok(User.Identity.IsAuthenticated);
 
 		// GET user/info
-		[AllowAnonymous]
 		[HttpGet("info")]
-		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.UserInfo(User));
+		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.GetInfo(User));
 
 		// POST user/register
 		[AllowAnonymous]
@@ -37,5 +36,8 @@ namespace TextBooker.Api.Controllers
 		[AllowAnonymous]
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] SignDto dto) => OkOrBadRequest(await userService.Login(dto));
+
+		[HttpPut]
+		public async Task<IActionResult> Update([FromBody] UserUpdateDto dto) => OkOrBadRequest(await userService.Update(User, dto));
 	}
 }

@@ -3,8 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-using Serilog;
-
 using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Formatters.Prometheus;
@@ -31,7 +29,7 @@ namespace TextBooker.Api
 					p.Enabled = true;
 					p.ReportingEnabled = true;
 				})
-			.Build();
+				.Build();
 
 			return Host
 				.CreateDefaultBuilder(args)

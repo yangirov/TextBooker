@@ -38,10 +38,10 @@ export default {
       setState(commit, { state: 'user', payload: user })
     },
 
-    async login({ commit, dispatch }, { email, password }) {
+    async login({ commit, dispatch }, { email, password, token }) {
       try {
         setState(commit, { loading: true })
-        let { token } = await api.loginUser({ email, password })
+        let { token } = await api.loginUser({ email, password, token })
         if (token) {
           localStorage.setItem('access_token', token)
           setState(commit, { isAuth: true })
@@ -55,12 +55,25 @@ export default {
       }
     },
 
-    async register({ commit }, { email, password }) {
+    async register({ commit }, { email, password, token }) {
       try {
         setState(commit, { loading: true })
-        let result = await api.registerUser({ email, password })
+        let result = await api.registerUser({ email, password, token })
+        // TODO: Push to verification page
       } catch (error) {
-        showErrorNotify(error)
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
+    async update({ commit }, { username }) {
+      try {
+        setState(commit, { loading: true })
+        let result = await api.updateUser({ username })
+        showSuccessNotify(i18n.t('status.success'))
+      } catch (error) {
+        showErrorNotify(error.detail)
       } finally {
         setState(commit, { loading: false })
       }

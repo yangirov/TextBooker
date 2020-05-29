@@ -18,6 +18,11 @@ export default {
     PageHeader,
     PageMain,
     PageFooter
+  },
+
+  created() {
+    this.$store.dispatch('appState/init')
+    this.$store.dispatch('user/init')
   }
 }
 </script>
