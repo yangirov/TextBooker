@@ -24,6 +24,7 @@ Make sure you have a [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.
 ### Project setup
 
 ```
+cd src/frontend
 npm install
 ```
 
@@ -50,7 +51,7 @@ npm run lint
 Make sure you have a [.NET Core 3.1](https://dotnet.microsoft.com/download) and [Docker](https://www.docker.com/).
 
 ```sh
-cd sources/backend
+cd src/backend
 dotnet build
 dotnet run
 ```
@@ -60,6 +61,6 @@ dotnet run
 Use docker-compose to deploy application:
 
 ```sh
-cd sources
+cd src
 docker-compose up --build -d
 ```

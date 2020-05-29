@@ -22,6 +22,5 @@ deploy/
 .sonarqube
 .sonarlint
 logs/
-sources/logs/
 dist/
 .env.production
