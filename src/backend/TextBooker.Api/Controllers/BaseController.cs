@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CSharpFunctionalExtensions;
@@ -8,6 +9,8 @@ namespace TextBooker.Api.Controllers
 {
 	public class BaseController : ControllerBase
 	{
+		protected string UserId => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
 		protected IActionResult OkOrBadRequest<T>(Result<T> model)
 		{
 			var (_, isFailure, response, error) = model;

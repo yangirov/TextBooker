@@ -11,7 +11,6 @@ namespace TextBooker.Api.Infrastructure.Filters
 				filterContext.Result = new BadRequestObjectResult(filterContext.ModelState);
 		}
 
-		public void OnActionExecuted(ActionExecutedContext context)
-		{ }
+		public void OnActionExecuted(ActionExecutedContext context) { }
 	}
 }

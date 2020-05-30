@@ -1,11 +1,9 @@
-using System.Security.Claims;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Serilog;
 using TextBooker.BusinessLogic.Infrastructure;
+using TextBooker.BusinessLogic.Services.Base;
 using TextBooker.Contracts.Dto.Config;
 using TextBooker.Contracts.Dto.User;
 using TextBooker.DataAccess;
@@ -13,14 +11,14 @@ using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.BusinessLogic.Services
 {
-	public class UserService : IUserService
+	public class UserService : BaseService, IUserService
 	{
 		private readonly ILogger logger;
 		private readonly TextBookerContext db;
 		private readonly JwtSettings jwtSettings;
 		private readonly PasswordHasher passwordHasher;
 
-		public UserService(ILogger logger, TextBookerContext db, JwtSettings jwtSettings)
+		public UserService(ILogger logger, TextBookerContext db, JwtSettings jwtSettings) : base(logger, db)
 		{
 			this.logger = logger;
 			this.db = db;
@@ -30,10 +28,9 @@ namespace TextBooker.BusinessLogic.Services
 			passwordHasher = new PasswordHasher(hashOptions);
 		}
 
-		public async Task<Result<UserInfoDto>> GetInfo(ClaimsPrincipal claimsUser)
+		public async Task<Result<UserInfoDto>> GetInfo(string userId)
 		{
-			return await GetUserEmail(claimsUser)
-				.Bind(email => FindUser(email))
+			return await FindUserById(userId)
 				.Bind(user => MapUser(user))
 				.OnFailure(LogError);
 
@@ -51,24 +48,16 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<bool>> Register(SignDto dto)
 		{
-			return await ValidateDto()
+			return await ValidateDto(dto)
 				.Bind(FindUser)
 				.Bind(RegisterUser)
 				.OnFailure(LogError);
-
-			Result ValidateDto()
-			{
-				var (_, isFailure, error) = Validate(dto);
-				return isFailure
-					? Result.Failure(error)
-					: Result.Ok();
-			}
 
 			async Task<Result> FindUser()
 			{
 				var user = await FindUserByEmail(dto.Email);
 				return user.HasValue
-					? Result.Failure<User>($"The user already exists: {dto.Email}")
+					? Result.Failure<User>($"The user with this email already exists: {dto.Email}")
 					: Result.Ok();
 			}
 
@@ -89,18 +78,18 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<SignResponse>> Login(SignDto dto)
 		{
-			return await ValidateDto()
-				.Bind(async () => await FindUser(dto.Email))
+			return await ValidateDto(dto)
+				.Bind(FindUser)
 				.Bind(user => CheckUserPassword(user))
 				.Bind(user => GenerateToken(user))
 				.OnFailure(LogError);
 
-			Result ValidateDto()
+			async Task<Result<User>> FindUser()
 			{
-				var (_, isFailure, error) = Validate(dto);
-				return isFailure
-					? Result.Failure(error)
-					: Result.Ok();
+				var user = await FindUserByEmail(dto.Email);
+				return user.HasNoValue
+					? Result.Failure<User>($"The user with this email was not found: {dto.Email}")
+					: Result.Ok(user.Value);
 			}
 
 			Result<User> CheckUserPassword(User user)
@@ -119,16 +108,16 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		public async Task<Result<bool>> Update(ClaimsPrincipal claimsUser, UserUpdateDto dto)
+		public async Task<Result<bool>> Update(string userId, UserUpdateDto dto)
 		{
-			return await GetUserEmail(claimsUser)
-				.Bind(email => FindUser(email))
+			return await FindUserById(userId)
 				.Bind(user => UpdateUser(user))
 				.OnFailure(LogError);
 
 			async Task<Result<bool>> UpdateUser(User user)
 			{
 				user.UserName = dto.Username;
+
 				db.Users.Update(user);
 				await db.SaveChangesAsync();
 
@@ -136,35 +125,23 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		private static Result Validate(in SignDto dto)
+		public Task<Result<bool>> Delete(string userId)
 		{
-			return GenericValidator<SignDto>.Validate(v =>
+			throw new System.NotImplementedException();
+		}
+
+		private static Result ValidateDto(SignDto dto)
+		{
+			var (_, isFailure, error) = Validate();
+			return isFailure
+				? Result.Failure(error)
+				: Result.Ok();
+
+			Result Validate() => GenericValidator<SignDto>.Validate(v =>
 			{
 				v.RuleFor(c => c.Email).EmailAddress().NotEmpty();
 				v.RuleFor(c => c.Password).NotEmpty();
 			}, dto);
 		}
-
-		private async Task<Result<User>> FindUser(string email)
-		{
-			var user = await FindUserByEmail(email);
-			return user.HasNoValue
-				? Result.Failure<User>($"The user with this email was not found: {email}")
-				: Result.Ok(user.Value);
-		}
-
-		private async Task<Maybe<User>> FindUserByEmail(string email) => await db.Users.SingleOrDefaultAsync(u => u.Email == email.ToLower()) ?? Maybe<User>.None;
-
-		private Result<string> GetUserEmail(ClaimsPrincipal data)
-		{
-			var email = data.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Maybe<string>.None;
-			return email.HasNoValue
-				? Result.Failure<string>($"The email cannot be empty")
-				: Result.Ok(email.Value);
-		}
-
-		private void LogError(string error) => logger.Error(error);
-
-		private void LogAudit(string message) => logger.Information(message);
 	}
 }

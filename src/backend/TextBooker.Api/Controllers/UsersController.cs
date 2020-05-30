@@ -18,15 +18,6 @@ namespace TextBooker.Api.Controllers
 			this.userService = userService;
 		}
 
-		// GET user/is-auth
-		[AllowAnonymous]
-		[HttpGet("is-auth")]
-		public IActionResult IsAuth() => Ok(User.Identity.IsAuthenticated);
-
-		// GET user/info
-		[HttpGet("info")]
-		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.GetInfo(User));
-
 		// POST user/register
 		[AllowAnonymous]
 		[HttpPost("register")]
@@ -37,7 +28,21 @@ namespace TextBooker.Api.Controllers
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] SignDto dto) => OkOrBadRequest(await userService.Login(dto));
 
+		// GET user/is-auth
+		[AllowAnonymous]
+		[HttpGet("is-auth")]
+		public IActionResult IsAuth() => Ok(User.Identity.IsAuthenticated);
+
+		// GET user/info
+		[HttpGet("info")]
+		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.GetInfo(UserId));
+
+		// PUT user
 		[HttpPut]
-		public async Task<IActionResult> Update([FromBody] UserUpdateDto dto) => OkOrBadRequest(await userService.Update(User, dto));
+		public async Task<IActionResult> Update([FromBody] UserUpdateDto dto) => OkOrBadRequest(await userService.Update(UserId, dto));
+
+		// DELETE user
+		[HttpDelete]
+		public async Task<IActionResult> Delete() => OkOrBadRequest(await userService.Delete(UserId));
 	}
 }
