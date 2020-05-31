@@ -30,15 +30,16 @@ namespace TextBooker.BusinessLogic.Services
 		public UserService(
 			ILogger logger,
 			TextBookerContext db,
-			JwtSettings jwtSettings,
 			IMailSender mailSender,
+			JwtSettings jwtSettings,
 			GoogleSettings googleOptions,
 			IHttpClientFactory clientFactory,
-			IHttpContextAccessor httpContextAccessor) : base(logger, db)
+			IHttpContextAccessor httpContextAccessor
+		) : base(logger, db)
 		{
 			this.db = db;
-			this.jwtSettings = jwtSettings;
 			this.mailSender = mailSender;
+			this.jwtSettings = jwtSettings;
 			this.googleOptions = googleOptions;
 			this.clientFactory = clientFactory;
 			httpContext = httpContextAccessor.HttpContext;
