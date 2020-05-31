@@ -59,7 +59,20 @@ export default {
       try {
         setState(commit, { loading: true })
         let result = await api.registerUser(payload)
-        router.push({ name: 'confirm', params: { email: payload.email } })
+        router.push({ name: 'email-check', params: { email: payload.email } })
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
+    async confirmEmail({ commit }, payload) {
+      try {
+        setState(commit, { loading: true })
+        let result = await api.confirmEmail(payload)
+        showSuccessNotify(i18n.t('status.success'))
+        router.push('/signin')
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {

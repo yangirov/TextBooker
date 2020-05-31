@@ -10,7 +10,7 @@ using TextBooker.DataAccess;
 namespace TextBooker.DataAccess.Migrations
 {
     [DbContext(typeof(TextBookerContext))]
-    [Migration("20200531173609_Initial")]
+    [Migration("20200531192210_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Body = "Hi! Please follow <a href=\"%host%/user/confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
+                            Body = "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
                             Importance = false,
                             Subject = "Invite to TextBooker"
                         },

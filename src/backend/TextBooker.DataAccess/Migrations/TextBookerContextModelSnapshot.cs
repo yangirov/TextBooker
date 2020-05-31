@@ -48,7 +48,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Body = "Hi! Please follow <a href=\"%host%/user/confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
+                            Body = "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
                             Importance = false,
                             Subject = "Invite to TextBooker"
                         },

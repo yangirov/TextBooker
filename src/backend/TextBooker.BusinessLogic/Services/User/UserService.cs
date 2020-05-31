@@ -14,7 +14,6 @@ namespace TextBooker.BusinessLogic.Services
 {
 	public class UserService : BaseService, IUserService
 	{
-		private readonly ILogger logger;
 		private readonly TextBookerContext db;
 		private readonly JwtSettings jwtSettings;
 		private readonly IMailSender mailSender;
@@ -30,7 +29,6 @@ namespace TextBooker.BusinessLogic.Services
 			IMailSender mailSender,
 			IHttpContextAccessor httpContextAccessor) : base(logger, db)
 		{
-			this.logger = logger;
 			this.db = db;
 			this.jwtSettings = jwtSettings;
 			this.mailSender = mailSender;

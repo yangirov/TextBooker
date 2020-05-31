@@ -17,7 +17,7 @@ namespace TextBooker.DataAccess
 				{
 					Id = 1,
 					Subject = "Invite to TextBooker",
-					Body = "Hi! Please follow <a href=\"%host%/user/confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
+					Body = "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
 					Importance = false
 				},
 
