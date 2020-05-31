@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 using TextBooker.BusinessLogic.Infrastructure;
-using TextBooker.BusinessLogic.Services.Base;
 using TextBooker.Contracts.Dto.Config;
 using TextBooker.Contracts.Dto.User;
+using TextBooker.Contracts.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 
@@ -16,13 +17,26 @@ namespace TextBooker.BusinessLogic.Services
 		private readonly ILogger logger;
 		private readonly TextBookerContext db;
 		private readonly JwtSettings jwtSettings;
+		private readonly IMailSender mailSender;
 		private readonly PasswordHasher passwordHasher;
 
-		public UserService(ILogger logger, TextBookerContext db, JwtSettings jwtSettings) : base(logger, db)
+		private readonly HttpContext httpContext;
+		private readonly string baseUrl;
+
+		public UserService(
+			ILogger logger,
+			TextBookerContext db,
+			JwtSettings jwtSettings,
+			IMailSender mailSender,
+			IHttpContextAccessor httpContextAccessor) : base(logger, db)
 		{
 			this.logger = logger;
 			this.db = db;
 			this.jwtSettings = jwtSettings;
+			this.mailSender = mailSender;
+
+			httpContext = httpContextAccessor.HttpContext;
+			baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}";
 
 			var hashOptions = new HashingOptions();
 			passwordHasher = new PasswordHasher(hashOptions);
@@ -51,6 +65,8 @@ namespace TextBooker.BusinessLogic.Services
 			return await ValidateDto(dto)
 				.Bind(FindUser)
 				.Bind(RegisterUser)
+				.Bind(user => GenerateToken(user))
+				.Bind(async (response) => await SendMesssage(response))
 				.OnFailure(LogError);
 
 			async Task<Result> FindUser()
@@ -61,10 +77,11 @@ namespace TextBooker.BusinessLogic.Services
 					: Result.Ok();
 			}
 
-			async Task<Result<bool>> RegisterUser()
+			async Task<Result<User>> RegisterUser()
 			{
 				var user = new User()
 				{
+					EmailConfirmed = false,
 					Email = dto.Email.ToLower(),
 					PasswordHash = passwordHasher.Hash(dto.Password)
 				};
@@ -72,9 +89,15 @@ namespace TextBooker.BusinessLogic.Services
 				db.Users.Add(user);
 				await db.SaveChangesAsync();
 
+				return Result.Ok(user);
+			}
+
+			async Task<Result<bool>> SendMesssage(SignResponse response)
+			{
+				await mailSender.Send(EmailTemplateKeys.Invite, dto.Email, response);
 				return Result.Ok(true);
 			}
- 		}
+		}
 
 		public async Task<Result<SignResponse>> Login(SignDto dto)
 		{
@@ -87,9 +110,9 @@ namespace TextBooker.BusinessLogic.Services
 			async Task<Result<User>> FindUser()
 			{
 				var user = await FindUserByEmail(dto.Email);
-				return user.HasNoValue
-					? Result.Failure<User>($"The user with this email was not found: {dto.Email}")
-					: Result.Ok(user.Value);
+				return user.HasValue && user.Value.EmailConfirmed
+					? Result.Ok(user.Value)
+					: Result.Failure<User>($"The user with this email was not found or not activated: {dto.Email}");
 			}
 
 			Result<User> CheckUserPassword(User user)
@@ -99,12 +122,39 @@ namespace TextBooker.BusinessLogic.Services
 					? Result.Failure<User>($"Incorrect email or password: {dto.Email}")
 					: Result.Ok(user);
 			}
+		}
 
-			Result<SignResponse> GenerateToken(User user)
+		public async Task<Result<bool>> ConfirmEmail(string email, string token)
+		{
+			return await FindUser()
+				.Bind(user => CheckToken(user))
+				.Bind(user => UpdateUser(user))
+				.OnFailure(LogError);
+
+			async Task<Result<User>> FindUser()
 			{
-				var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id, jwtSettings);
-				LogAudit($"Successful login: {dto.Email}");
-				return Result.Ok(new SignResponse(token, user.Email));
+				var user = await FindUserByEmail(email);
+				return user.HasValue
+					? Result.Ok(user.Value)
+					: Result.Failure<User>($"The user with this email was not found or not activated: {email}");
+			}
+
+			Result<User> CheckToken(User user)
+			{
+				var result = AuthenticationHelper.ValidateJwtToken(token, jwtSettings);
+				return result
+					? Result.Ok(user)
+					: Result.Failure<User>("Token is invalid");
+			}
+
+			async Task<Result<bool>> UpdateUser(User user)
+			{
+				user.EmailConfirmed = true;
+
+				db.Users.Update(user);
+				await db.SaveChangesAsync();
+
+				return Result.Ok(true);
 			}
 		}
 
@@ -125,9 +175,19 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		public Task<Result<bool>> Delete(string userId)
+		public async Task<Result<bool>> Delete(string userId)
 		{
-			throw new System.NotImplementedException();
+			return await FindUserById(userId)
+				.Bind(user => DeleteUser(user))
+				.OnFailure(LogError);
+
+			async Task<Result<bool>> DeleteUser(User user)
+			{
+				db.Users.Remove(user);
+				await db.SaveChangesAsync();
+
+				return Result.Ok(true);
+			}
 		}
 
 		private static Result ValidateDto(SignDto dto)
@@ -142,6 +202,13 @@ namespace TextBooker.BusinessLogic.Services
 				v.RuleFor(c => c.Email).EmailAddress().NotEmpty();
 				v.RuleFor(c => c.Password).NotEmpty();
 			}, dto);
+		}
+
+		private Result<SignResponse> GenerateToken(User user)
+		{
+			var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id, jwtSettings);
+			LogAudit($"Successful generate token: {user.Email}");
+			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
 		}
 	}
 }

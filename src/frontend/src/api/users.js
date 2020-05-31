@@ -8,6 +8,8 @@ export const loginUser = async data =>
 export const updateUser = async payload =>
   (await axios.put('/user', payload)).data
 
+export const deleteUser = async () => (await axios.delete('/user')).data
+
 export const registerUser = async payload =>
   (await axios.post('/user/register', payload)).data
 
@@ -16,7 +18,8 @@ const users = {
   getUser,
   loginUser,
   updateUser,
-  registerUser
+  registerUser,
+  deleteUser
 }
 
 export default users

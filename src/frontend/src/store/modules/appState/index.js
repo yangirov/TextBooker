@@ -31,6 +31,19 @@ export default {
     async fetchSettings({ commit }) {
       const settings = await api.getSettings()
       setState(commit, { state: 'settings', payload: settings })
+    },
+
+    async sendFeedback({ commit }, payload) {
+      try {
+        setState(commit, { loading: true })
+        let result = await api.sendFeedback(payload)
+        showSuccessNotify(i18n.t('feedback.thanks'))
+        setTimeout(() => router.push('/'), 1000)
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
     }
   }
 }

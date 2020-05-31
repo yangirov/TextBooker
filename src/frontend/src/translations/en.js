@@ -67,7 +67,8 @@ export const ENGLISH_TRANSLATIONS = {
     name: 'Name',
     email: 'Email',
     message: 'Message',
-    send: 'Send'
+    send: 'Send',
+    thanks: 'Thank you for your feedback!'
   },
   about: {
     title: 'Open Source static sites generator with content management system',
@@ -103,7 +104,9 @@ export const ENGLISH_TRANSLATIONS = {
     username: 'Username',
     delete: 'Delete account',
     deleteWarning:
-      "Are you sure you want to delete your account? You can't undo this."
+      "Are you sure you want to delete your account? You can't undo this.",
+    confirm:
+      'We just sent you a link to activate your account. Check your email <b>{email}</b>'
   },
   status: {
     success: 'Success',

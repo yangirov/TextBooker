@@ -26,6 +26,8 @@ using TextBooker.BusinessLogic.Services;
 using TextBooker.DataAccess;
 using TextBooker.Contracts.Dto.Config;
 using TextBooker.DataAccess.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Design;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -33,6 +35,7 @@ namespace TextBooker.Api
 	public class Startup
 	{
 		public IWebHostEnvironment HostingEnvironment { get; private set; }
+
 		public IConfiguration Configuration { get; }
 
 		public Startup(IConfiguration configuration, IWebHostEnvironment env)
@@ -61,6 +64,7 @@ namespace TextBooker.Api
 				)
 				.CreateLogger();
 
+			services.AddSingleton<IConfiguration>(Configuration);
 			services.AddSingleton<ILogger>(logger);
 
 			services
@@ -84,7 +88,7 @@ namespace TextBooker.Api
 				.AddLocalization()
 				.AddMemoryCache();
 
-			services.AddHttpContextAccessor();
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 			var connectionOptions = Configuration.GetValue<string>("Database:Options");
 			var connectionString = EnvironmentVariable.Get(connectionOptions);
@@ -112,7 +116,8 @@ namespace TextBooker.Api
 				Username = EnvironmentVariable.Get(emailOptions.Username),
 				Password = EnvironmentVariable.Get(emailOptions.Password),
 				Host = EnvironmentVariable.Get(emailOptions.Host),
-				Port = EnvironmentVariable.Get(emailOptions.Port)
+				Port = EnvironmentVariable.Get(emailOptions.Port),
+				Sender = EnvironmentVariable.Get(emailOptions.Sender)
 			};
 
 			var jwtOptions = Configuration.GetSection("Jwt").Get<JwtSettings>();
@@ -193,11 +198,22 @@ namespace TextBooker.Api
 
 			services.AddSingleton<IVersionService, VersionService>();
 
-			services.AddTransient<IUserService, UserService>(
+			services.AddTransient<IMailSender>(
+				x => new MailSender(
+					x.GetRequiredService<ILogger>(),
+					x.GetRequiredService<TextBookerContext>(),
+					emailSettings
+				));
+
+			services.AddTransient<ICommonService, CommonService>();
+
+			services.AddTransient<IUserService>(
 				x => new UserService(
 					x.GetRequiredService<ILogger>(),
 					x.GetRequiredService<TextBookerContext>(),
-					jwtSettings
+					jwtSettings,
+					x.GetRequiredService<IMailSender>(),
+					x.GetRequiredService<IHttpContextAccessor>()
 				));
 		}
 

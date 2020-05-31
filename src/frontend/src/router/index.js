@@ -8,12 +8,17 @@ import NotFound from '@/views/NotFound.vue'
 
 import SignIn from '@/views/User/SignIn.vue'
 import SignUp from '@/views/User/SignUp.vue'
+import Confirm from '@/views/User/Confirm.vue'
 import Projects from '@/views/User/Projects.vue'
 import Settings from '@/views/User/Settings.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    component: About
+  },
   {
     path: '*',
     redirect: '/404'
@@ -22,10 +27,6 @@ const routes = [
     path: '/404',
     name: '404',
     component: NotFound
-  },
-  {
-    path: '/',
-    component: About
   },
   {
     path: '/about',
@@ -46,6 +47,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp
+  },
+  {
+    path: '/user/confirm',
+    name: 'confirm',
+    component: Confirm
   },
   {
     path: '/user/projects',
@@ -70,11 +76,12 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   let isAuth = localStorage.getItem('access_token')
+router.beforeEach((to, from, next) => {
+  let isAuth = localStorage.getItem('access_token')
 
-//   if (to.name !== 'Auth' && !isAuth) next({ name: 'Auth' })
-//   else next()
-// })
+  if (!isAuth && ['editor', 'settings', 'projects'].includes(to.name))
+    next({ name: 'signin' })
+  else next()
+})
 
 export default router
