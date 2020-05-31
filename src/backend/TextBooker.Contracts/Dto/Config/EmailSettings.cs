@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace TextBooker.Contracts.Dto.Config
 {
 	public class EmailSettings
