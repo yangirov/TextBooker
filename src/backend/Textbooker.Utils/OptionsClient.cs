@@ -33,13 +33,13 @@ namespace Textbooker.Utils
 			return obj;
 		}
 
-		private static TEntity GetValue<TEntity>(TEntity value)
+		private static T GetValue<T>(T value)
 		{
 			var envVariable = Environment.GetEnvironmentVariable(value.ToString());
 			if (envVariable is null)
 				return value;
 
-			return (TEntity)Convert.ChangeType(envVariable, typeof(TEntity));
+			return (T)Convert.ChangeType(envVariable, typeof(T));
 		}
 	}
 }

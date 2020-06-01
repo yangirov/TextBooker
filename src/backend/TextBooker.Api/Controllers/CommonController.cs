@@ -17,12 +17,19 @@ namespace TextBooker.Api.Controllers
 			this.commonService = commonService;
 		}
 
-		// GET /settings
+		/// <summary>
+		/// Get system settings
+		/// </summary>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpGet("settings")]
 		public IActionResult GetSetting() => OkOrBadRequest(commonService.GetSettings());
 
-		// POST /feedback
+		/// <summary>
+		/// Send feedback
+		/// </summary>
+		/// <param name="dto">Feedback message</param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("feedback")]
 		public async Task<IActionResult> SendFeedback(Feedback dto) => OkOrBadRequest(await commonService.SendFeedback(dto));
