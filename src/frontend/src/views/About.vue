@@ -12,7 +12,7 @@
 
             <a
               class="button is-light is-medium"
-              href="help"
+              href="https://github.com/yangirov/TextBooker/wiki"
               target="_blank"
               rel="nofollow noreferrer"
             >
