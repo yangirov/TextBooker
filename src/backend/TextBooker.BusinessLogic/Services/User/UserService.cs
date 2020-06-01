@@ -3,13 +3,11 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Serilog;
 using TextBooker.BusinessLogic.Infrastructure;
-using TextBooker.Contracts.Dto;
-using TextBooker.Contracts.Dto.Config;
+using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto.User;
-using TextBooker.Contracts.Enums;
+using TextBooker.Common.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 
@@ -70,7 +68,7 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> Register(SignDto dto)
 		{
 			return await ValidateDto(dto)
-				.Bind(async () => await RecaptchaTokenVerify(dto.Token))
+				.Bind(async () => await RecaptchaVerify(dto.Token))
 				.Bind(FindUser)
 				.Bind(RegisterUser)
 				.Bind(user => GenerateToken(user))
@@ -110,7 +108,7 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<SignResponse>> Login(SignDto dto)
 		{
 			return await ValidateDto(dto)
-				.Bind(async () => await RecaptchaTokenVerify(dto.Token))
+				.Bind(async () => await RecaptchaVerify(dto.Token))
 				.Bind(FindUser)
 				.Bind(user => CheckUserPassword(user))
 				.Bind(user => GenerateToken(user))
@@ -214,26 +212,13 @@ namespace TextBooker.BusinessLogic.Services
 			}, dto);
 		}
 
-		private async Task<Result> RecaptchaTokenVerify(string token)
-		{
-			var tokenResponse = new TokenResponseModel() { Success = false };
-
-			using (var client = clientFactory.CreateClient(HttpClientNames.GoogleRecaptcha))
-			{
-				var response = await client.GetStringAsync($"{googleOptions.RecaptchaVerifyApi}?secret={googleOptions.SecretKey}&response={token}");
-				tokenResponse = JsonConvert.DeserializeObject<TokenResponseModel>(response);
-			}
-
-			return ( !tokenResponse.Success || tokenResponse.Score < (decimal)0.5 )
-				 ? Result.Failure("Recaptcha token is invalid")
-				 : Result.Ok();
-		}
-
 		private Result<SignResponse> GenerateToken(User user)
 		{
 			var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id, jwtSettings);
 			LogAudit($"Successful generate token: {user.Email}");
 			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
 		}
+
+		private async Task<Result> RecaptchaVerify(string token) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, token);
 	}
 }

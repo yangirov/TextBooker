@@ -1,5 +1,8 @@
 import api from '@/api'
 import { SET_STATE, setState } from '@/store/helpers'
+import { showSuccessNotify, showErrorNotify } from '@/utils'
+import i18n from '@/libs/VueI18n'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -36,9 +39,9 @@ export default {
     async sendFeedback({ commit }, payload) {
       try {
         setState(commit, { loading: true })
-        let result = await api.sendFeedback(payload)
+        await api.sendFeedback(payload)
         showSuccessNotify(i18n.t('feedback.thanks'))
-        setTimeout(() => router.push('/'), 1000)
+        router.push('/')
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {

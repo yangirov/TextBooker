@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using TextBooker.Contracts.Enums;
+using TextBooker.Common.Enums;
 
 namespace TextBooker.BusinessLogic.Services
 {

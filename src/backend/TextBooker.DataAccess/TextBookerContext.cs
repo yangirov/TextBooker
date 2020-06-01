@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using TextBooker.DataAccess.Entities;
 
