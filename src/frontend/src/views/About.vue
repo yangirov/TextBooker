@@ -24,7 +24,7 @@
 
       <div class="columns mt-3">
         <div class="column is-half">
-          <ul>
+          <ul class="vantages">
             <li v-for="item in $t('about.vantages')" :key="item.title">
               <h2 class="subtitle">{{ item.title }}</h2>
               <p>{{ item.desc }}</p>
@@ -72,4 +72,7 @@ export default {}
 .subtitle
   padding-top: 1em
   margin-bottom: .5em !important
+
+.vantages
+  margin-top: -1em
 </style>

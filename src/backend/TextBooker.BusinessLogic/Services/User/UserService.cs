@@ -214,7 +214,7 @@ namespace TextBooker.BusinessLogic.Services
 
 		private Result<SignResponse> GenerateToken(User user)
 		{
-			var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id, jwtSettings);
+			var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id.ToString(), jwtSettings);
 			LogAudit($"Successful generate token: {user.Email}");
 			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
 		}
