@@ -1,16 +1,16 @@
-using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TextBooker.DataAccess.Entities
 {
-	public class UserScript : IEntity<Guid>
+	public class UserScript : IEntity<string>
 	{
-		public Guid Id { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public string Id { get; set; }
 		
 		public int Location { get; set; }
 
 		public string Content { get; set; }
 
-		public Guid SiteId { get; set; }
 		public Site Site { get; set; }
 	}
 }

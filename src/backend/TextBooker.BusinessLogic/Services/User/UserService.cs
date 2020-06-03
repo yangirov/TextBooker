@@ -10,11 +10,13 @@ using TextBooker.Contracts.Dto.User;
 using TextBooker.Common.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
+using AutoMapper;
 
 namespace TextBooker.BusinessLogic.Services
 {
 	public class UserService : BaseService, IUserService
 	{
+		private readonly IMapper mapper;
 		private readonly TextBookerContext db;
 		private readonly JwtSettings jwtSettings;
 		private readonly IMailSender mailSender;
@@ -26,6 +28,7 @@ namespace TextBooker.BusinessLogic.Services
 		private readonly string baseUrl;
 
 		public UserService(
+			IMapper mapper,
 			ILogger logger,
 			TextBookerContext db,
 			IMailSender mailSender,
@@ -35,6 +38,7 @@ namespace TextBooker.BusinessLogic.Services
 			IHttpContextAccessor httpContextAccessor
 		) : base(logger, db)
 		{
+			this.mapper = mapper;
 			this.db = db;
 			this.mailSender = mailSender;
 			this.jwtSettings = jwtSettings;
@@ -50,17 +54,12 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<UserInfoDto>> GetInfo(string userId)
 		{
 			return await FindUserById(userId)
-				.Bind(user => MapUser(user))
+				.Bind(MapUser)
 				.OnFailure(LogError);
 
-			static Result<UserInfoDto> MapUser(User user)
+			Result<UserInfoDto> MapUser(User user)
 			{
-				var userInfo = new UserInfoDto()
-				{
-					Username = user.UserName,
-					Email = user.Email
-				};
-
+				var userInfo = mapper.Map<UserInfoDto>(user);
 				return Result.Ok(userInfo);
 			}
 		}
@@ -68,11 +67,11 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> Register(SignDto dto)
 		{
 			return await ValidateDto(dto)
-				.Bind(async () => await RecaptchaVerify(dto.Token))
+				.Bind(RecaptchaVerify)
 				.Bind(FindUser)
 				.Bind(RegisterUser)
-				.Bind(user => GenerateToken(user))
-				.Bind(async (response) => await SendMesssage(response))
+				.Bind(GenerateToken)
+				.Bind(SendMesssage)
 				.OnFailure(LogError);
 
 			async Task<Result> FindUser()
@@ -108,10 +107,10 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<SignResponse>> Login(SignDto dto)
 		{
 			return await ValidateDto(dto)
-				.Bind(async () => await RecaptchaVerify(dto.Token))
+				.Bind(RecaptchaVerify)
 				.Bind(FindUser)
-				.Bind(user => CheckUserPassword(user))
-				.Bind(user => GenerateToken(user))
+				.Bind(CheckUserPassword)
+				.Bind(GenerateToken)
 				.OnFailure(LogError);
 
 			async Task<Result<User>> FindUser()
@@ -134,8 +133,8 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> ConfirmEmail(string email, string token)
 		{
 			return await FindUser()
-				.Bind(user => CheckToken(user))
-				.Bind(user => UpdateUser(user))
+				.Bind(CheckToken)
+				.Bind(UpdateUser)
 				.OnFailure(LogError);
 
 			async Task<Result<User>> FindUser()
@@ -168,7 +167,7 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> Update(string userId, UserUpdateDto dto)
 		{
 			return await FindUserById(userId)
-				.Bind(user => UpdateUser(user))
+				.Bind(UpdateUser)
 				.OnFailure(LogError);
 
 			async Task<Result<bool>> UpdateUser(User user)
@@ -185,7 +184,7 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> Delete(string userId)
 		{
 			return await FindUserById(userId)
-				.Bind(user => DeleteUser(user))
+				.Bind(DeleteUser)
 				.OnFailure(LogError);
 
 			async Task<Result<bool>> DeleteUser(User user)
@@ -197,12 +196,12 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		private static Result ValidateDto(SignDto dto)
+		private static Result<SignDto> ValidateDto(SignDto dto)
 		{
 			var (_, isFailure, error) = Validate();
 			return isFailure
-				? Result.Failure(error)
-				: Result.Ok();
+				? Result.Failure<SignDto>(error)
+				: Result.Ok(dto);
 
 			Result Validate() => GenericValidator<SignDto>.Validate(v =>
 			{
@@ -219,6 +218,6 @@ namespace TextBooker.BusinessLogic.Services
 			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
 		}
 
-		private async Task<Result> RecaptchaVerify(string token) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, token);
+		private async Task<Result> RecaptchaVerify(SignDto dto) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
 	}
 }

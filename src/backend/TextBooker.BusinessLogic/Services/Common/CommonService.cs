@@ -56,16 +56,16 @@ namespace TextBooker.BusinessLogic.Services
 		public async Task<Result<bool>> SendFeedback(Feedback dto)
 		{
 			return await ValidateDto(dto)
-				.Bind(async () => await RecaptchaVerify(dto.Token))
+				.Bind(RecaptchaVerify)
 				.Bind(SendMessage)
 				.OnFailure(LogError);
 
-			Result ValidateDto(Feedback dto)
+			Result<Feedback> ValidateDto(Feedback dto)
 			{
 				var (_, isFailure, error) = Validate();
 				return isFailure
-					? Result.Failure(error)
-					: Result.Ok();
+					? Result.Failure<Feedback>(error)
+					: Result.Ok(dto);
 
 				Result Validate() => GenericValidator<Feedback>.Validate(v =>
 				{
@@ -76,7 +76,7 @@ namespace TextBooker.BusinessLogic.Services
 				}, dto);
 			}
 
-			async Task<Result> RecaptchaVerify(string token) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, token);
+			async Task<Result> RecaptchaVerify(Feedback dto) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
 
 			async Task<Result<bool>> SendMessage()
 			{

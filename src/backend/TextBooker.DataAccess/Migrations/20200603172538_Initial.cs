@@ -64,7 +64,7 @@ namespace TextBooker.DataAccess.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<string>(nullable: false),
                     user_name = table.Column<string>(nullable: true),
                     normalized_user_name = table.Column<string>(nullable: true),
                     email = table.Column<string>(nullable: true),
@@ -89,9 +89,8 @@ namespace TextBooker.DataAccess.Migrations
                 name: "sites",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<string>(nullable: false),
                     user_id = table.Column<string>(nullable: true),
-                    user_id1 = table.Column<Guid>(nullable: true),
                     title = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
                     keywords = table.Column<string>(nullable: true),
@@ -110,8 +109,8 @@ namespace TextBooker.DataAccess.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_sites_users_user_id1",
-                        column: x => x.user_id1,
+                        name: "fk_sites_users_user_id",
+                        column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -121,10 +120,9 @@ namespace TextBooker.DataAccess.Migrations
                 name: "section_names",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<string>(nullable: false),
                     content = table.Column<string>(nullable: true),
-                    template_key_id = table.Column<int>(nullable: false),
-                    site_id = table.Column<Guid>(nullable: false)
+                    site_id = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,23 +132,17 @@ namespace TextBooker.DataAccess.Migrations
                         column: x => x.site_id,
                         principalTable: "sites",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_section_names_template_keys_template_key_id",
-                        column: x => x.template_key_id,
-                        principalTable: "template_keys",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "user_scripts",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<string>(nullable: false),
                     location = table.Column<int>(nullable: false),
                     content = table.Column<string>(nullable: true),
-                    site_id = table.Column<Guid>(nullable: false)
+                    site_id = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,7 +152,7 @@ namespace TextBooker.DataAccess.Migrations
                         column: x => x.site_id,
                         principalTable: "sites",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -229,19 +221,14 @@ namespace TextBooker.DataAccess.Migrations
                 column: "site_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_section_names_template_key_id",
-                table: "section_names",
-                column: "template_key_id");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_sites_template_id",
                 table: "sites",
                 column: "template_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_sites_user_id1",
+                name: "ix_sites_user_id",
                 table: "sites",
-                column: "user_id1");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_templates_name",
@@ -270,10 +257,10 @@ namespace TextBooker.DataAccess.Migrations
                 name: "section_names");
 
             migrationBuilder.DropTable(
-                name: "user_scripts");
+                name: "template_keys");
 
             migrationBuilder.DropTable(
-                name: "template_keys");
+                name: "user_scripts");
 
             migrationBuilder.DropTable(
                 name: "sites");
