@@ -1,6 +1,10 @@
 <template>
   <div class="user-scripts">
-    <el-select v-model="location" placeholder="Select">
+    <el-select
+      v-model="location"
+      :placeholder="$t('common.select')"
+      size="small"
+    >
       <el-option
         v-for="item in locations"
         :key="item.id"

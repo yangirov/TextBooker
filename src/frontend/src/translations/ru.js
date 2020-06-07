@@ -162,6 +162,7 @@ export const RUSSIAN_TRANSLATIONS = {
     search: 'Поиск',
     enabled: 'Включен',
     disabled: 'Выключен',
-    close: 'Закрыть'
+    close: 'Закрыть',
+    select: 'Выбрать'
   }
 }
