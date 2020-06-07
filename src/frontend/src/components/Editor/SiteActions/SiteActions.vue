@@ -1,6 +1,6 @@
 <template>
-  <div class="buttons">
-    <el-button type="buttons">
+  <div class="site-actions buttons" v-if="show">
+    <el-button type="primary">
       <i class="el-icon-view"></i> {{ $t('siteActions.view') }}
     </el-button>
 
@@ -11,13 +11,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'SiteActions'
+  name: 'SiteActions',
+
+  computed: {
+    ...mapGetters('sites', ['site']),
+
+    show() {
+      return this.site && this.$route.name == 'editor'
+    }
+  }
 }
 </script>
 
-<style lang="sass" scoped>
-.buttons
-  margin-left: auto
-  margin-right: 1em
+<style lang="sass">
+.site-actions.buttons
+  justify-content: flex-end !important
+  margin: 3px 0
+  margin-right: -15px
 </style>

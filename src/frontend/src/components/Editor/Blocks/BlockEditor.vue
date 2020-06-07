@@ -88,7 +88,7 @@ export default {
       let menuHeight = document.getElementById('blocks_list').clientHeight
       let inputWidth = document.getElementById('block_title').clientWidth
 
-      this.style = `height: calc(${menuHeight}px - 7em);
+      this.style = `height: calc(${menuHeight}px - 4em);
                     width: calc(${inputWidth}px - 0.1em);`
     }
   },

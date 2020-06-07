@@ -42,6 +42,16 @@
         </span>
         <Publisher />
       </el-tab-pane>
+
+      <el-tab-pane
+        v-if="site && $route.name == 'editor'"
+        name="actions"
+        :disabled="true"
+      >
+        <span slot="label">
+          <SiteActions />
+        </span>
+      </el-tab-pane>
     </el-tabs>
   </section>
 </template>
@@ -55,6 +65,7 @@ import SiteSettings from '@/components/Editor/SiteSettings/SiteSettings.vue'
 import Pages from '@/components/Editor/Pages/Pages.vue'
 import Blocks from '@/components/Editor/Blocks/Blocks.vue'
 import Publisher from '@/components/Editor/Publisher/Publisher.vue'
+import SiteActions from '@/components/Editor/SiteActions/SiteActions.vue'
 
 export default {
   name: 'Editor',
@@ -65,7 +76,8 @@ export default {
     SiteSettings,
     Pages,
     Blocks,
-    Publisher
+    Publisher,
+    SiteActions
   },
 
   computed: {
@@ -85,4 +97,11 @@ export default {
   position: relative
   min-height: 80vh
   max-height: 80vh
+
+.el-tabs__nav
+  display: flex !important
+  width: 100% !important
+
+#tab-actions
+  flex-grow: 1
 </style>
