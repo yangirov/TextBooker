@@ -148,6 +148,7 @@ export const ENGLISH_TRANSLATIONS = {
     title: 'Title',
     description: 'Description',
     updatedOn: 'Updated on',
-    createdOn: 'Created on'
+    createdOn: 'Created on',
+    search: 'Search'
   }
 }

@@ -6,13 +6,17 @@ export default {
   namespaced: true,
   state: {
     loading: false,
-    sites: []
+    templates: [],
+    sites: [],
+    site: {}
   },
 
   getters: {
     loading: state => state.loading,
     data: (state, getters) => getters,
-    sites: state => state.sites
+    templates: state => state.templates,
+    sites: state => state.sites,
+    site: state => state.site
   },
 
   mutations: {
@@ -38,6 +42,13 @@ export default {
       } finally {
         setState(commit, { loading: false })
       }
+    },
+
+    async fetchTemplates({ commit }) {
+      setState(commit, { loading: true })
+      const templates = await api.getTemplates()
+      setState(commit, { state: 'templates', payload: templates })
+      setState(commit, { loading: false })
     }
   }
 }

@@ -31,7 +31,18 @@ namespace TextBooker.Api.Controllers
 			return OkOrBadRequest(await editorService.Create(dto));
 		}
 
+		/// <summary>
+		/// Get user projects (sites) list
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet("site")]
 		public async Task<IActionResult> GetUserSites() => OkOrBadRequest(await editorService.GetUserSites(UserId));
+
+		/// <summary>
+		/// Get templates list
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("templates")]
+		public async Task<IActionResult> GetTemplates() => OkOrBadRequest(await editorService.GetTemplates());
 	}
 }
