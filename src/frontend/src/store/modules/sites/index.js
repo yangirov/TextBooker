@@ -7,6 +7,7 @@ export default {
   state: {
     loading: false,
     templates: [],
+    templateKeys: [],
     sites: [],
     site: {}
   },
@@ -15,6 +16,7 @@ export default {
     loading: state => state.loading,
     data: (state, getters) => getters,
     templates: state => state.templates,
+    templateKeys: state => state.templateKeys,
     sites: state => state.sites,
     site: state => state.site
   },
@@ -48,6 +50,13 @@ export default {
       setState(commit, { loading: true })
       const templates = await api.getTemplates()
       setState(commit, { state: 'templates', payload: templates })
+      setState(commit, { loading: false })
+    },
+
+    async fetchTemplateKeys({ commit }) {
+      setState(commit, { loading: true })
+      const keys = await api.getTemplateKeys()
+      setState(commit, { state: 'templateKeys', payload: keys })
       setState(commit, { loading: false })
     }
   }

@@ -65,15 +65,28 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<List<TemplateDto>>> GetTemplates()
 		{
-			return await FindTemplates()
+			return await GetTemplates()
 				.Bind(Map)
 				.OnFailure(LogError);
 
-			async Task<Result<List<Template>>> FindTemplates()
+			async Task<Result<List<Template>>> GetTemplates()
 				=> Result.Ok(await db.Templates.OrderBy(t => t.Name).ToListAsync());
 
 			Result<List<TemplateDto>> Map(List<Template> templates)
 				=> Result.Ok(mapper.Map<List<TemplateDto>>(templates));
+		}
+
+		public async Task<Result<List<TemplateKeyDto>>> GetTemplateKeys()
+		{
+			return await GetTemplateKeys()
+				.Bind(Map)
+				.OnFailure(LogError);
+
+			async Task<Result<List<TemplateKey>>> GetTemplateKeys()
+				=> Result.Ok(await db.TemplateKeys.OrderBy(t => t.Id).ToListAsync());
+
+			Result<List<TemplateKeyDto>> Map(List<TemplateKey> keys)
+				=> Result.Ok(mapper.Map<List<TemplateKeyDto>>(keys));
 		}
 	}
 }
