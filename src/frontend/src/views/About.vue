@@ -6,7 +6,7 @@
           <h1 class="title" v-html="$t('about.title')"></h1>
 
           <div class="buttons mt-2">
-            <router-link class="button is-blue is-medium" to="editor">
+            <router-link class="button is-blue is-medium" to="/editor">
               {{ $t('about.getStarted') }}
             </router-link>
 

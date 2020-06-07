@@ -24,7 +24,7 @@
               <router-link
                 class="button is-light"
                 id="login-button"
-                to="signin"
+                to="/signin"
                 v-if="!isAuth"
               >
                 {{ $t('user.login') }}
@@ -32,7 +32,7 @@
 
               <router-link
                 class="button bold is-blue is-outlined"
-                to="signup"
+                to="/signup"
                 v-if="!isAuth"
               >
                 {{ $t('user.register') }}
