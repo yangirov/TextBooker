@@ -21,3 +21,9 @@ let store = new Vuex.Store({
 })
 
 export default store
+
+const initialStoreCopy = JSON.parse(JSON.stringify(store.state))
+
+export function resetStore() {
+  store.replaceState(JSON.parse(JSON.stringify(initialStoreCopy)))
+}
