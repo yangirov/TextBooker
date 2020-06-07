@@ -1,42 +1,42 @@
 <template>
   <section>
-    <el-tabs type="card" value="0">
-      <el-tab-pane class="full-wh" :lazy="true">
+    <el-tabs type="card" :value="tabId">
+      <el-tab-pane class="full-wh" :lazy="true" name="start">
         <span slot="label">
           <i class="el-icon-s-home"></i> {{ $t('tabs.start.name') }}
         </span>
         <StartWork />
       </el-tab-pane>
 
-      <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
+      <el-tab-pane v-if="site" class="full-wh" :lazy="true" name="templates">
         <span slot="label">
           <i class="el-icon-picture-outline"></i> {{ $t('tabs.template.name') }}
         </span>
         <TemplateGallery />
       </el-tab-pane>
 
-      <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
+      <el-tab-pane v-if="site" class="full-wh" :lazy="true" name="settings">
         <span slot="label">
           <i class="el-icon-setting"></i> {{ $t('tabs.settings.name') }}
         </span>
         <SiteSettings />
       </el-tab-pane>
 
-      <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
+      <el-tab-pane v-if="site" class="full-wh" :lazy="true" name="pages">
         <span slot="label">
           <i class="el-icon-tickets"></i> {{ $t('tabs.pages.name') }}
         </span>
         <Pages />
       </el-tab-pane>
 
-      <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
+      <el-tab-pane v-if="site" class="full-wh" :lazy="true" name="blocks">
         <span slot="label">
           <i class="el-icon-document-copy"></i>{{ $t('tabs.blocks.name') }}
         </span>
         <Blocks />
       </el-tab-pane>
 
-      <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
+      <el-tab-pane v-if="site" class="full-wh" :lazy="true" name="deploy">
         <span slot="label">
           <i class="el-icon-monitor"></i> {{ $t('tabs.publish.name') }}
         </span>
@@ -69,7 +69,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['isAuth'])
+    ...mapGetters('sites', ['site']),
+
+    tabId() {
+      if (this.site) return 'settings'
+      return 'start'
+    }
   }
 }
 </script>

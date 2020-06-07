@@ -1,7 +1,11 @@
-export const getUserSites = async () => (await axios.get('/editor/site')).data
+export const getUserSites = async () =>
+  (await axios.get('/editor/projects')).data
 
 export const deleteUserSite = async siteId =>
-  (await axios.delete(`/editor?siteId=${siteId}`)).data
+  (await axios.delete(`/editor/site?id=${siteId}`)).data
+
+export const getSiteInfo = async siteId =>
+  (await axios.get(`/editor/site?id=${siteId}`)).data
 
 export const getTemplates = async () =>
   (await axios.get('/editor/templates')).data
@@ -13,7 +17,8 @@ const sites = {
   getUserSites,
   deleteUserSite,
   getTemplates,
-  getTemplateKeys
+  getTemplateKeys,
+  getSiteInfo
 }
 
 export default sites

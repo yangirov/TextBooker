@@ -25,17 +25,25 @@ namespace TextBooker.Api.Controllers
 		/// <param name="dto">Site short info data</param>
 		/// <returns></returns>
 		[HttpPost("site")]
-		public async Task<IActionResult> CreateSite([FromBody] SiteCreateDto dto)
+		public async Task<IActionResult> CreateSite([FromBody] SiteDto dto)
 		{
 			dto.UserId = UserId;
 			return OkOrBadRequest(await editorService.Create(dto));
 		}
 
 		/// <summary>
+		/// Get site info
+		/// </summary>
+		/// <param name="id">Site identifier</param>
+		/// <returns></returns>
+		[HttpGet("site")]
+		public async Task<IActionResult> GetSite([FromQuery] string id) => OkOrBadRequest(await editorService.Get(id, UserId));
+
+		/// <summary>
 		/// Get user projects (sites) list
 		/// </summary>
 		/// <returns></returns>
-		[HttpGet("site")]
+		[HttpGet("projects")]
 		public async Task<IActionResult> GetUserSites() => OkOrBadRequest(await editorService.GetUserSites(UserId));
 
 		/// <summary>

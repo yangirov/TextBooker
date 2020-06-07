@@ -58,6 +58,7 @@ import { mapGetters } from 'vuex'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
 import UserScriptsModal from './UserScriptsModal.vue'
 import { USER_SCRIPTS_MODAL } from '@/store/modals'
+import { populateObject } from '@/utils'
 
 let initState = {
   title: '',
@@ -76,6 +77,14 @@ export default {
 
   components: {
     UserScriptsModal
+  },
+
+  computed: {
+    ...mapGetters('sites', ['site', 'loading'])
+  },
+
+  created() {
+    this.siteForm = populateObject(this.site)
   },
 
   methods: {

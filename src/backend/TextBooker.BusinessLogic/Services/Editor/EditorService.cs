@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-using TextBooker.Common.Enums;
 using TextBooker.Contracts.Dto;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
@@ -29,21 +27,51 @@ namespace TextBooker.BusinessLogic.Services
 			this.db = db;
 		}
 
-		public async Task<Result<SiteCreateDto>> Create(SiteCreateDto dto)
+		public async Task<Result<SiteDto>> Create(SiteDto dto)
 		{
 			return await Map(dto)
 				.Bind(Create)
 				.OnFailure(LogError);
 
-			Result<Site> Map(SiteCreateDto site) => Result.Ok(mapper.Map<Site>(site));
+			Result<Site> Map(SiteDto site) => Result.Ok(mapper.Map<Site>(site));
 
-			async Task<Result<SiteCreateDto>> Create(Site entity)
+			async Task<Result<SiteDto>> Create(Site entity)
 			{
 				db.Sites.Add(entity);
 				await db.SaveChangesAsync();
 
 				return Result.Ok(dto);
 			};
+		}
+
+		public async Task<Result<SiteDto>> Get(string siteId, string userId)
+		{
+			return await Validate()
+				.Bind(CheckPermissions)
+				.Bind(Map)
+				.OnFailure(LogError);
+
+			Result Validate()
+			{
+				return string.IsNullOrEmpty(siteId) && string.IsNullOrEmpty(userId)
+					? Result.Failure("Validation error, one or more fields are empty")
+					: Result.Ok();
+			}
+
+			async Task<Result<Site>> CheckPermissions()
+			{
+				var site = await db.Sites
+					.Where(x => x.Id == siteId && x.UserId == userId)
+					.Include(x => x.UserScripts)
+					.Include(x => x.SectionNames)
+					.FirstOrDefaultAsync() ?? Maybe<Site>.None;
+
+				return site.HasNoValue
+					? Result.Failure<Site>("Site not found")
+					: Result.Ok(site.Value);
+			}
+
+			Result<SiteDto> Map(Site entity) => Result.Ok(mapper.Map<SiteDto>(entity));
 		}
 
 		public async Task<Result<List<SiteListItemDto>>> GetUserSites(string userId)

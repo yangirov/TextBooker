@@ -13,6 +13,7 @@
       <SelectList
         class="template-list"
         :items="templatesData"
+        :default-index="templateIndex"
         @handler="handleClick"
       ></SelectList>
     </div>
@@ -70,12 +71,23 @@ export default {
           item.name.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1
         )
       })
+    },
+
+    templateIndex() {
+      return (
+        this.currentTemplate &&
+        this.templates.findIndex(x => x.id == this.currentTemplate.id)
+      )
     }
   },
 
   methods: {
-    handleClick(index) {
-      this.currentTemplate = this.templates[index]
+    handleClick(templateId) {
+      this.currentTemplate = this.templates[templateId]
+
+      this.$store.commit('sites/UPDATE_TEMPLATE', {
+        templateId: this.currentTemplate.id
+      })
     },
 
     currentTemplateImage() {
@@ -88,7 +100,13 @@ export default {
 
   created() {
     this.$store.dispatch('sites/fetchTemplates')
-    this.currentTemplate = this.site.id ?? this.templates[0]
+
+    let templateIndex =
+      (this.site &&
+        this.templates.findIndex(x => x.id == this.site.templateId)) ??
+      0
+
+    this.handleClick(templateIndex)
   }
 }
 </script>

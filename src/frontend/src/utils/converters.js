@@ -28,3 +28,10 @@ export function pluralize(titles, empty) {
     return `${count} ${title}`
   }
 }
+
+export function populateObject(entity) {
+  return Object.keys(entity).reduce((acc, key) => {
+    acc[key] = entity[key]
+    return acc
+  }, {})
+}
