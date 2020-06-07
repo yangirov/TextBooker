@@ -33,10 +33,10 @@ export default {
     ...mapGetters('sites', ['site', 'templateKeys', 'loading']),
 
     form() {
-      return this.templateKeys.reduce((acc, { id }) => {
+      return Object.keys(keysForm).reduce((acc, cur) => {
         let item = {
-          templateKeyId: id,
-          content: this.keysForm[id],
+          templateKeyId: cur,
+          content: this.keysForm[cur],
           siteId: this.site.id
         }
 

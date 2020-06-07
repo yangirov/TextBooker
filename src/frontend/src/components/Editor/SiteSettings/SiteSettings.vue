@@ -1,6 +1,7 @@
 <template>
   <div class="columns">
     <div class="column is-half">
+      <h3 class="tab-title">{{ $t('tabs.settings.main') }}</h3>
       <SiteOptions />
     </div>
 

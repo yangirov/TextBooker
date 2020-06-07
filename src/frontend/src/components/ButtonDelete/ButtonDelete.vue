@@ -76,7 +76,7 @@ export default {
     },
     icon: {
       type: String,
-      default: 'fal fa-trash-alt'
+      default: 'el-icon-delete'
     },
     tooltipVisible: {
       type: Boolean,
