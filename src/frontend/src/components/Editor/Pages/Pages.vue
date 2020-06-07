@@ -10,30 +10,32 @@
           <span slot="label">
             <i class="el-icon-edit"></i> {{ $t('tabs.pages.editor') }}
           </span>
+          <PageEditor />
         </el-tab-pane>
 
         <el-tab-pane class="full-wh">
           <span slot="label">
             <i class="el-icon-setting"></i> {{ $t('tabs.pages.settings') }}
           </span>
+          <PageSettings />
         </el-tab-pane>
       </el-tabs>
-
-      <SiteActions />
     </div>
   </div>
 </template>
 
 <script>
-import SiteActions from '@/components/Editor/SiteActions/SiteActions.vue'
 import PagesList from './PagesList.vue'
+import PageEditor from './PageEditor.vue'
+import PageSettings from './PageSettings.vue'
 
 export default {
   name: 'Pages',
 
   components: {
-    SiteActions,
-    PagesList
+    PagesList,
+    PageEditor,
+    PageSettings
   }
 }
 </script>

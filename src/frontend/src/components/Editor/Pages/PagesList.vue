@@ -7,7 +7,7 @@
       id="pages_list"
     ></SelectList>
 
-    <div class="buttons mt-1 ml-1">
+    <div class="buttons mt-1">
       <el-button type="primary" @click="addPage">
         <i class="el-icon-circle-plus-outline"></i>
         {{ $t('common.add') }}
