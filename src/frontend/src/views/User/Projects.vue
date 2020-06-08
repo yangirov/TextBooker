@@ -1,7 +1,6 @@
 <template>
   <div class="columns is-mobile is-centered">
     <div class="column is-half">
-      <h1 class="title mb-2">{{ $t('user.projects') }}</h1>
       <ProjectList />
     </div>
   </div>

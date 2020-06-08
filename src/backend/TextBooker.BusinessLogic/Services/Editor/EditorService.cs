@@ -27,7 +27,7 @@ namespace TextBooker.BusinessLogic.Services
 			this.db = db;
 		}
 
-		public async Task<Result<SiteDto>> Create(SiteDto dto)
+		public async Task<Result<string>> Create(SiteDto dto)
 		{
 			return await Map(dto)
 				.Bind(Create)
@@ -35,41 +35,54 @@ namespace TextBooker.BusinessLogic.Services
 
 			Result<Site> Map(SiteDto site) => Result.Ok(mapper.Map<Site>(site));
 
-			async Task<Result<SiteDto>> Create(Site entity)
+			async Task<Result<string>> Create(Site entity)
 			{
 				db.Sites.Add(entity);
+				await db.SaveChangesAsync();
+
+				return Result.Ok(entity.Id);
+			};
+		}
+
+		public async Task<Result<SiteDto>> Update(SiteDto dto)
+		{
+			return await Map(dto)
+				.Bind(Update)
+				.OnFailure(LogError);
+
+			Result<Site> Map(SiteDto site) => Result.Ok(mapper.Map<Site>(site));
+
+			async Task<Result<SiteDto>> Update(Site entity)
+			{
+				db.Sites.Update(entity);
 				await db.SaveChangesAsync();
 
 				return Result.Ok(dto);
 			};
 		}
 
-		public async Task<Result<SiteDto>> Get(string siteId, string userId)
+		public async Task<Result<bool>> Delete(string siteId, string userId)
 		{
-			return await Validate()
-				.Bind(CheckPermissions)
-				.Bind(Map)
+			return await Validate(siteId, userId)
+				.Bind(async () => await FindSite(siteId, userId))
+				.Bind(DeleteSite)
 				.OnFailure(LogError);
 
-			Result Validate()
+			async Task<Result<bool>> DeleteSite(Site site)
 			{
-				return string.IsNullOrEmpty(siteId) && string.IsNullOrEmpty(userId)
-					? Result.Failure("Validation error, one or more fields are empty")
-					: Result.Ok();
-			}
+				db.Sites.Remove(site);
+				await db.SaveChangesAsync();
 
-			async Task<Result<Site>> CheckPermissions()
-			{
-				var site = await db.Sites
-					.Where(x => x.Id == siteId && x.UserId == userId)
-					.Include(x => x.UserScripts)
-					.Include(x => x.SectionNames)
-					.FirstOrDefaultAsync() ?? Maybe<Site>.None;
-
-				return site.HasNoValue
-					? Result.Failure<Site>("Site not found")
-					: Result.Ok(site.Value);
+				return Result.Ok(true);
 			}
+		}
+
+		public async Task<Result<SiteDto>> Get(string siteId, string userId)
+		{
+			return await Validate(siteId, userId)
+				.Bind(async () => await FindSite(siteId, userId))
+				.Bind(Map)
+				.OnFailure(LogError);
 
 			Result<SiteDto> Map(Site entity) => Result.Ok(mapper.Map<SiteDto>(entity));
 		}
@@ -115,6 +128,26 @@ namespace TextBooker.BusinessLogic.Services
 
 			Result<List<TemplateKeyDto>> Map(List<TemplateKey> keys)
 				=> Result.Ok(mapper.Map<List<TemplateKeyDto>>(keys));
+		}
+
+		private async Task<Result<Site>> FindSite(string siteId, string userId)
+		{
+			var site = await db.Sites
+				.Where(x => x.Id == siteId && x.UserId == userId)
+				.Include(x => x.UserScripts)
+				.Include(x => x.SectionNames)
+				.FirstOrDefaultAsync() ?? Maybe<Site>.None;
+
+			return site.HasNoValue
+				? Result.Failure<Site>("Site not found")
+				: Result.Ok(site.Value);
+		}
+
+		private Result Validate(string siteId, string userId)
+		{
+			return string.IsNullOrEmpty(siteId) && string.IsNullOrEmpty(userId)
+				? Result.Failure("Validation error, one or more fields are empty")
+				: Result.Ok();
 		}
 	}
 }

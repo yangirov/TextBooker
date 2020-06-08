@@ -85,7 +85,7 @@ export default {
     handleClick(templateId) {
       this.currentTemplate = this.templates[templateId]
 
-      this.$store.commit('sites/UPDATE_TEMPLATE', {
+      this.$store.commit('sites/UPDATE_SITE', {
         templateId: this.currentTemplate.id
       })
     },

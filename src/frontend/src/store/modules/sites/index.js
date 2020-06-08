@@ -5,6 +5,7 @@ import router from '@/router'
 
 export default {
   namespaced: true,
+
   state: {
     loading: false,
     templates: [],
@@ -25,24 +26,25 @@ export default {
   mutations: {
     SET_STATE,
 
-    UPDATE_TEMPLATE(state, data = {}) {
+    UPDATE_SITE(state, data = {}) {
       state.site = { ...state.site, ...data }
     }
   },
 
   actions: {
-    async fetchUserSites({ commit }) {
+    async fetchSites({ commit }) {
       setState(commit, { loading: true })
-      const sites = await api.getUserSites()
+      const sites = await api.getSites()
       setState(commit, { state: 'sites', payload: sites })
       setState(commit, { loading: false })
     },
 
-    async deleteUserSite({ commit, dispatch }, siteId) {
+    async deleteSite({ commit, dispatch }, siteId) {
       try {
         setState(commit, { loading: true })
-        await api.deleteUserSite(siteId)
-        await dispatch('fetchUserSites')
+        await api.deleteSite(siteId)
+        await dispatch('reset')
+        await dispatch('fetchSites')
         showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
@@ -76,6 +78,37 @@ export default {
       } finally {
         setState(commit, { loading: false })
       }
+    },
+
+    async addSite({ commit, dispatch }, payload) {
+      try {
+        setState(commit, { loading: true })
+        let siteId = await api.addSite(payload)
+        await dispatch('fetchSiteInfo', siteId)
+        showSuccessNotify()
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
+    async updateSiteInfo({ commit, state }) {
+      try {
+        setState(commit, { loading: true })
+        let site = await api.updateSite(state.site)
+        showSuccessNotify()
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
+    reset({ commit }) {
+      setState(commit, { state: 'loading', payload: false })
+      setState(commit, { state: 'sites', payload: [] })
+      setState(commit, { state: 'site', payload: {} })
     }
   }
 }

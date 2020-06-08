@@ -27,7 +27,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { resetStore } from '@/store'
 
 export default {
   computed: {
@@ -54,8 +53,9 @@ export default {
     },
 
     logout() {
-      resetStore()
       localStorage.clear()
+      this.$store.dispatch('user/reset')
+      this.$store.dispatch('sites/reset')
       this.$router.push('/')
     }
   }

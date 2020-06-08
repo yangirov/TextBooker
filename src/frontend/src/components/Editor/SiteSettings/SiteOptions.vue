@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { lodash as _ } from '@/utils'
 import { mapGetters } from 'vuex'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
 import UserScriptsModal from './UserScriptsModal.vue'
@@ -70,24 +71,33 @@ let initState = {
 }
 
 export default {
+  components: {
+    UserScriptsModal
+  },
+
   data: () => ({
     siteForm: { ...initState },
     USER_SCRIPTS_MODAL
   }),
 
-  components: {
-    UserScriptsModal
+  watch: {
+    siteForm: {
+      handler(newValue) {
+        this.handleData(newValue)
+      },
+      deep: true
+    }
   },
 
   computed: {
     ...mapGetters('sites', ['site', 'loading'])
   },
 
-  created() {
-    this.siteForm = populateObject(this.site)
-  },
-
   methods: {
+    handleData: _.debounce(function(data) {
+      this.$store.commit('sites/UPDATE_SITE', data)
+    }, 1000),
+
     openModal(data) {
       this.$modal.open(USER_SCRIPTS_MODAL)
     },
@@ -110,6 +120,10 @@ export default {
 
       return isImage && isLimit100Kb
     }
+  },
+
+  created() {
+    this.siteForm = populateObject(this.site)
   }
 }
 </script>

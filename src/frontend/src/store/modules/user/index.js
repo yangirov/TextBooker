@@ -1,4 +1,5 @@
 import api from '@/api'
+import { resetStore } from '@/store'
 import { SET_STATE, setState } from '@/store/helpers'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
 import i18n from '@/libs/VueI18n'
@@ -100,8 +101,6 @@ export default {
       try {
         setState(commit, { loading: true })
         await api.deleteUser()
-        await dispatch('logout')
-        router.push('/')
         showSuccessNotify(i18n.t('status.success'))
       } catch (error) {
         showErrorNotify(error.detail)
@@ -110,14 +109,10 @@ export default {
       }
     },
 
-    async logout({ commit }) {
-      try {
-        setState(commit, { loading: true })
-        localStorage.removeItem('access_token')
-        setState(commit, { isAuth: false, user: {} })
-      } finally {
-        setState(commit, { loading: false })
-      }
+    reset({ commit }) {
+      setState(commit, { state: 'loading', payload: false })
+      setState(commit, { state: 'isAuth', payload: false })
+      setState(commit, { state: 'user', payload: {} })
     }
   }
 }

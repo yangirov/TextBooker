@@ -3,11 +3,11 @@
     :visible="$modal.isVisible(USER_SCRIPTS_MODAL)"
     width="900px"
     top="5vh"
-    :close-on-click-modal="false"
+    :close-on-click-modal="true"
     :before-close="closeModal"
   >
     <div slot="title">
-      <h3 class="margin-0">{{ $t('tabs.settings.userScripts') }}</h3>
+      <h3>{{ $t('tabs.settings.userScripts') }}</h3>
     </div>
 
     <UserScriptsForm @close="closeModal" />
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import UserScriptsForm from './UserScriptsForm'
 import { USER_SCRIPTS_MODAL } from '@/store/modals'
 
@@ -27,8 +26,6 @@ export default {
   components: {
     UserScriptsForm
   },
-
-  computed: {},
 
   methods: {
     closeModal() {
