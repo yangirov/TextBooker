@@ -15,6 +15,8 @@ namespace TextBooker.DataAccess
 		public DbSet<UserScript> UserScripts { get; set; }
 		public DbSet<SectionName> SectionNames { get; set; }
 
+		public DbSet<Block> Blocks { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			BuildIdentity(builder);

@@ -17,21 +17,12 @@
 </template>
 
 <script>
+import langs from './langs'
+
 export default {
   name: 'LocaleChanger',
   data: () => ({
-    langs: [
-      {
-        short: 'en',
-        name: 'English',
-        flag: '🇬🇧'
-      },
-      {
-        short: 'ru',
-        name: 'Русский',
-        flag: '🇷🇺'
-      }
-    ]
+    langs
   }),
 
   computed: {

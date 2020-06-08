@@ -27,7 +27,7 @@ export default {
 
   methods: {
     openSite() {
-      console.log('Coming soon!')
+      window.open(`/static/${this.site.id}/index.html`, '_blank')
     },
 
     updateSite() {

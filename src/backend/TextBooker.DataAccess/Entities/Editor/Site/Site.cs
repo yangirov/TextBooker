@@ -31,5 +31,7 @@ namespace TextBooker.DataAccess.Entities
 		public ICollection<UserScript> UserScripts { get; set; }
 
 		public ICollection<SectionName> SectionNames { get; set; }
+
+		public ICollection<Block> Blocks { get; set; }
 	}
 }

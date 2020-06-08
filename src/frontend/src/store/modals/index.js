@@ -1,8 +1,9 @@
 const modal = {
-  USER_SCRIPTS_MODAL: 'USER_SCRIPTS_MODAL'
+  USER_SCRIPTS_MODAL: 'USER_SCRIPTS_MODAL',
+  TWITTER_MODAL: 'TWITTER_MODAL'
 }
 
-export const { USER_SCRIPTS_MODAL } = modal
+export const { USER_SCRIPTS_MODAL, TWITTER_MODAL } = modal
 
 export default {
   namespaced: true,

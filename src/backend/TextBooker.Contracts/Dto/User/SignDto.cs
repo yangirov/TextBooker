@@ -13,6 +13,7 @@ namespace TextBooker.Contracts.Dto.User
 		}
 
 		[Required]
+		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
 		[Required]

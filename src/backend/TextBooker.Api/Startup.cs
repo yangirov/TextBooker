@@ -21,6 +21,7 @@ using AutoMapper;
 
 using Serilog;
 using Serilog.Sinks.Loki;
+using Masking.Serilog;
 
 using TextBooker.Api.Infrastructure;
 using TextBooker.Api.Infrastructure.Filters;
@@ -28,7 +29,6 @@ using TextBooker.BusinessLogic.Services;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
 using Textbooker.Utils;
-using Masking.Serilog;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api

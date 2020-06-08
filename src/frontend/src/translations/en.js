@@ -129,7 +129,8 @@ export const ENGLISH_TRANSLATIONS = {
     required: 'Required field',
     notEmpty: 'Field cannot be empty',
     email: 'The format does not match the email address — example@mail.com',
-    maxLength: 'Limit on {count} characters'
+    maxLength: 'Limit on {count} characters',
+    minLength: 'Min lenght on {count} characters'
   },
   siteActions: {
     view: 'Open site',
@@ -163,6 +164,16 @@ export const ENGLISH_TRANSLATIONS = {
     enabled: 'Enabled',
     disabled: 'Disabled',
     close: 'Close',
-    select: 'Select'
+    select: 'Select',
+    lang: 'Language',
+    width: 'Width',
+    height: 'Height',
+    theme: 'Theme'
+  },
+  twitter: {
+    feedTitle: 'Twitter feed',
+    buttonTitle: 'Twitter button',
+    url: 'Twitter URL',
+    invalidUrl: 'Incorrect Twitter url'
   }
 }
