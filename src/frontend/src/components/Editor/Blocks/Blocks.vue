@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import BlocksList from './BlocksList.vue'
 import BlockEditor from './BlockEditor'
 
@@ -20,6 +22,14 @@ export default {
   components: {
     BlocksList,
     BlockEditor
+  },
+
+  computed: {
+    ...mapGetters('sites', ['site'])
+  },
+
+  created() {
+    this.$store.dispatch('blocks/fetchBlocks', this.site.id)
   }
 }
 </script>

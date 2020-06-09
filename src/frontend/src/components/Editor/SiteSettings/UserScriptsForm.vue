@@ -13,23 +13,21 @@
       ></el-option>
     </el-select>
 
-    <prism-editor
-      class="mt-1"
-      style="max-width: 850px; max-height: 600px; overflow-y: scroll;"
+    <VueAceEditor
       v-model="form[location - 1].content"
-      language="js"
-      lineNumbers="true"
-    ></prism-editor>
+      :options="aceOptions"
+      class="mt-1"
+    ></VueAceEditor>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import PrismEditor from 'vue-prism-editor'
+import VueAceEditor from '@/components/Editor/ContentEditor/VueAceEditor.vue'
 
 export default {
   components: {
-    PrismEditor
+    VueAceEditor
   },
 
   data: () => ({
@@ -40,7 +38,20 @@ export default {
     ],
 
     location: 1,
-    form: []
+    form: [],
+
+    aceOptions: {
+      mode: 'js',
+      theme: 'clouds',
+      fontSize: 16,
+      fontFamily: 'monospace',
+      highlightActiveLine: true,
+      highlightGutterLine: true,
+      maxLines: 25,
+      wrap: true,
+      autoScrollEditorIntoView: true,
+      showPrintMargin: false
+    }
   }),
 
   computed: {
@@ -48,7 +59,12 @@ export default {
   },
 
   created() {
-    this.form = _.merge(this.site.userScripts, this.locations)
+    this.form = _.values(
+      _.merge(
+        _.keyBy(this.site.userScripts, 'location'),
+        _.keyBy(this.locations, 'location')
+      )
+    )
   }
 }
 </script>

@@ -71,6 +71,8 @@ export default {
 
   methods: {
     handleEdit({ id }) {
+      this.$store.dispatch('sites/reset', id)
+      this.$store.dispatch('blocks/reset', id)
       this.$store.dispatch('sites/fetchSite', id)
     },
 

@@ -21,21 +21,33 @@ namespace TextBooker.Api.Controllers
 			this.pageService = pageService;
 		}
 
-        /// <summary>
-        /// Create page
-        /// </summary>
-        /// <param name="dto">Page info data</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> CreatePage([FromBody] PageDto dto) => OkOrBadRequest(await pageService.Create(dto));
+		/// <summary>
+		/// Get all pages for site
+		/// </summary>
+		/// <param name="siteId">Site identifier</param>
+		/// <returns></returns>
+		[HttpGet("all")]
+		public async Task<IActionResult> GetAllPages([FromQuery] string siteId)
+			=> OkOrBadRequest(await pageService.GetAll(siteId));
+
+		/// <summary>
+		/// Create page
+		/// </summary>
+		/// <param name="dto">Page info data</param>
+		/// <returns></returns>
+		[HttpPost]
+		public async Task<IActionResult> CreatePage([FromBody] PageDto dto)
+			=> OkOrBadRequest(await pageService.Create(dto));
 
 		/// <summary>
 		/// Get page info
 		/// </summary>
 		/// <param name="id">Page identifier</param>
+		/// <param name="siteId">Site identifier</param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> GetPage([FromQuery] string id) => OkOrBadRequest(await pageService.Get(id, UserId));
+		public async Task<IActionResult> GetPage([FromQuery] string id, [FromQuery] string siteId)
+			=> OkOrBadRequest(await pageService.Get(id, siteId));
 
 		/// <summary>
 		/// Update page info
@@ -43,14 +55,17 @@ namespace TextBooker.Api.Controllers
 		/// <param name="dto">Page info data</param>
 		/// <returns></returns>
 		[HttpPut]
-        public async Task<IActionResult> UpdatePage([FromBody] PageDto dto) => OkOrBadRequest(await pageService.Update(dto));
+		public async Task<IActionResult> UpdatePage([FromBody] PageDto dto)
+			=> OkOrBadRequest(await pageService.Update(dto));
 
-        /// <summary>
-        /// Delete page
-        /// </summary>
-        /// <param name="id">Page identifier</param>
-        /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> DeletePage([FromQuery] string id) => OkOrBadRequest(await pageService.Delete(id, UserId)); 
-    }
+		/// <summary>
+		/// Delete page
+		/// </summary>
+		/// <param name="id">Page identifier</param>
+		/// <param name="siteId">Site identifier</param>
+		/// <returns></returns>
+		[HttpDelete]
+		public async Task<IActionResult> DeletePage([FromQuery] string id, [FromQuery] string siteId)
+			=> OkOrBadRequest(await pageService.Delete(id, siteId));
+	}
 }

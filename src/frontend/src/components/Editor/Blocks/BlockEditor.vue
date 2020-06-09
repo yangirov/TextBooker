@@ -1,8 +1,16 @@
 <template>
   <div class="block_editor">
-    <el-form :model="form" :rules="rules" ref="blockEditorForm" size="small">
+    <el-form
+      :model="blockForm"
+      :rules="rules"
+      ref="blockEditorForm"
+      size="small"
+    >
       <el-form-item prop="title" id="block_title">
-        <el-input v-model="title" :placeholder="$t('tabs.blocks.title')">
+        <el-input
+          v-model="blockForm.title"
+          :placeholder="$t('tabs.blocks.title')"
+        >
           <template #prepend>
             <el-tooltip
               effect="dark"
@@ -30,7 +38,8 @@
       :html-mode="enabledHtmlMode"
       :preview-visible="previewVisible"
       :style="style"
-      :title="title"
+      :title="blockForm.title"
+      :text="blockForm.content"
       @change-content="changeContent"
       @close-previewer="closePreview"
     ></ContentEditor>
@@ -38,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ContentEditor from '@/components/Editor/ContentEditor/ContentEditor.vue'
 
 export default {
@@ -53,11 +63,32 @@ export default {
     previewVisible: false,
     enabledHtmlMode: false,
 
-    title: '',
-    content: ''
+    blockForm: {
+      title: '',
+      content: ''
+    }
   }),
 
+  watch: {
+    block: {
+      handler(newValue, oldValue) {
+        this.blockHandler(newValue, oldValue)
+      },
+      deep: true
+    },
+
+    blockForm: {
+      handler(newValue) {
+        this.$store.commit('blocks/UPDATE_BLOCKS', newValue)
+        this.$store.commit('blocks/SET_BLOCK', newValue)
+      },
+      deep: true
+    }
+  },
+
   computed: {
+    ...mapGetters('blocks', ['blocks', 'block']),
+
     rules() {
       return {
         ...this.mapRules(['title'])
@@ -76,8 +107,14 @@ export default {
   },
 
   methods: {
+    blockHandler: _.debounce(function(newValue, oldValue) {
+      if (!_.isEqual(newValue, oldValue)) {
+        this.blockForm = newValue
+      }
+    }, 100),
+
     changeContent(data) {
-      this.form.content = data
+      this.blockForm.content = data
     },
 
     closePreview() {
@@ -95,6 +132,7 @@ export default {
 
   created() {
     window.addEventListener('resize', this.resizeHandler)
+    this.blockForm = this.block
   },
 
   mounted() {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -21,36 +22,51 @@ namespace TextBooker.Api.Controllers
 			this.blockService = blockService;
 		}
 
-        /// <summary>
-        /// Create block
-        /// </summary>
-        /// <param name="dto">Block info data</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> CreateBlock([FromBody] BlockDto dto) => OkOrBadRequest(await blockService.Create(dto));
+		/// <summary>
+		/// Get all blocks for site
+		/// </summary>
+		/// <param name="siteId">Site identifier</param>
+		/// <returns></returns>
+		[HttpGet("all")]
+		public async Task<IActionResult> GetAllBlocks([FromQuery] string siteId)
+			=> OkOrBadRequest(await blockService.GetAll(siteId));
+
+		/// <summary>
+		/// Create block
+		/// </summary>
+		/// <param name="dto">Block info data</param>
+		/// <returns></returns>
+		[HttpPost]
+        public async Task<IActionResult> CreateBlock([FromBody] BlockDto dto)
+			=> OkOrBadRequest(await blockService.Create(dto));
 
 		/// <summary>
 		/// Get block info
 		/// </summary>
 		/// <param name="id">Block identifier</param>
+		/// <param name="siteId">Site identifier</param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IActionResult> GetBlock([FromQuery] string id) => OkOrBadRequest(await blockService.Get(id, UserId));
+		public async Task<IActionResult> GetBlock([FromQuery] string id, [FromQuery] string siteId)
+			=> OkOrBadRequest(await blockService.Get(id, siteId));
 
 		/// <summary>
 		/// Update block info
 		/// </summary>
-		/// <param name="dto">Block info data</param>
+		/// <param name="list">Block list</param>
 		/// <returns></returns>
 		[HttpPut]
-        public async Task<IActionResult> UpdateBlock([FromBody] BlockDto dto) => OkOrBadRequest(await blockService.Update(dto));
+        public async Task<IActionResult> UpdateBlock([FromBody] List<BlockDto> list)
+			=> OkOrBadRequest(await blockService.UpdateAll(list));
 
-        /// <summary>
-        /// Delete block
-        /// </summary>
-        /// <param name="id">Block identifier</param>
-        /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> DeleteBlock([FromQuery] string id) => OkOrBadRequest(await blockService.Delete(id, UserId));
+		/// <summary>
+		/// Delete block
+		/// </summary>
+		/// <param name="id">Block identifier</param>
+		/// <param name="siteId">Site identifier</param>
+		/// <returns></returns>
+		[HttpDelete]
+        public async Task<IActionResult> DeleteBlock([FromQuery] string id, [FromQuery] string siteId)
+			=> OkOrBadRequest(await blockService.Delete(id, siteId));
     }
 }
