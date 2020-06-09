@@ -78,20 +78,6 @@ export default {
     this.$refs[formName] && this.$refs[formName].resetFields()
   },
 
-  getName(fisrtName = '', middleName = '', lastName = '') {
-    let isString = val => val && typeof val === 'string'
-    let _upper = value =>
-      isString(value)
-        ? value[0].toUpperCase() + value.slice(1).toLowerCase()
-        : ''
-    let _first = value => (isString(value) ? `${value[0].toUpperCase()}.` : '')
-
-    return {
-      short: `${_upper(fisrtName)} ${_first(middleName)} ${_first(lastName)}`,
-      full: `${_upper(fisrtName)} ${_upper(middleName)} ${_upper(lastName)}`
-    }
-  },
-
   get(from, selectors = '') {
     if (!selectors) return undefined
     return selectors

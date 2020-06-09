@@ -1,13 +1,17 @@
 using System;
-using System.Text;
-using System.Net.Http;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+
 using CSharpFunctionalExtensions;
+
+using Microsoft.IdentityModel.Tokens;
+
+using Newtonsoft.Json;
+
 using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto;
 

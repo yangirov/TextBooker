@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import langs from './langs'
+import langs from '@/api/langs'
 
 export default {
   name: 'LocaleChanger',

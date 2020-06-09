@@ -1,7 +1,11 @@
 using System.Threading.Tasks;
+
 using CSharpFunctionalExtensions;
+
 using Microsoft.EntityFrameworkCore;
+
 using Serilog;
+
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 
@@ -29,7 +33,8 @@ namespace TextBooker.BusinessLogic.Services
 				: Result.Ok(user.Value);
 		}
 
-		public async Task<Maybe<User>> FindUserByEmail(string email) => await db.Users.SingleOrDefaultAsync(u => u.Email == email.ToLower()) ?? Maybe<User>.None;
+		public async Task<Maybe<User>> FindUserByEmail(string email)
+			=> await db.Users.SingleOrDefaultAsync(u => u.Email == email.ToLower()) ?? Maybe<User>.None;
 
 		public void LogError(string error) => logger.Error(error);
 

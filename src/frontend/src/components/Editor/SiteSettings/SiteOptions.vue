@@ -67,7 +67,11 @@ let initState = {
   keywords: '',
   enabledUserScripts: false,
   templateId: 1,
-  icon: ''
+  icon: '',
+  userScripts: [],
+  sectionNames: [],
+  blocks: [],
+  pages: []
 }
 
 export default {

@@ -33,5 +33,7 @@ namespace TextBooker.DataAccess.Entities
 		public ICollection<SectionName> SectionNames { get; set; }
 
 		public ICollection<Block> Blocks { get; set; }
+
+		public ICollection<Page> Pages { get; set; }
 	}
 }

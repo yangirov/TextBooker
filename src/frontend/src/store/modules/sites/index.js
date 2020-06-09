@@ -3,6 +3,19 @@ import { SET_STATE, setState } from '@/store/helpers'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
 import router from '@/router'
 
+let initState = {
+  title: '',
+  description: '',
+  keywords: '',
+  enabledUserScripts: false,
+  templateId: 1,
+  icon: '',
+  userScripts: [],
+  sectionNames: [],
+  blocks: [],
+  pages: []
+}
+
 export default {
   namespaced: true,
 
@@ -10,8 +23,8 @@ export default {
     loading: false,
     templates: [],
     templateKeys: [],
-    sites: [],
-    site: {}
+    projects: [],
+    site: { ...initState }
   },
 
   getters: {
@@ -19,8 +32,10 @@ export default {
     data: (state, getters) => getters,
     templates: state => state.templates,
     templateKeys: state => state.templateKeys,
-    sites: state => state.sites,
-    site: state => state.site
+    projects: state => state.projects,
+    site: state => state.site,
+    blocks: state => state.site.blocks,
+    pages: state => state.site.pages
   },
 
   mutations: {
@@ -28,14 +43,22 @@ export default {
 
     UPDATE_SITE(state, data = {}) {
       state.site = { ...state.site, ...data }
+    },
+
+    UPDATE_BLOCKS(state, data = {}) {
+      state.site.blocks = [...state.site.blocks, data]
+    },
+
+    UPDATE_PAGES(state, data = {}) {
+      state.site.pages = [...state.site.pages, data]
     }
   },
 
   actions: {
-    async fetchSites({ commit }) {
+    async fetchProjects({ commit }) {
       setState(commit, { loading: true })
-      const sites = await api.getSites()
-      setState(commit, { state: 'sites', payload: sites })
+      const sites = await api.getProjects()
+      setState(commit, { state: 'projects', payload: sites })
       setState(commit, { loading: false })
     },
 
@@ -44,7 +67,7 @@ export default {
         setState(commit, { loading: true })
         await api.deleteSite(siteId)
         await dispatch('reset')
-        await dispatch('fetchSites')
+        await dispatch('fetchProjects')
         showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
@@ -67,10 +90,10 @@ export default {
       setState(commit, { loading: false })
     },
 
-    async fetchSiteInfo({ commit }, siteId) {
+    async fetchSite({ commit }, siteId) {
       try {
         setState(commit, { loading: true })
-        let site = await api.getSiteInfo(siteId)
+        let site = await api.getSite(siteId)
         setState(commit, { state: 'site', payload: site })
         router.push('/editor')
       } catch (error) {
@@ -84,7 +107,7 @@ export default {
       try {
         setState(commit, { loading: true })
         let siteId = await api.addSite(payload)
-        await dispatch('fetchSiteInfo', siteId)
+        await dispatch('fetchSite', siteId)
         showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)

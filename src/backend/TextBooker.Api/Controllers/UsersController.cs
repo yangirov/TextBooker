@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.AspNetCore.Authorization;
-using TextBooker.Contracts.Dto.User;
+using Microsoft.AspNetCore.Mvc;
+
 using TextBooker.BusinessLogic.Services;
+using TextBooker.Contracts.Dto.User;
 
 namespace TextBooker.Api.Controllers
 {
@@ -58,6 +60,7 @@ namespace TextBooker.Api.Controllers
 		/// Get user info
 		/// </summary>
 		/// <returns></returns>
+		[Authorize]
 		[HttpGet("info")]
 		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.GetInfo(UserId));
 
@@ -66,6 +69,7 @@ namespace TextBooker.Api.Controllers
 		/// </summary>
 		/// <param name="dto">User data</param>
 		/// <returns></returns>
+		[Authorize]
 		[HttpPut]
 		public async Task<IActionResult> Update([FromBody] UserUpdateDto dto) => OkOrBadRequest(await userService.Update(UserId, dto));
 
@@ -73,6 +77,7 @@ namespace TextBooker.Api.Controllers
 		/// Delete user
 		/// </summary>
 		/// <returns></returns>
+		[Authorize]
 		[HttpDelete]
 		public async Task<IActionResult> Delete() => OkOrBadRequest(await userService.Delete(UserId));
 	}

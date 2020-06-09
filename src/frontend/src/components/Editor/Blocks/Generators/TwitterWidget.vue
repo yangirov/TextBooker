@@ -36,7 +36,12 @@
           </el-form-item>
 
           <el-form-item prop="height" :label="$t('common.height')">
-            <el-input v-model="twitterForm.height" type="number" clearable>
+            <el-input
+              v-model="twitterForm.height"
+              type="number"
+              :min="220"
+              clearable
+            >
             </el-input>
           </el-form-item>
 
@@ -85,7 +90,7 @@
 
 <script>
 import { lodash as _ } from '@/utils'
-import langs from '@/components/Layout/langs'
+import langs from '@/api/langs'
 import { TWITTER_MODAL } from '@/store/modals'
 
 const twitterWidgetJs = 'https://platform.twitter.com/widgets.js'
@@ -153,26 +158,19 @@ export default {
         if (valid) {
           let embed = this.generateTwitterWidget()
           this.$emit('change', embed)
-          //this.closeModal()
+          this.closeModal()
         }
       })
     },
 
     previewHandler: _.debounce(function() {
       this.preview = this.generateTwitterWidget()
-    }, 500),
+    }, 1000),
 
     generateTwitterWidget() {
-      let { lang, width, height, theme, url } = this.twitterForm
+      this.loadTwitterResources()
 
-      if (window.twttr) {
-        window.twttr.widgets.load()
-      } else if (!document.getElementById('twttr-widgets')) {
-        const embed = document.createElement('script')
-        embed.id = 'twttr-widgets'
-        embed.src = twitterWidgetJs
-        document.body.appendChild(embed)
-      }
+      let { lang, width, height, theme, url } = this.twitterForm
 
       return `<a
           class="twitter-timeline"
@@ -183,10 +181,21 @@ export default {
           href="${url}"
         >Tweets feed</a>
         <script async src="${twitterWidgetJs}" charset="utf-8"><\/script>`
+    },
+
+    loadTwitterResources() {
+      if (window.twttr) {
+        window.twttr.widgets.load()
+      } else if (!document.getElementById('twttr-widgets')) {
+        const embed = document.createElement('script')
+        embed.id = 'twttr-widgets'
+        embed.src = twitterWidgetJs
+        document.body.appendChild(embed)
+      }
     }
   },
 
-  created() {
+  mounted() {
     this.preview = this.generateTwitterWidget()
   }
 }

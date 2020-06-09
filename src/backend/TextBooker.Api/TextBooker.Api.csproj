@@ -56,7 +56,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TextBooker.BusinessLogic\TextBooker.BusinessLogic.csproj" />
     <ProjectReference Include="..\TextBooker.Contracts\TextBooker.Contracts.csproj" />
-    <ProjectReference Include="..\Textbooker.Utils\Textbooker.Utils.csproj" />
+    <ProjectReference Include="..\TextBooker.Utils\TextBooker.Utils.csproj" />
   </ItemGroup>
 
 

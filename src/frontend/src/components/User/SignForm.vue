@@ -104,6 +104,13 @@ export default {
   },
 
   methods: {
+    validationEmail(rule, value, callback) {
+      if (!value) return callback()
+      return window.validation.email(value)
+        ? callback()
+        : callback(new Error(rule.message))
+    },
+
     async recaptcha() {
       await this.$recaptchaLoaded()
       this.signForm.token = await this.$recaptcha('login')
@@ -115,13 +122,6 @@ export default {
 
     async register() {
       await this.$store.dispatch('user/register', this.signForm)
-    },
-
-    validationEmail(rule, value, callback) {
-      if (!value) return callback()
-      return window.validation.email(value)
-        ? callback()
-        : callback(new Error(rule.message))
     },
 
     onSubmit() {

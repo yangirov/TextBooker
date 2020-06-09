@@ -59,7 +59,7 @@ export default {
     async register({ commit }, payload) {
       try {
         setState(commit, { loading: true })
-        await api.registerUser(payload)
+        let result = await api.registerUser(payload)
         router.push({ name: 'email-check', params: { email: payload.email } })
       } catch (error) {
         showErrorNotify(error.detail)
@@ -71,9 +71,10 @@ export default {
     async confirmEmail({ commit, dispatch }, payload) {
       try {
         setState(commit, { loading: true })
-        await api.confirmEmail(payload)
+        let result = await api.confirmEmail(payload)
         localStorage.setItem('access_token', payload.token)
         setState(commit, { isAuth: true })
+
         await dispatch('fetchUserInfo')
         router.push('/editor')
         showSuccessNotify()
@@ -87,7 +88,7 @@ export default {
     async update({ commit, dispatch }, { username }) {
       try {
         setState(commit, { loading: true })
-        await api.updateUser({ username })
+        let result = await api.updateUser({ username })
         await dispatch('fetchUserInfo')
         showSuccessNotify()
       } catch (error) {
@@ -100,7 +101,7 @@ export default {
     async delete({ commit, dispatch }) {
       try {
         setState(commit, { loading: true })
-        await api.deleteUser()
+        let result = await api.deleteUser()
         showSuccessNotify(i18n.t('status.success'))
       } catch (error) {
         showErrorNotify(error.detail)

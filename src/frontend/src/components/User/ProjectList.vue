@@ -5,7 +5,7 @@
       <CreateSiteButton />
     </div>
 
-    <el-table :data="sites" class="project_list">
+    <el-table :data="projects" class="project_list" v-loading="loading">
       <el-table-column
         prop="updatedOn"
         :label="$t('common.updatedOn')"
@@ -61,21 +61,17 @@ import { mapGetters } from 'vuex'
 import CreateSiteButton from '@/components/Editor/StartWork/CreateSiteButton.vue'
 
 export default {
-  data: () => ({
-    loading: false
-  }),
-
   components: {
     CreateSiteButton
   },
 
   computed: {
-    ...mapGetters('sites', ['sites'])
+    ...mapGetters('sites', ['projects', 'loading'])
   },
 
   methods: {
     handleEdit({ id }) {
-      this.$store.dispatch('sites/fetchSiteInfo', id)
+      this.$store.dispatch('sites/fetchSite', id)
     },
 
     handleDelete({ id }) {
@@ -84,7 +80,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('sites/fetchSites')
+    this.$store.dispatch('sites/fetchProjects')
   }
 }
 </script>

@@ -11,7 +11,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('user', ['user', 'loading'])
+    ...mapGetters('user', ['loading'])
   },
 
   created() {

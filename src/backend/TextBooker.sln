@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextBooker.BusinessLogic", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextBooker.DataAccess", "TextBooker.DataAccess\TextBooker.DataAccess.csproj", "{6D50C604-A9B7-45FE-BE7A-0DDC09F3AAAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Textbooker.Utils", "Textbooker.Utils\Textbooker.Utils.csproj", "{4E4D7FDE-06EF-43D8-8DDB-321DF4F1DB1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextBooker.Utils", "TextBooker.Utils\TextBooker.Utils.csproj", "{4E4D7FDE-06EF-43D8-8DDB-321DF4F1DB1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBooker.Common", "TextBooker.Common\TextBooker.Common.csproj", "{FF190493-3291-4F6E-9C48-2B65B9D12B60}"
 EndProject

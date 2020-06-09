@@ -7,6 +7,8 @@
       id="blocks_list"
     ></SelectList>
 
+    {{ blocks }}
+
     <div class="buttons mt-1">
       <el-button type="primary" @click="addBlock">
         <i class="el-icon-circle-plus-outline"></i>
@@ -30,7 +32,7 @@
       <el-dropdown
         trigger="click"
         placement="top-start"
-        @command="selectBlockTemplate"
+        @command="insertBlockTemplate"
       >
         <span class="el-dropdown-link">
           <el-button class="ml-1" type="info" icon="el-icon-dish"></el-button>
@@ -51,6 +53,8 @@
 </template>
 
 <script>
+import SelectList from '@/components/SelectList/SelectList.vue'
+import { mapGetters } from 'vuex'
 import { TWITTER_MODAL } from '@/store/modals'
 import TwitterWidget from './Generators/TwitterWidget.vue'
 
@@ -58,22 +62,44 @@ export default {
   name: 'BlocksList',
 
   components: {
+    SelectList,
     TwitterWidget
   },
 
   data: () => ({
     TWITTER_MODAL,
-    selectedBlock: 0,
-    blocks: [
-      {
-        name: 'Block 1',
-        alias: 'block1'
-      }
-    ]
+    selectedBlock: {}
   }),
 
+  computed: {
+    ...mapGetters('sites', ['site', 'blocks'])
+  },
+
   methods: {
-    selectBlockTemplate(template) {
+    addBlock() {
+      let index = (this.blocks && this.blocks.length + 1) ?? 1
+
+      let data = {
+        name: `${this.$t('tabs.blocks.defaultBlockName')} ${index}`,
+        alias: `block${index}`,
+        siteId: this.site.id
+      }
+
+      this.$store.commit('sites/UPDATE_BLOCKS', data)
+    },
+
+    deleteBlock() {
+      //this.$store.dispatch('sites/deleteBlock', this.selectedBlock.id)
+    },
+
+    selectBlock(id) {
+      //this.$store.dispatch('sites/deleteBlock', this.selectedBlock.id)
+      //this.selectedBlock = this.blocks.find(x => x.id === id) ?? {}
+    },
+
+    handleTwitterWidget(data) {},
+
+    insertBlockTemplate(template) {
       switch (template) {
         case 'twitter':
           this.$modal.open(TWITTER_MODAL)
@@ -81,26 +107,7 @@ export default {
         default:
           break
       }
-    },
-
-    addBlock() {
-      let index = this.blocks.length + 1
-      let block = {
-        name: `${this.$t('tabs.blocks.defaultBlockName')} ${index}`,
-        alias: `block${index}`
-      }
-      this.blocks.push(block)
-    },
-
-    deleteBlock() {
-      this.$delete(this.blocks, this.selectedBlock)
-    },
-
-    selectBlock(index) {
-      this.selectedBlock = index
-    },
-
-    handleTwitterWidget(data) {}
+    }
   }
 }
 </script>

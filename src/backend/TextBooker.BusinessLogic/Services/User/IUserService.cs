@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+
 using CSharpFunctionalExtensions;
+
 using TextBooker.Contracts.Dto.User;
 
 namespace TextBooker.BusinessLogic.Services

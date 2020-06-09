@@ -2,16 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+
 using CSharpFunctionalExtensions;
+
 using FluentValidation;
+
 using Microsoft.Extensions.Configuration;
+
 using Serilog;
+
 using TextBooker.BusinessLogic.Infrastructure;
-using TextBooker.Contracts.Dto;
 using TextBooker.Common.Config;
-using TextBooker.Common.Enums;
+using TextBooker.Contracts.Dto;
+using TextBooker.Contracts.Enums;
 using TextBooker.DataAccess;
-using Textbooker.Utils;
+using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {
@@ -29,7 +34,8 @@ namespace TextBooker.BusinessLogic.Services
 			IVersionService versionService,
 			IConfiguration config,
 			IHttpClientFactory clientFactory,
-			GoogleSettings googleOptions) : base(logger, db)
+			GoogleSettings googleOptions
+		) : base(logger, db)
 		{
 			this.mailSender = mailSender;
 			this.clientFactory = clientFactory;
@@ -55,28 +61,12 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<bool>> SendFeedback(Feedback dto)
 		{
-			return await ValidateDto(dto)
-				.Bind(RecaptchaVerify)
+			return await RecaptchaVerify(dto)
 				.Bind(SendMessage)
 				.OnFailure(LogError);
 
-			Result<Feedback> ValidateDto(Feedback dto)
-			{
-				var (_, isFailure, error) = Validate();
-				return isFailure
-					? Result.Failure<Feedback>(error)
-					: Result.Ok(dto);
-
-				Result Validate() => GenericValidator<Feedback>.Validate(v =>
-				{
-					v.RuleFor(c => c.Name).NotEmpty();
-					v.RuleFor(c => c.Email).EmailAddress().NotEmpty();
-					v.RuleFor(c => c.Message).NotEmpty();
-					v.RuleFor(c => c.Token).NotEmpty();
-				}, dto);
-			}
-
-			async Task<Result> RecaptchaVerify(Feedback dto) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
+			async Task<Result> RecaptchaVerify(Feedback dto)
+				=> await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
 
 			async Task<Result<bool>> SendMessage()
 			{

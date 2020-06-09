@@ -1,10 +1,12 @@
 using System.IO;
 using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Textbooker.Utils;
+
 using TextBooker.Common.Config;
+using TextBooker.Utils;
 
 namespace TextBooker.DataAccess
 {
@@ -13,7 +15,7 @@ namespace TextBooker.DataAccess
 		public TextBookerContext CreateDbContext(string[] args)
 		{
 			var dbContextOptions = new DbContextOptionsBuilder<TextBookerContext>();
-			dbContextOptions.UseNpgsql(GetConnectionString(), builder => builder.UseNetTopologySuite());
+			dbContextOptions.UseNpgsql(GetConnectionString());
 			dbContextOptions.UseSnakeCaseNamingConvention();
 
 			return new TextBookerContext(dbContextOptions.Options);
