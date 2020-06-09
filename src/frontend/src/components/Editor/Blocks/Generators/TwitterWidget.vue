@@ -172,7 +172,7 @@ export default {
 
       let { lang, width, height, theme, url } = this.twitterForm
 
-      return `<a
+      let str = `<a
           class="twitter-timeline"
           data-lang="${lang}"
           data-width="${width}"
@@ -181,6 +181,8 @@ export default {
           href="${url}"
         >Tweets feed</a>
         <script async src="${twitterWidgetJs}" charset="utf-8"><\/script>`
+
+      return str.replace(/(\r\n|\n|\t|\r)/gm, '').replace(/  +/g, ' ')
     },
 
     loadTwitterResources() {

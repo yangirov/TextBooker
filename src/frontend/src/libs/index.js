@@ -1,5 +1,7 @@
 import './VueAxios'
 import './VueMoment'
+import './VueReCaptcha'
+import './VueWysiwyg'
 import './Modals'
 import 'bulma/bulma.sass'
 import './CssUtils/index.sass'

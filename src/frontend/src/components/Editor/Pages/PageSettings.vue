@@ -1,7 +1,7 @@
 <template>
   <el-form ref="pageForm" :model="pageForm" label-width="300px" size="small">
     <el-form-item :label="$t('tabs.pages.url')" prop="title">
-      <el-input v-model="pageForm.url" placeholder="index.html"></el-input>
+      <el-input v-model="pageForm.alias" placeholder="index.html"></el-input>
     </el-form-item>
 
     <el-form-item :label="$t('tabs.pages.title')" prop="title">
@@ -21,7 +21,12 @@
 <script>
 export default {
   data: () => ({
-    pageForm: {}
+    pageForm: {
+      alias: '',
+      title: '',
+      description: '',
+      keywords: ''
+    }
   })
 }
 </script>

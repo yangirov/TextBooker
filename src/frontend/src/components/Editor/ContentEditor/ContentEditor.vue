@@ -5,122 +5,56 @@
       :visible="previewVisible"
       @close="closeDrawer"
     >
-      <div v-html="content"></div>
+      <div v-html="value"></div>
     </el-drawer>
 
-    <vue-editor
-      v-if="!htmlMode"
-      v-model="content"
-      :editor-options="editorSettings"
-      :editor-toolbar="customToolbar"
-      :style="style"
-    ></vue-editor>
+    <wysiwyg v-if="!htmlMode" v-model="value" />
 
     <VueAceEditor
       v-if="htmlMode"
-      v-model="content"
+      v-model="value"
       :options="aceOptions"
-      id="ace-container"
       class="mt-1"
     ></VueAceEditor>
   </div>
 </template>
 
 <script>
-import { lodash as _ } from '@/utils'
-
 import VueAceEditor from './VueAceEditor.vue'
-
-import { VueEditor, Quill } from 'vue2-editor'
-import BlotFormatter from 'quill-blot-formatter'
-import QuillPasteSmart from 'quill-paste-smart'
-
-Quill.register('modules/clipboard', QuillPasteSmart, true)
-Quill.register('modules/blotFormatter', BlotFormatter)
 
 export default {
   components: {
-    VueEditor,
     VueAceEditor
   },
 
   props: {
-    style: {
+    value: {
       type: String,
       default: ''
     },
+
     title: {
       type: String,
       default: ''
     },
-    text: {
+
+    style: {
       type: String,
       default: ''
     },
+
     previewVisible: {
       type: Boolean,
       default: false
     },
+
     htmlMode: {
       type: Boolean,
       default: false
-    },
-    customToolbar: {
-      type: Array,
-      default: () => [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-
-        [{ header: 1 }, { header: 2 }],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        [{ script: 'sub' }, { script: 'super' }],
-        [{ indent: '-1' }, { indent: '+1' }],
-        [{ direction: 'rtl' }],
-
-        [{ size: ['small', false, 'large', 'huge'] }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-        [{ color: [] }, { background: [] }],
-        [{ font: [] }],
-        [{ align: [] }],
-
-        ['clean']
-      ]
-    },
-    editorSettings: {
-      type: Object,
-      default: () => ({
-        modules: {
-          blotFormatter: {},
-          clipboard: {
-            allowed: {
-              tags: [
-                'a',
-                'b',
-                'strong',
-                'u',
-                's',
-                'i',
-                'p',
-                'br',
-                'ul',
-                'ol',
-                'li',
-                'span',
-                'script'
-              ],
-              attributes: ['href', 'rel', 'target', 'class', 'src']
-            },
-            keepSelection: true
-          }
-        }
-      })
     }
   },
 
   data: () => ({
-    content: '',
-
     aceOptions: {
       mode: 'html',
       theme: 'clouds',
@@ -136,19 +70,12 @@ export default {
   }),
 
   watch: {
-    content(newValue) {
-      this.handler(newValue)
-    },
-    text(newValue) {
-      this.content = newValue
+    value() {
+      this.$emit('input', this.value)
     }
   },
 
   methods: {
-    handler: _.debounce(function(data) {
-      this.$emit('change-content', data)
-    }, 150),
-
     closeDrawer() {
       this.$emit('close-previewer')
     }
@@ -157,6 +84,10 @@ export default {
 </script>
 
 <style lang="sass">
+.editr--content
+  min-height: 583px !important
+  max-height: 63vh
+
 .el-drawer__header
   margin-bottom: 0
 

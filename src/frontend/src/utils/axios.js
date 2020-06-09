@@ -1,8 +1,10 @@
 import axiosInstance from 'axios'
 
+const baseURL =
+  process.env.NODE_ENV == 'production' ? 'api/' : process.env.VUE_APP_HOST
+
 const axios = axiosInstance.create({
-  baseURL:
-    process.env.NODE_ENV == 'production' ? 'api/' : process.env.VUE_APP_HOST,
+  baseURL,
   timeout: 1000 * 60 * 10,
   responseType: 'json',
   headers: {

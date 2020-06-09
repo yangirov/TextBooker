@@ -20,7 +20,6 @@
 import langs from '@/api/langs'
 
 export default {
-  name: 'LocaleChanger',
   data: () => ({
     langs
   }),

@@ -1,10 +1,5 @@
 <template>
-  <header
-    class="navbar header"
-    role="navigation"
-    aria-label="main navigation"
-    id="header"
-  >
+  <header class="navbar header" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item logo" exact>
@@ -15,18 +10,13 @@
         </router-link>
       </div>
 
-      <div id="nav-menu" class="navbar-menu">
+      <div class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
               <UserNav v-if="isAuth" />
 
-              <router-link
-                class="button is-light"
-                id="login-button"
-                to="/signin"
-                v-if="!isAuth"
-              >
+              <router-link class="button is-light" to="/signin" v-if="!isAuth">
                 {{ $t('user.login') }}
               </router-link>
 

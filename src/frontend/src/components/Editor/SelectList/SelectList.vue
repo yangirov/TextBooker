@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="defaultActive"
+    :default-active="defaultSelected"
     :class="className"
     @select="selectHandler"
     @open="openHandler"
@@ -28,12 +28,20 @@ export default {
     className: {
       type: String,
       required: false
+    },
+    defaultActive: {
+      type: String,
+      required: false
     }
   },
 
   computed: {
-    defaultActive() {
-      return this.items && this.items[0]?.id
+    defaultSelected() {
+      if (!this.defaultActive) {
+        return this.items && this.items[0]?.id
+      }
+
+      return this.defaultActive
     }
   },
 

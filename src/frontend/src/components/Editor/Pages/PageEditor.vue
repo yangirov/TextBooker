@@ -1,8 +1,11 @@
 <template>
   <div class="page_editor">
-    <el-form :model="form" :rules="rules" ref="pageEditorForm" size="small">
-      <el-form-item prop="title" id="page_title">
-        <el-input v-model="title" :placeholder="$t('tabs.pages.title')">
+    <el-form :model="siteForm" :rules="rules" ref="pageEditorForm" size="small">
+      <el-form-item prop="title">
+        <el-input
+          v-model="siteForm.title"
+          :placeholder="$t('tabs.pages.title')"
+        >
           <template #prepend>
             <el-tooltip
               effect="dark"
@@ -30,9 +33,8 @@
     <ContentEditor
       :html-mode="enabledHtmlMode"
       :preview-visible="previewVisible"
-      :style="style"
-      :title="title"
-      @change-content="changeContent"
+      :title="siteForm.title"
+      v-model="siteForm.content"
       @close-previewer="closePreview"
     ></ContentEditor>
   </div>
@@ -49,13 +51,13 @@ export default {
   },
 
   data: () => ({
-    style: '',
-
     previewVisible: false,
     enabledHtmlMode: false,
 
-    title: '',
-    content: ''
+    siteForm: {
+      title: '',
+      content: ''
+    }
   }),
 
   computed: {
@@ -77,35 +79,11 @@ export default {
   },
 
   methods: {
-    changeContent(data) {
-      this.form.content = data
-    },
-
     closePreview() {
       this.previewVisible = false
-    },
-
-    resizeHandler() {
-      let menuHeight = document.getElementById('pages_list').clientHeight
-      let inputWidth = document.getElementById('page_title').clientWidth
-
-      this.style = `height: calc(${menuHeight}px - 7em);
-                    width: calc(${inputWidth}px - 0.1em);`
     }
   },
 
-  created() {
-    window.addEventListener('resize', this.resizeHandler)
-  },
-
-  mounted() {
-    setTimeout(() => {
-      this.resizeHandler()
-    }, 100)
-  },
-
-  destroyed() {
-    window.removeEventListener('resize', this.resizeHandler)
-  }
+  created() {}
 }
 </script>

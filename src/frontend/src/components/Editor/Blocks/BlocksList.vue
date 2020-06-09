@@ -4,7 +4,6 @@
       :items="blocks"
       @handler="selectBlock"
       class-name="max-wh m-1"
-      id="blocks_list"
     ></SelectList>
 
     <div class="buttons mt-1">
@@ -51,10 +50,10 @@
 </template>
 
 <script>
-import SelectList from '@/components/Editor/SelectList/SelectList.vue'
 import { mapGetters } from 'vuex'
 import { TWITTER_MODAL } from '@/store/modals'
 import TwitterWidget from './Generators/TwitterWidget.vue'
+import SelectList from '@/components/Editor/SelectList/SelectList.vue'
 
 export default {
   components: {
@@ -63,8 +62,7 @@ export default {
   },
 
   data: () => ({
-    TWITTER_MODAL,
-    isEdit: false
+    TWITTER_MODAL
   }),
 
   computed: {
@@ -98,7 +96,6 @@ export default {
     },
 
     handleTwitterWidget(content) {
-      console.log(content)
       this.$store.commit('blocks/SET_BLOCK', { content })
     },
 

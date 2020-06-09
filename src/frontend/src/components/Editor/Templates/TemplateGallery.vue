@@ -12,9 +12,9 @@
 
       <SelectList
         class="template-list"
+        :default-active="currentTemplate.id"
         :items="templatesData"
-        :default-index="templateIndex"
-        @handler="handleClick"
+        @handler="selectTemplate"
       ></SelectList>
     </div>
 
@@ -71,28 +71,22 @@ export default {
     ...mapGetters('sites', ['site', 'templates']),
 
     templatesData() {
-      return this.templates.filter(item => {
-        return (
-          item.name.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1
-        )
-      })
-    },
-
-    templateIndex() {
-      return (
-        this.currentTemplate &&
-        this.templates.findIndex(x => x.id == this.currentTemplate.id)
-      )
+      return this.templates
+        .map(x => {
+          return { ...x, title: x.name }
+        })
+        .filter(item => {
+          return (
+            item.name.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1
+          )
+        })
     }
   },
 
   methods: {
-    handleClick(templateId) {
-      this.currentTemplate = this.templates[templateId]
-
-      this.$store.commit('sites/UPDATE_SITE', {
-        templateId: this.currentTemplate.id
-      })
+    selectTemplate(templateId) {
+      this.currentTemplate = this.templates.find(x => x.id == templateId)
+      this.$store.commit('sites/UPDATE_SITE', { templateId })
     },
 
     currentTemplateImage() {
@@ -105,13 +99,7 @@ export default {
 
   created() {
     this.$store.dispatch('sites/fetchTemplates')
-
-    let templateIndex =
-      (this.site &&
-        this.templates.findIndex(x => x.id == this.site.templateId)) ??
-      0
-
-    this.handleClick(templateIndex)
+    this.selectTemplate(this.site?.templateId ?? 1)
   }
 }
 </script>
