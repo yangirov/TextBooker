@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TextBooker.DataAccess.Entities
 {
-	public class SiteContent
+	public class SiteContent : IEntity<string>
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }

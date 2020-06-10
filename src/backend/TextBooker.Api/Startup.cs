@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -70,6 +71,9 @@ namespace TextBooker.Api
 
 			var googleSettings = OptionsClient.GetData(Configuration.GetSection("Google").Get<GoogleSettings>());
 			services.AddSingleton(googleSettings);
+
+			var fileSettings = OptionsClient.GetData(Configuration.GetSection("FileStore").Get<FileStoreSettings>());
+			services.AddSingleton(fileSettings);
 
 			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
@@ -198,6 +202,7 @@ namespace TextBooker.Api
 			services.AddTransient<ISiteService, SiteService>();
 			services.AddTransient<IPageService, PageService>();
 			services.AddTransient<IBlockService, BlockService>();
+			services.AddTransient<IFileService, FileService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -212,6 +217,16 @@ namespace TextBooker.Api
 			{
 				var swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
+			});
+
+			var basePath = Path.Combine(OptionsClient.GetData(Configuration.GetValue<string>("FileStore:BasePath")));
+			if (!Directory.Exists(basePath))
+				Directory.CreateDirectory(basePath);
+
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(basePath),
+				RequestPath = new PathString("/static")
 			});
 
 			app.UseCors(builder => builder

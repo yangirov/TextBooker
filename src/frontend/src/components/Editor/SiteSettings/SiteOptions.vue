@@ -21,12 +21,20 @@
 
       <el-form-item :label="$t('tabs.settings.icon')" prop="title">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleIconSuccess"
+          action=""
+          :http-request="uploadIcon"
+          :on-change="uploadChanged"
           :before-upload="beforeIconUpload"
+          :multiple="false"
+          :auto-upload="true"
+          :show-file-list="false"
+          accept="image/png, image/x-icon"
         >
-          <img v-if="siteForm.icon" :src="siteForm.icon" class="icon" />
+          <img
+            v-if="siteForm.icon"
+            :src="'/static/' + siteForm.icon"
+            class="icon"
+          />
           <i v-else class="el-icon-plus icon-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -60,6 +68,7 @@ import { showSuccessNotify, showErrorNotify } from '@/utils'
 import UserScriptsModal from './UserScriptsModal.vue'
 import { USER_SCRIPTS_MODAL } from '@/store/modals'
 import { populateObject } from '@/utils'
+import api from '@/api'
 
 let initState = {
   title: '',
@@ -80,6 +89,7 @@ export default {
   },
 
   data: () => ({
+    file: {},
     siteForm: { ...initState },
     USER_SCRIPTS_MODAL
   }),
@@ -106,8 +116,24 @@ export default {
       this.$modal.open(USER_SCRIPTS_MODAL)
     },
 
-    handleIconSuccess(res, file) {
-      this.siteForm.icon = URL.createObjectURL(file.raw)
+    uploadChanged(file, fileList) {
+      this.file = file.raw
+    },
+
+    uploadIcon() {
+      const formData = new FormData()
+      formData.append('siteId', this.site.id)
+      formData.append('type', 1)
+      formData.append('file', this.file)
+
+      api
+        .uploadFile(formData)
+        .then(response => {
+          this.siteForm.icon = response.data
+        })
+        .catch(err => {
+          showErrorNotify(err?.detail)
+        })
     },
 
     beforeIconUpload(file) {

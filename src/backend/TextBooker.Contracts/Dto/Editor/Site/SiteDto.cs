@@ -17,6 +17,8 @@ namespace TextBooker.Contracts.Dto
 
 		public string Keywords { get; set; }
 
+		public string Icon { get; set; }
+
 		public bool EnabledUserScripts { get; set; }
 
 		public DateTime CreatedOn { get; set; } = DateTime.Now;
