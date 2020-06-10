@@ -28,8 +28,9 @@ export const RUSSIAN_TRANSLATIONS = {
         6: 'Подвал'
       },
       userScripts: 'Пользовательский код',
+      imageFormatError: 'Формат изображения должен быть JPG или PNG!',
       iconFormatError: 'Формат иконки должен быть ICO, JPG или PNG!',
-      iconSizeError: 'Размер иконки должен быть меньше 100 Кб!'
+      iconSizeError: 'Размер иконки должен быть меньше {size}!'
     },
     pages: {
       name: 'Страницы',

@@ -9,6 +9,7 @@ using AutoMapper;
 using CSharpFunctionalExtensions;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 using Serilog;
 
@@ -66,7 +67,7 @@ namespace TextBooker.BusinessLogic.Services
 						Directory.CreateDirectory(directoryPath);
 
 					if (File.Exists(filePath))
-						return Result.Failure<FileUploadDto>("File with this name already exists");
+						return Result.Ok(dto);
 
 					using var fileStream = new FileStream(filePath, FileMode.Create);
 					await dto.File.CopyToAsync(fileStream);
@@ -83,8 +84,15 @@ namespace TextBooker.BusinessLogic.Services
 
 			async Task<Result<string>> SaveFileInfo(SiteFile entity)
 			{
-				db.Files.Add(entity);
-				await db.SaveChangesAsync();
+				var fileExists = await db.Files
+					.Where(x => x.SiteId == entity.SiteId && x.FileName == entity.FileName)
+					.FirstOrDefaultAsync() ?? Maybe<SiteFile>.None;
+
+				if (fileExists.HasNoValue)
+				{
+					db.Files.Add(entity);
+					await db.SaveChangesAsync();
+				}
 
 				return Result.Ok(entity.FilePath);
 			}
