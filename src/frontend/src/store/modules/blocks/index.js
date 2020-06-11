@@ -28,6 +28,13 @@ export default {
       )
     },
 
+    DELETE_BLOCK(state, id) {
+      state.blocks = state.blocks.splice(
+        state.blocks.findIndex(item => item.id === id),
+        1
+      )
+    },
+
     SET_BLOCK(state, data = {}) {
       state.block = { ...state.block, ...data }
     }
@@ -70,8 +77,8 @@ export default {
     async deleteBlock({ commit, dispatch }, payload) {
       try {
         setState(commit, { loading: true })
+        commit('DELETE_BLOCK', payload.id)
         let result = await api.deleteBlock(payload)
-        await dispatch('reset')
         await dispatch('fetchBlocks', payload.siteId)
         showSuccessNotify()
       } catch (error) {
