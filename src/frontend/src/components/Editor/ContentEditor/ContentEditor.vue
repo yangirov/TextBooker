@@ -116,14 +116,13 @@ export default {
 
       api
         .uploadFile(formData)
-        .then(response => {
-          let position = this.$refs.editor.selection.startOffset ?? 0
-          let text = this.value
-
-          this.value =
-            text.slice(0, position) +
-            `<img src=\"/static/${response.data}\" />` +
-            text.slice(position)
+        .then(res => {
+          let position = this.$refs.editor.selection
+          this.$refs.editor.exec(
+            'insertHTML',
+            `<img src=/static/${res.data}>`,
+            position
+          )
         })
         .catch(err => {
           showErrorNotify(err?.detail)
@@ -178,6 +177,9 @@ export default {
     align-items: center
     .icon
       color: #333333
+
+.editr--content img
+  max-width: 500px
 
 .editr--content
   min-height: 583px !important

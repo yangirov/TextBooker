@@ -40,11 +40,24 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<string>> Upload(FileUploadDto dto)
 		{
+			var fileExists = CheckFileExists(dto);
+			if (fileExists.HasValue)
+				return Result.Ok(fileExists.Value);
+
 			return await FillDto(dto)
 				.Bind(UploadFile)
 				.Bind(Map)
 				.Bind(SaveFileInfo)
 				.OnFailure(LogError);
+
+			Maybe<string> CheckFileExists(FileUploadDto dto)
+			{
+				var filePath = Path.Combine(fileStoreSettings.BasePath, dto.SiteId, "assets", dto.File.FileName);
+
+				return File.Exists(filePath)
+					? Path.Combine(dto.SiteId, "assets", dto.File.FileName)
+					: Maybe<string>.None;
+			}
 
 			static Result<FileUploadDto> FillDto(FileUploadDto dto)
 			{
@@ -66,9 +79,6 @@ namespace TextBooker.BusinessLogic.Services
 					if (!Directory.Exists(directoryPath))
 						Directory.CreateDirectory(directoryPath);
 
-					if (File.Exists(filePath))
-						return Result.Ok(dto);
-
 					using var fileStream = new FileStream(filePath, FileMode.Create);
 					await dto.File.CopyToAsync(fileStream);
 
@@ -84,15 +94,8 @@ namespace TextBooker.BusinessLogic.Services
 
 			async Task<Result<string>> SaveFileInfo(SiteFile entity)
 			{
-				var fileExists = await db.Files
-					.Where(x => x.SiteId == entity.SiteId && x.FileName == entity.FileName)
-					.FirstOrDefaultAsync() ?? Maybe<SiteFile>.None;
-
-				if (fileExists.HasNoValue)
-				{
-					db.Files.Add(entity);
-					await db.SaveChangesAsync();
-				}
+				db.Files.Add(entity);
+				await db.SaveChangesAsync();
 
 				return Result.Ok(entity.FilePath);
 			}
