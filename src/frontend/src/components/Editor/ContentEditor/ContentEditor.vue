@@ -8,20 +8,15 @@
       <div v-html="value"></div>
     </el-drawer>
 
-    <el-upload
-      v-if="!htmlMode"
-      action=""
-      :http-request="uploadImage"
-      :on-change="uploadChanged"
-      :before-upload="beforeIconUpload"
-      :multiple="false"
-      :auto-upload="true"
-      :show-file-list="false"
-      accept="image/png, image/jpg"
+    <ImageUpload
       id="image-btn"
+      v-if="!htmlMode"
+      v-model="file"
+      :upload="uploadImage"
+      :before-upload="beforeImageUpload"
     >
       <i class="icon el-icon-picture-outline"></i>
-    </el-upload>
+    </ImageUpload>
 
     <wysiwyg v-if="!htmlMode" v-model="value" ref="editor" />
 
@@ -39,11 +34,13 @@ import { mapGetters } from 'vuex'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
 import api from '@/api'
 
+import ImageUpload from './ImageUpload.vue'
 import VueAceEditor from './VueAceEditor.vue'
 
 export default {
   components: {
-    VueAceEditor
+    VueAceEditor,
+    ImageUpload
   },
 
   props: {
@@ -104,15 +101,11 @@ export default {
       this.$emit('close-previewer')
     },
 
-    uploadChanged(file, fileList) {
-      this.file = file.raw
-    },
-
     uploadImage() {
       const formData = new FormData()
       formData.append('siteId', this.site.id)
       formData.append('type', 2)
-      formData.append('file', this.file)
+      formData.append('file', this.file.raw)
 
       api
         .uploadFile(formData)
@@ -129,7 +122,7 @@ export default {
         })
     },
 
-    beforeIconUpload(file) {
+    beforeImageUpload(file) {
       const isImage = file.type === 'image/jpeg' || 'image/png'
       const isLimit2Mb = file.size / 1024 <= 2048
 
@@ -157,6 +150,7 @@ export default {
   margin-left: 35px
 
 #image-btn
+  .el-upload
   position: absolute
   width: 36px
   height: 33px
@@ -165,7 +159,7 @@ export default {
   border-right: none
   &:hover
     background: rgba(0,0,0,0.1)
-  .vw-btn-image
+  .el-upload
     font-size: 1.1em
     width: 100%
     height: 100%
@@ -179,7 +173,7 @@ export default {
       color: #333333
 
 .editr--content img
-  max-width: 500px
+  max-width: 500px !important
 
 .editr--content
   min-height: 583px !important
