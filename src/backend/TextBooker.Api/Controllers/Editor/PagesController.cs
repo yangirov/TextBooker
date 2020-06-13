@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +32,7 @@ namespace TextBooker.Api.Controllers
 			=> OkOrBadRequest(await pageService.GetAll(siteId));
 
 		/// <summary>
-		/// Create page
+	 	/// Create page
 		/// </summary>
 		/// <param name="dto">Page info data</param>
 		/// <returns></returns>
@@ -50,13 +51,13 @@ namespace TextBooker.Api.Controllers
 			=> OkOrBadRequest(await pageService.Get(id, siteId));
 
 		/// <summary>
-		/// Update page info
+		/// Update pages
 		/// </summary>
-		/// <param name="dto">Page info data</param>
+		/// <param name="list">Pages data</param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<IActionResult> UpdatePage([FromBody] PageDto dto)
-			=> OkOrBadRequest(await pageService.Update(dto));
+		public async Task<IActionResult> UpdatePage([FromBody] List<PageDto> list)
+			=> OkOrBadRequest(await pageService.UpdateAll (list));
 
 		/// <summary>
 		/// Delete page

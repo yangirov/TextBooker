@@ -13,9 +13,9 @@ namespace TextBooker.Api.Controllers
 	[Produces("application/json")]
 	public class EditorController : BaseController
 	{
-		private readonly ISiteService siteService;
+		private readonly ISiteSettingsService siteService;
 
-		public EditorController(ISiteService siteService)
+		public EditorController(ISiteSettingsService siteService)
 		{
 			this.siteService = siteService;
 			this.siteService = siteService;

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace TextBooker.Api.Infrastructure.Filters
+namespace TextBooker.Api.Infrastructure
 {
 	public class ModelValidationFilter : IActionFilter
 	{
