@@ -75,7 +75,6 @@ export default {
 
     blockForm: {
       handler(newValue) {
-        this.$store.commit('blocks/UPDATE_BLOCKS', newValue)
         this.$store.commit('blocks/SET_BLOCK', newValue)
       },
       deep: true
@@ -107,7 +106,7 @@ export default {
       if (!_.isEmpty(newValue) && !_.isEqual(newValue, oldValue)) {
         this.blockForm = newValue
       }
-    }, 100),
+    }, 300),
 
     closePreview() {
       this.previewVisible = false

@@ -1,6 +1,7 @@
 <template>
   <div class="pages_list">
     <SelectList
+      :default-active="defaultActive"
       :items="pages"
       @handler="selectPage"
       class-name="max-wh m-1"
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SelectList from '@/components/Editor/SelectList/SelectList.vue'
 
 export default {
@@ -40,32 +42,45 @@ export default {
   },
 
   data: () => ({
-    selectedPage: 0,
-    pages: [
-      {
-        name: 'Page 1',
-        alias: 'page1'
-      }
-    ]
+    defaultActive: ''
   }),
+
+  computed: {
+    ...mapGetters('sites', ['site']),
+    ...mapGetters('pages', ['pages', 'page'])
+  },
 
   methods: {
     addPage() {
-      let index = this.pages.length + 1
-      let page = {
-        name: `${this.$t('tabs.pages.defaultPageName')} ${index}`,
-        alias: `page${index}`
+      let index = this.pages.length + 1 ?? 1
+
+      let data = {
+        title: `${this.$t('tabs.pages.defaultPageName')} ${index}`,
+        alias: `page${index}`,
+        siteId: this.site.id
       }
-      this.pages.push(page)
+
+      this.$store.dispatch('pages/addPage', data)
     },
 
     deletePage() {
-      this.$delete(this.pages, this.selectedPage)
+      this.$store.dispatch('pages/deletePage', {
+        id: this.page.id,
+        siteId: this.site.id
+      })
     },
 
-    selectPage(index) {
-      this.selectedPage = index
+    selectPage(id) {
+      this.defaultActive = id
+      let page = this.pages.find(x => x.id === id) ?? {}
+      this.$store.commit('pages/SET_PAGE', page)
     }
+  },
+
+  mounted() {
+    setTimeout(() => {
+      this.selectPage(this.pages[0]?.id)
+    }, 100)
   }
 }
 </script>

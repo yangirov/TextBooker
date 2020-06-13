@@ -8,50 +8,50 @@ export default {
 
   state: {
     loading: false,
-    blocks: [],
-    block: {}
+    pages: [],
+    page: {}
   },
 
   getters: {
     loading: state => state.loading,
     data: (state, getters) => getters,
-    blocks: state => state.blocks,
-    block: state => state.block
+    pages: state => state.pages,
+    page: state => state.page
   },
 
   mutations: {
     SET_STATE,
 
-    DELETE_BLOCK(state, id) {
-      state.blocks = state.blocks.splice(
-        state.blocks.findIndex(item => item.id === id),
+    DELETE_PAGE(state, id) {
+      state.pages = state.pages.splice(
+        state.pages.findIndex(item => item.id === id),
         1
       )
     },
 
-    SET_BLOCK(state, data = {}) {
-      state.block = { ...state.block, ...data }
+    SET_PAGE(state, data = {}) {
+      state.page = { ...state.page, ...data }
 
-      state.blocks = _.values(
-        _.merge(_.keyBy(state.blocks, 'id'), _.keyBy([data], 'id'))
+      state.pages = _.values(
+        _.merge(_.keyBy(state.pages, 'id'), _.keyBy([data], 'id'))
       )
     }
   },
 
   actions: {
-    async fetchBlocks({ commit }, siteId) {
+    async fetchPages({ commit }, siteId) {
       setState(commit, { loading: true })
-      const blocks = await api.getBlocks(siteId)
-      setState(commit, { state: 'blocks', payload: blocks })
+      const pages = await api.getPages(siteId)
+      setState(commit, { state: 'pages', payload: pages })
       setState(commit, { loading: false })
     },
 
-    async addBlock({ commit, dispatch }, payload) {
+    async addPage({ commit, dispatch }, payload) {
       try {
         setState(commit, { loading: true })
-        let block = await api.addBlock(payload)
-        setState(commit, { state: 'block', payload: block })
-        await dispatch('fetchBlocks', payload.siteId)
+        let page = await api.addPage(payload)
+        setState(commit, { state: 'page', payload: page })
+        await dispatch('fetchPages', payload.siteId)
         showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
@@ -60,11 +60,11 @@ export default {
       }
     },
 
-    async updateBlocks({ commit, state }) {
+    async updatePages({ commit, state }) {
       try {
         setState(commit, { loading: true })
-        let result = await api.updateBlocks(state.blocks)
-        setState(commit, { state: 'blocks', payload: result })
+        let result = await api.updatePages(state.pages)
+        setState(commit, { state: 'pages', payload: result })
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {
@@ -72,12 +72,12 @@ export default {
       }
     },
 
-    async deleteBlock({ commit, dispatch }, payload) {
+    async deletePage({ commit, dispatch }, payload) {
       try {
         setState(commit, { loading: true })
-        commit('DELETE_BLOCK', payload.id)
-        let result = await api.deleteBlock(payload)
-        await dispatch('fetchBlocks', payload.siteId)
+        commit('DELETE_PAGE', payload.id)
+        let result = await api.deletePage(payload)
+        await dispatch('fetchPages', payload.siteId)
         showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
@@ -88,8 +88,8 @@ export default {
 
     reset({ commit }) {
       setState(commit, { state: 'loading', payload: false })
-      setState(commit, { state: 'blocks', payload: [] })
-      setState(commit, { state: 'block', payload: {} })
+      setState(commit, { state: 'pages', payload: [] })
+      setState(commit, { state: 'page', payload: {} })
     }
   }
 }

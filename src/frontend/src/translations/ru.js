@@ -40,7 +40,9 @@ export const RUSSIAN_TRANSLATIONS = {
       url: 'Свой адрес страницы',
       title: 'Свой заголовок',
       description: 'Своё описание',
-      keywords: 'Свои ключевые слова'
+      keywords: 'Свои ключевые слова',
+      existsError: 'Страница с таким URL уже существует',
+      errorLength: 'Длина строки должна быть от {from} до {to} символов'
     },
     blocks: {
       name: 'Блоки',

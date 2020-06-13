@@ -41,7 +41,10 @@ export const ENGLISH_TRANSLATIONS = {
       url: 'Custom url',
       title: 'Custom title',
       description: 'Custom description',
-      keywords: 'Custom keywords'
+      keywords: 'Custom keywords',
+      existsError: 'Page with this URL already exists',
+      errorLength:
+        'The string length must be between {from} and {to} characters'
     },
     blocks: {
       name: 'Blocks',

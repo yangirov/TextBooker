@@ -65,7 +65,7 @@ import { populateObject } from '@/utils'
 import api from '@/api'
 
 import ImageUpload from '@/components/Editor/ContentEditor/ImageUpload.vue'
-import UserScriptsModal from './UserScriptsModal.vue'
+import UserScriptsModal from './UserScripts/UserScriptsModal.vue'
 import { USER_SCRIPTS_MODAL } from '@/store/modals'
 
 let initState = {
