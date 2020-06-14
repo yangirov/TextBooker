@@ -33,13 +33,9 @@
         </div>
 
         <div class="column is-half">
-          <iframe
-            class="iframe"
-            src="https://www.youtube.com/embed/ezp60FUnjGg"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+          <video class="video-frame" controls muted autoplay loop>
+            <source src="@/assets/demo.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
@@ -51,8 +47,18 @@ export default {}
 </script>
 
 <style lang="sass">
+.video-frame
+  min-height: 320px
+  max-width: 500px
+  margin-top: -50px
+  display: flex
+  justify-content: center
+  align-items: center
+  &:focus, &:active
+    outline: none
+
 .row
-  height: 70%
+  height: 80%
   display: flex
   align-items: center
   justify-content: center
@@ -62,12 +68,6 @@ export default {}
   flex-direction: column
   align-items: flex-start
   justify-content: center
-
-.iframe
-  width: 100%
-  height: 100%
-  border: 1px solid #ccc
-  margin-left: 2em
 
 .subtitle
   padding-top: 1em
