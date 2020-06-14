@@ -77,6 +77,7 @@ export default {
         setState(commit, { loading: true })
         commit('DELETE_PAGE', payload.id)
         let result = await api.deletePage(payload)
+        setState(commit, { state: 'page', payload: {} })
         await dispatch('fetchPages', payload.siteId)
         showSuccessNotify()
       } catch (error) {

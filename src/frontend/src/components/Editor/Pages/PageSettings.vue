@@ -32,13 +32,7 @@ export default {
 
   watch: {
     value() {
-      this.$form.validate(async valid => {
-        if (valid) {
-          this.$emit('input', this.value)
-        } else {
-          return false
-        }
-      })
+      this.$emit('input', this.value)
     }
   },
 

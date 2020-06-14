@@ -143,6 +143,9 @@ export default {
 </script>
 
 <style lang="sass">
+/deep/ i
+  font-style: italic
+
 .el-upload
   border: none
 

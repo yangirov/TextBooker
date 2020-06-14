@@ -67,6 +67,7 @@ namespace TextBooker.BusinessLogic.Services
 				var Ts = await db.Set<TEntity>()
 					.Where(x => x.SiteId == siteId)
 						.Include(s => s.Site)
+					.OrderBy(x => x.Order)
 					.ToListAsync();
 
 				return Result.Ok(Ts);

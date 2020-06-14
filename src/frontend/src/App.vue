@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 import PageHeader from '@/components/Layout/Header'
 import PageMain from '@/components/Layout/Main'
 import PageFooter from '@/components/Layout/Footer'
