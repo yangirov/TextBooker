@@ -201,6 +201,7 @@ namespace TextBooker.Api
 			services.AddTransient<IPageService, PageService>();
 			services.AddTransient<IBlockService, BlockService>();
 			services.AddTransient<IFileService, FileService>();
+			services.AddTransient<ISiteGenerator, SiteGenerator>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -223,8 +224,7 @@ namespace TextBooker.Api
 
 			app.UseStaticFiles(new StaticFileOptions()
 			{
-				FileProvider = new PhysicalFileProvider(basePath),
-				RequestPath = new PathString("/static")
+				FileProvider = new PhysicalFileProvider(basePath)
 			});
 
 			app.UseCors(builder => builder

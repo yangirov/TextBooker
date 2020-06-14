@@ -26,3 +26,4 @@ dist/
 .env
 .idea
 .history
+filestore/

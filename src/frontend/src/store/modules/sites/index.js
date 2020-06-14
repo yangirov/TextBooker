@@ -116,6 +116,17 @@ export default {
       }
     },
 
+    async generateSite({ commit }, siteId) {
+      try {
+        setState(commit, { loading: true })
+        let site = await api.generateSite(siteId)
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
     reset({ commit }) {
       setState(commit, { state: 'loading', payload: false })
       setState(commit, { state: 'sites', payload: [] })
