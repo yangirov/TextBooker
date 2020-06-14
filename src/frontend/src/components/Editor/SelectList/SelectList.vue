@@ -6,20 +6,28 @@
     @open="openHandler"
     @close="closeHandler"
   >
-    <el-menu-item
-      v-for="item in items"
-      :index="item.id"
-      :id="item.id"
-      :key="item.id"
-      :label="item.title"
-    >
-      <span class="noselect">{{ item.title }}</span>
-    </el-menu-item>
+    <draggable :disabled="!draggable" v-model="items" @change="handleChange">
+      <el-menu-item
+        v-for="item in items"
+        :index="item.id"
+        :id="item.id"
+        :key="item.order"
+        :label="item.title"
+      >
+        <span class="noselect">{{ item.title }}</span>
+      </el-menu-item>
+    </draggable>
   </el-menu>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+  components: {
+    draggable
+  },
+
   props: {
     items: {
       type: Array,
@@ -32,6 +40,14 @@ export default {
     defaultActive: {
       type: String,
       required: false
+    },
+    commitName: {
+      type: String,
+      default: ''
+    },
+    draggable: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -46,6 +62,16 @@ export default {
 
     closeHandler(data) {
       this.$emit('close', data)
+    },
+
+    handleChange() {
+      let { commitName, items, $store } = this
+
+      commitName &&
+        $store.commit(
+          commitName,
+          items.map((x, index) => ({ ...x, order: index }))
+        )
     }
   }
 }

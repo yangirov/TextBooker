@@ -41,9 +41,13 @@ export default {
         this.$store.dispatch('sites/updateSite'),
         this.$store.dispatch('pages/updatePages'),
         this.$store.dispatch('blocks/updateBlocks')
-      ]).then(data => {
-        this.$store.commit('appState/SET_STATE', { loading: false })
-      })
+      ])
+        .then(data =>
+          this.$store.commit('appState/SET_STATE', { loading: false })
+        )
+        .catch(err =>
+          this.$store.commit('appState/SET_STATE', { loading: false })
+        )
     }
   }
 }

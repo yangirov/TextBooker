@@ -1,10 +1,11 @@
 <template>
   <div class="pages_list">
     <SelectList
+      class-name="max-wh m-1"
       :default-active="defaultActive"
       :items="pages"
       @handler="selectPage"
-      class-name="max-wh m-1"
+      commit-name="pages/UPDATE_PAGES"
     ></SelectList>
 
     <div class="buttons mt-1">
