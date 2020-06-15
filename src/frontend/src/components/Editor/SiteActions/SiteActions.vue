@@ -14,11 +14,14 @@
 import { lodash as _ } from '@/utils'
 import { mapGetters } from 'vuex'
 
+var siteWindow = null
+
 export default {
   name: 'SiteActions',
 
   computed: {
     ...mapGetters('sites', ['site']),
+    ...mapGetters('pages', ['page']),
 
     show() {
       return (
@@ -28,10 +31,18 @@ export default {
   },
 
   methods: {
-    async openSite() {
-      await Promise.all([this.updateSite()]).then(res => {
-        window.open(`/static/${this.site.id}/index.html`, '_blank')
-      })
+    openSite() {
+      let siteUrl = `/sites/${this.site.id}/${this.page.alias}.html`
+
+      if (
+        siteWindow &&
+        !siteWindow.closed &&
+        siteWindow.location.pathname === siteUrl
+      ) {
+        siteWindow.location.reload(true)
+      } else {
+        siteWindow = window.open(siteUrl, '_blank')
+      }
     },
 
     async updateSite() {
@@ -43,8 +54,11 @@ export default {
         this.$store.dispatch('blocks/updateBlocks')
       ])
         .then(data => {
-          this.$store.dispatch('sites/generateSite', this.site.id)
-          this.$store.commit('appState/SET_STATE', { loading: false })
+          this.$store
+            .dispatch('sites/generateSite', this.site.id)
+            .then(gs =>
+              this.$store.commit('appState/SET_STATE', { loading: false })
+            )
         })
         .catch(err =>
           this.$store.commit('appState/SET_STATE', { loading: false })

@@ -8,6 +8,7 @@ using CSharpFunctionalExtensions;
 using FluentValidation;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 using Serilog;
 
@@ -42,8 +43,8 @@ namespace TextBooker.BusinessLogic.Services
 			GoogleSettings googleOptions,
 			IHttpClientFactory clientFactory,
 			IHttpContextAccessor httpContextAccessor
-		) : base(logger, db)
-		{
+		) : base(logger)
+        {
 			this.mapper = mapper;
 			this.db = db;
 			this.mailSender = mailSender;
@@ -201,6 +202,20 @@ namespace TextBooker.BusinessLogic.Services
 				return Result.Ok(true);
 			}
 		}
+
+		public async Task<Result<User>> FindUserById(string userId)
+		{
+			var user = await db.Users
+				.Include(x => x.Sites)
+				.SingleOrDefaultAsync(u => u.Id == userId) ?? Maybe<User>.None;
+
+			return user.HasNoValue
+				? Result.Failure<User>($"The user with this identifier was not found: {userId}")
+				: Result.Ok(user.Value);
+		}
+
+		public async Task<Maybe<User>> FindUserByEmail(string email)
+			=> await db.Users.SingleOrDefaultAsync(u => u.Email == email.ToLower()) ?? Maybe<User>.None;
 
 		private static Result<SignDto> ValidateDto(SignDto dto)
 		{

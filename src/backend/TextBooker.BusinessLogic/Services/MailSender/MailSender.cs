@@ -29,8 +29,12 @@ namespace TextBooker.BusinessLogic.Services
 		private readonly TextBookerContext db;
 		private readonly EmailSettings emailSettings;
 
-		public MailSender(ILogger logger, TextBookerContext db, EmailSettings emailSettings) : base(logger, db)
-		{
+		public MailSender(
+			ILogger logger,
+			TextBookerContext db,
+			EmailSettings emailSettings
+		) : base(logger)
+        {
 			this.logger = logger;
 			this.db = db;
 			this.emailSettings = emailSettings;

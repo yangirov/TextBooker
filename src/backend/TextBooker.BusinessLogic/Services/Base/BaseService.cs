@@ -1,40 +1,15 @@
-using System.Threading.Tasks;
-
-using CSharpFunctionalExtensions;
-
-using Microsoft.EntityFrameworkCore;
-
 using Serilog;
-
-using TextBooker.DataAccess;
-using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.BusinessLogic.Services
 {
 	public class BaseService
 	{
 		private readonly ILogger logger;
-		private readonly TextBookerContext db;
 
-		public BaseService(ILogger logger, TextBookerContext db)
-		{
+		public BaseService(ILogger logger)
+        {
 			this.logger = logger;
-			this.db = db;
 		}
-
-		public async Task<Result<User>> FindUserById(string userId)
-		{
-			var user = await db.Users
-				.Include(x => x.Sites)
-				.SingleOrDefaultAsync(u => u.Id == userId) ?? Maybe<User>.None;
-
-			return user.HasNoValue
-				? Result.Failure<User>($"The user with this identifier was not found: {userId}")
-				: Result.Ok(user.Value);
-		}
-
-		public async Task<Maybe<User>> FindUserByEmail(string email)
-			=> await db.Users.SingleOrDefaultAsync(u => u.Email == email.ToLower()) ?? Maybe<User>.None;
 
 		public void LogError(string error) => logger.Error(error);
 

@@ -9,7 +9,6 @@ using AutoMapper;
 using CSharpFunctionalExtensions;
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 using Serilog;
 
@@ -31,8 +30,8 @@ namespace TextBooker.BusinessLogic.Services
 			ILogger logger,
 			TextBookerContext db,
 			FileStoreSettings fileStoreSettings
-		) : base(logger, db)
-		{
+		) : base(logger)
+        {
 			this.mapper = mapper;
 			this.db = db;
 			this.fileStoreSettings = fileStoreSettings;
@@ -49,56 +48,56 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Map)
 				.Bind(SaveFileInfo)
 				.OnFailure(LogError);
+		}
 
-			Maybe<string> CheckFileExists(FileUploadDto dto)
+		private Maybe<string> CheckFileExists(FileUploadDto dto)
+		{
+			var filePath = Path.Combine(fileStoreSettings.BasePath, "sites", dto.SiteId, "assets", dto.File.FileName);
+
+			return File.Exists(filePath)
+				? Path.Combine(dto.SiteId, "assets", dto.File.FileName)
+				: Maybe<string>.None;
+		}
+
+		private static Result<FileUploadDto> FillDto(FileUploadDto dto)
+		{
+			dto.Hash = GetMD5Hash(dto.File);
+			dto.FileName = dto.File.FileName;
+			dto.Length = dto.File.Length;
+			dto.FilePath = Path.Combine("sites", dto.SiteId, "assets", dto.FileName);
+
+			return Result.Ok(dto);
+		}
+
+		private async Task<Result<FileUploadDto>> UploadFile(FileUploadDto dto)
+		{
+			try
 			{
-				var filePath = Path.Combine(fileStoreSettings.BasePath, "sites", dto.SiteId, "assets", dto.File.FileName);
+				var filePath = Path.Combine(fileStoreSettings.BasePath, dto.FilePath);
+				var directoryPath = Path.GetDirectoryName(filePath);
 
-				return File.Exists(filePath)
-					? Path.Combine(dto.SiteId, "assets", dto.File.FileName)
-					: Maybe<string>.None;
-			}
+				if (!Directory.Exists(directoryPath))
+					Directory.CreateDirectory(directoryPath);
 
-			static Result<FileUploadDto> FillDto(FileUploadDto dto)
-			{
-				dto.Hash = GetMD5Hash(dto.File);
-				dto.FileName = dto.File.FileName;
-				dto.Length = dto.File.Length;
-				dto.FilePath = Path.Combine("sites", dto.SiteId, "assets", dto.FileName);
+				using var fileStream = new FileStream(filePath, FileMode.Create);
+				await dto.File.CopyToAsync(fileStream);
 
 				return Result.Ok(dto);
 			}
-
-			async Task<Result<FileUploadDto>> UploadFile(FileUploadDto dto)
+			catch (Exception)
 			{
-				try
-				{
-					var filePath = Path.Combine(fileStoreSettings.BasePath, dto.FilePath);
-					var directoryPath = Path.GetDirectoryName(filePath);
-
-					if (!Directory.Exists(directoryPath))
-						Directory.CreateDirectory(directoryPath);
-
-					using var fileStream = new FileStream(filePath, FileMode.Create);
-					await dto.File.CopyToAsync(fileStream);
-
-					return Result.Ok(dto);
-				}
-				catch (Exception ex)
-				{
-					return Result.Failure<FileUploadDto>("An error occurred while uploading the file");
-				}
+				return Result.Failure<FileUploadDto>("An error occurred while uploading the file");
 			}
+		}
 
-			Result<SiteFile> Map(FileUploadDto dto) => Result.Ok(mapper.Map<SiteFile>(dto));
+		private Result<SiteFile> Map(FileUploadDto dto) => Result.Ok(mapper.Map<SiteFile>(dto));
 
-			async Task<Result<string>> SaveFileInfo(SiteFile entity)
-			{
-				db.Files.Add(entity);
-				await db.SaveChangesAsync();
+		private async Task<Result<string>> SaveFileInfo(SiteFile entity)
+		{
+			db.Files.Add(entity);
+			await db.SaveChangesAsync();
 
-				return Result.Ok(entity.FilePath);
-			}
+			return Result.Ok(entity.FilePath);
 		}
 
 		private static string GetMD5Hash(IFormFile file)
