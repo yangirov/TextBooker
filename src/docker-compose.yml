@@ -53,6 +53,10 @@ services:
       ASPNETCORE_ENVIRONMENT: 'Production'
       DB_CONNECTION_STRING: 'Server=postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};'
       LOKI_URL: 'http://loki:3100'
+      FILESTORE_BASEPATH: '/filestore'
+    volumes:
+      - ./devops/filestore/themes:/filestore/themes
+      - /filestore:/filestore
     depends_on:
       - postgres
       - db-migrations
@@ -85,6 +89,7 @@ services:
       - ./devops/nginx/page.conf:/etc/nginx/page.conf
       - ./devops/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /var/log/nginx:/var/log/nginx/
+      - /filestore/sites:/var/www/sites/
     ports:
       - 80:80
     networks:
@@ -239,3 +244,4 @@ volumes:
   prometheus-data:
   loki-data:
   grafana-data:
+  filestore:
