@@ -18,6 +18,10 @@ namespace TextBooker.Contracts.Dto
 
 		public string Content { get; set; }
 
+		public bool InMainMenu { get; set; }
+
+		public bool InAsideMenu { get; set; } = true;
+
 		public int Order { get; set; }
 
 		[Required]
