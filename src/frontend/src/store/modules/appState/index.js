@@ -28,8 +28,10 @@ export default {
   actions: {
     async init({ state, commit, dispatch }) {
       if (state.isInitAppState) return
+      setState(commit, { loading: true })
       await dispatch('fetchSettings')
       setState(commit, { state: 'isInitAppState', payload: true })
+      setState(commit, { loading: false })
     },
 
     async fetchSettings({ commit }) {

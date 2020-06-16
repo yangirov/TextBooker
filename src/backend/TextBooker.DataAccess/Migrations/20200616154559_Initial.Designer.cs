@@ -10,8 +10,8 @@ using TextBooker.DataAccess;
 namespace TextBooker.DataAccess.Migrations
 {
     [DbContext(typeof(TextBookerContext))]
-    [Migration("20200614094434_SiteContent-Add-Column-Order")]
-    partial class SiteContentAddColumnOrder
+    [Migration("20200616154559_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,14 @@ namespace TextBooker.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnName("description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("InAsideMenu")
+                        .HasColumnName("in_aside_menu")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("InMainMenu")
+                        .HasColumnName("in_main_menu")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Keywords")
                         .HasColumnName("keywords")
@@ -342,7 +350,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            About = "Это стандартная тема с блоками и одной боковой панелью справа. В заголовке старницы - рисунок модели атома. Прекрасная тема для электронного учебника по физике.",
+                            About = "This is a standard theme with blocks and a single sidebar on the right. In the title of the starnitsa-drawing of the atom model. A great topic for an electronic physics textbook.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<div class=\"boxed\">",
@@ -358,7 +366,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            About = "Простая и современная светлая тема.",
+                            About = "Simple and modern light theme.",
                             Author = "Switchroyale",
                             AuthorUrl = "http://www.switchroyale.com/",
                             BlockBegin = "<li> ",
@@ -373,7 +381,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -388,7 +396,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -403,7 +411,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -418,7 +426,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -433,7 +441,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 7,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -448,7 +456,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 8,
-                            About = "Простая, светлая минималистичная тема в 6 различных цветах: синий, зеленый, оранжевый, розовый, красный и желтый.",
+                            About = "Simple, light minimalistic theme in 6 different colors: blue, green, orange, pink, red and yellow.",
                             Author = "Grigoruta Adrian",
                             AuthorUrl = "http://www.pixelstudio.ro/",
                             BlockBegin = "<div>",
@@ -463,7 +471,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 9,
-                            About = "Черная тема с 1 боковой панелью. Главное меню в боковой панели.",
+                            About = "Black theme with one sidebar. Main menu in the sidebar.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -479,7 +487,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-                            About = "Очень красивая тема в светлых освежающих тонах. Одна боковая панель.",
+                            About = "Very beautiful theme in light refreshing colors. One side panel.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -495,7 +503,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 11,
-                            About = "1 боковая панель, зеленые и фиолетовые тона, рисунок на тему растительности.",
+                            About = "One side panel, green and purple tones, drawing on the theme of vegetation.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -511,7 +519,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 12,
-                            About = "Боковая панель слева, голубые тона, яркая оранжевая подсветка главного меню. В боковой панели над списком страниц блок \"Коротко о сайте\", редактируемый через дополнительные поля.",
+                            About = "Sidebar on the left, blue tones, bright orange illumination of the main menu. In the sidebar above the list of pages, the \"Short about the site\" block, editable via additional fields.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -527,7 +535,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 13,
-                            About = "Одна боковая панель, спокойные цвета.",
+                            About = "One side panel, calm colors.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -543,7 +551,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 14,
-                            About = "Ярко-синяя тема. Одна боковая панель.",
+                            About = "Bright blue theme. One side panel.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -559,7 +567,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 15,
-                            About = "Красная тема с одной боковой панелью и очень аппетитным заголовком",
+                            About = "Red theme with a single sidebar and a very mouth-watering title",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -575,7 +583,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 16,
-                            About = "Темно-серая тема с боковой колонкой слева.",
+                            About = "Dark gray theme with a side column on the left.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -591,7 +599,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 17,
-                            About = "Яркая креативная черное-зеленая тема.",
+                            About = "Bright creative black-green theme.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -607,7 +615,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 18,
-                            About = "Приятная тема в бежевых тонах с боковой колонкой слева.",
+                            About = "Nice theme in beige tones with a side column on the left.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -623,7 +631,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 19,
-                            About = "Светлая тема с сине-зеленым заголовком и боковой панелью слева. Главное меню в боковой панели.",
+                            About = "Light theme with a blue-green header and a sidebar on the left. Main menu in the sidebar.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<div id:updates\" \"class=\"boxed\">",
@@ -639,7 +647,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 20,
-                            About = "Светло-голубая тема с правой боковой колонкой.",
+                            About = "Light blue theme with right side column.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -655,7 +663,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 21,
-                            About = "Ярко-красная тема.",
+                            About = "Bright red theme.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -671,7 +679,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 22,
-                            About = "Красивая оранжево-зеленая тема с цветами в заголовке.",
+                            About = "Beautiful orange-green theme with flowers in the title.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -687,7 +695,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 23,
-                            About = "Светлая тема в коричневых тонах с одной боковой панелью.",
+                            About = "Light theme in brown tones with a single sidebar.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -703,7 +711,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 24,
-                            About = "Дерево и металл.",
+                            About = "Wood and metal.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -719,7 +727,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 25,
-                            About = "Светлая голубая тема с одной боковой колонкой.",
+                            About = "Light blue theme with one side column.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -735,7 +743,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 26,
-                            About = "Строгая серая тема с боковой колонкой слева. Главное меню в боковой колонке.",
+                            About = "Strict gray theme with a side column on the left. The main menu in the sidebar.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -751,7 +759,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 27,
-                            About = "Светло-оранжевая тема с одной боковой колонкой.",
+                            About = "Light orange theme with one sidebar column.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -767,7 +775,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 28,
-                            About = "Серо-зеленая тема с левой боковой колонкой и рисунком в заголовке на растительную тему.",
+                            About = "Grey-green theme with left-side column and the picture in the header on vegetable theme.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -783,7 +791,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 29,
-                            About = "Очень красивая яркая черно-зеленая тема с одной боковой колонкой.",
+                            About = "Very beautiful bright green and black theme with one side column.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -799,7 +807,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 30,
-                            About = "Тема гор, синие тона, главное меню в боковой колонке.",
+                            About = "Subject mountains, blue tone, main menu in sidebar.",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -815,7 +823,7 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 31,
-                            About = "Яркая креативная светло-голубая тема с блоком \"О сайте\".",
+                            About = "Bright creative light blue theme with a block \"On site\".",
                             Author = "Free CSS Templates",
                             AuthorUrl = "http://www.freecsstemplates.org/",
                             BlockBegin = "<li>",
@@ -851,32 +859,32 @@ namespace TextBooker.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Заголовок главного меню"
+                            Name = "MainMenuTitle"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Подзаголовок"
+                            Name = "Subtitle"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Заголовок списка страниц"
+                            Name = "PageListTitle"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Заголовок о сайте"
+                            Name = "AboutSiteTitle"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Коротко о сайте"
+                            Name = "AboutSiteShort"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Подвал"
+                            Name = "Footer"
                         });
                 });
 
