@@ -101,6 +101,19 @@ namespace TextBooker.BusinessLogic.Services
 			html = html.Replace($"%SiteTitle%", site.Title);
 			html = html.Replace($"%Blocks%", preparedBlocks);
 
+			foreach (var userScript in site.UserScripts)
+			{
+				var location = userScript.Location switch
+				{
+					1 => "</head>",
+					2 => "<body>",
+					3 => "</body>",
+					_ => null
+				};
+
+				html = html.Insert(html.IndexOf(location), userScript.Content);
+			}
+
 			var templateKeys = await db.TemplateKeys.ToListAsync();
 			var replaces = sectionNames.Join(templateKeys, s => s.TemplateKeyId, t => t.Id, (s, t) => new { t.Name, s.Content });
 

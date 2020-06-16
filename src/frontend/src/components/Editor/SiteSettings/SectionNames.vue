@@ -54,7 +54,7 @@ export default {
   methods: {
     handleData: _.debounce(function() {
       this.$store.commit('sites/UPDATE_SITE', { sectionNames: this.form })
-    }, 1000),
+    }, 300),
 
     labelKey(id) {
       return this.$t('tabs.settings.templateFields')[id]

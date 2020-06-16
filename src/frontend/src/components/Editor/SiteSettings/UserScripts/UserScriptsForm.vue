@@ -54,8 +54,24 @@ export default {
     }
   }),
 
+  watch: {
+    form: {
+      handler(newValue) {
+        this.handleData(newValue)
+      },
+      deep: true
+    }
+  },
+
   computed: {
     ...mapGetters('sites', ['site', 'loading'])
+  },
+
+  methods: {
+    handleData: _.debounce(function(data) {
+      let userScripts = data.map(x => ({ ...x, siteId: this.site.id }))
+      this.$store.commit('sites/UPDATE_SITE', { userScripts })
+    }, 300)
   },
 
   created() {
