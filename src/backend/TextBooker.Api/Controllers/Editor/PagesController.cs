@@ -56,8 +56,8 @@ namespace TextBooker.Api.Controllers
 		/// <param name="list">Pages data</param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<IActionResult> UpdatePage([FromBody] List<PageDto> list)
-			=> OkOrBadRequest(await pageService.UpdateAll (list));
+		public async Task<IActionResult> UpdatePages([FromBody] List<PageDto> list)
+			=> OkOrBadRequest(await pageService.UpdateAll(list));
 
 		/// <summary>
 		/// Delete page
