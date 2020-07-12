@@ -96,7 +96,6 @@ export default {
 
   computed: {
     ...mapGetters('sites', ['site']),
-
     ...mapGetters('deploy', ['deployed']),
 
     $form() {
