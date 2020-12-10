@@ -61,14 +61,27 @@ export const ENGLISH_TRANSLATIONS = {
         name: 'Log'
       },
       deploy: 'Deploy',
+      deployed: 'Site was published successfully!',
       ways: {
         details: 'To learn more',
+        ftp: {
+          name: 'FTP',
+          description: 'Upload site directly to your server.',
+          link: 'https://en.wikipedia.org/wiki/File_Transfer_Protocol',
+          host: 'Host',
+          port: 'Port',
+          login: 'Login',
+          password: 'Password',
+          folder: 'Site folder on server'
+        },
         github: {
+          name: 'Github Pages',
           description:
             'GitHub Pages is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub.',
           link: 'https://pages.github.com/'
         },
         netlify: {
+          name: 'Netlify',
           description:
             'Netlify is an all-in-one platform for automating modern web projects.',
           link: 'https://www.netlify.com/'
