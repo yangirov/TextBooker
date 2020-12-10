@@ -27,6 +27,7 @@ using Serilog;
 using Serilog.Sinks.Loki;
 
 using TextBooker.Api.Infrastructure;
+using TextBooker.BusinessLogic;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
@@ -189,7 +190,7 @@ namespace TextBooker.Api
 				});
 			});
 
-			var mapper = new MapperConfiguration(cfg => cfg.AddMaps("TextBooker.BusinessLogic")).CreateMapper();
+			var mapper = new MapperConfiguration(cfg => cfg.AddMaps(BusinessLogicAssembly.Value)).CreateMapper();
 			services.AddSingleton(mapper);
 
 			services.AddMetrics(Program.Metrics);

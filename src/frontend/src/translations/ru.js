@@ -57,14 +57,27 @@ export const RUSSIAN_TRANSLATIONS = {
       name: 'Публикация в интернете',
       log: 'Лог',
       deploy: 'Опубликовать',
+      deployed: 'Сайт успешно опубликован!',
       ways: {
         details: 'Узнать больше',
+        ftp: {
+          name: 'FTP',
+          description: 'Загрузите сайт на свой сервер',
+          link: 'https://ru.wikipedia.org/wiki/File_Transfer_Protocol',
+          host: 'Хост',
+          port: 'Порт',
+          login: 'Логин',
+          password: 'Пароль',
+          folder: 'Директория сайта на сервере'
+        },
         github: {
+          name: 'Github Pages',
           description:
             'Cтатический хостинг сайтов, в котором HTML, CSS и JavaScript файлы берутся прямо из репозитория на GitHub.',
           link: 'https://pages.github.com/'
         },
         netlify: {
+          name: 'Netlify',
           description:
             'Универсальная платформа для автоматизации современных веб-проектов.',
           link: 'https://www.netlify.com/'

@@ -2,6 +2,9 @@
   "name": "textbooker",
   "version": "1.0.0",
   "description": "",
+  "scripts": {
+    "changelog": "standard-changelog"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
@@ -10,6 +13,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "standard-changelog": "^2.0.27"
   }
 }
