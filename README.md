@@ -4,7 +4,7 @@
 
 Дев-режим:
 ```bash
-cd frontend
+cd sources/frontend
 npm i
 npm run serve
 ```
@@ -18,5 +18,13 @@ npm run build
 ## Бекенд
 
 ```bash
+cd sources
 docker-compose up -d --build
+```
+
+```
+docker volume rm textbooker_db-data
+docker volume rm textbooker_prometheus-data
+docker volume rm textbooker_loki-data
+docker volume rm textbooker_grafana-data
 ```
