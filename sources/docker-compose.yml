@@ -12,7 +12,7 @@ services:
       context: ./devops/postgres
       dockerfile: Dockerfile
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./devops/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
       - db-data:/var/lib/postgresql/data
-      - ./logs/postgresql/:/var/log/postgresql
+      - ${FILESTORE}/logs/postgres:/var/log/postgresql
     networks:
       - tb-network
 
@@ -34,12 +34,14 @@ services:
     ports:
       - 2055:80
     environment:
-      DB_CONNECTION_STRING: 'Server=tb-postgres;Port=5432;Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};'
       ASPNETCORE_ENVIRONMENT: 'Production'
+      DB_CONNECTION_STRING: 'Server=tb-postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};'
+      LOKI_URL: 'http://loki:3100'
     networks:
       - tb-network
     links:
       - tb-postgres
+      - loki
     depends_on:
       - tb-postgres
 
@@ -59,17 +61,16 @@ services:
 
   tb-nginx:
     container_name: tb-nginx
-    restart: unless-stopped
+    restart: always
     image: nginx:1.16.0-alpine
     volumes:
       - ./devops/nginx/html:/var/www/html/errors
       - ./devops/nginx/page.conf:/etc/nginx/page.conf
       - ./devops/nginx/error_pages.conf:/etc/nginx/error_pages.conf
       - ./devops/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./logs/nginx:/var/log/nginx
+      - ${FILESTORE}/logs/nginx:/var/log/nginx
     ports:
       - 80:80
-      - 443:443
     networks:
       - tb-network
     links:
@@ -171,6 +172,7 @@ services:
       
   loki:
     image: grafana/loki:master-2739551
+    restart: always
     container_name: loki
     ports:
       - 3100:3100
@@ -178,20 +180,6 @@ services:
       - ./devops/loki:/etc/loki
       - loki-data:/tmp/loki/
     command: -config.file=/etc/loki/loki-config.yml
-    networks:
-      - tb-network
-
-  promtail:
-    image: grafana/promtail:master-2739551
-    container_name: promtail
-    restart: always
-    volumes:
-      - ./devops/loki:/etc/promtail
-      - ./logs/nginx:/var/log/nginx
-      - ./logs/postgresql/:/var/log/postgresql
-    command: -config.file=/etc/promtail/loki-promtail-config.yml
-    links:
-      - loki
     networks:
       - tb-network
 
@@ -214,6 +202,20 @@ services:
       - tb-network
     labels:
       org.label-schema.group: "monitoring"
+
+  promtail:
+    image: grafana/promtail:master-2739551
+    container_name: promtail
+    restart: always
+    volumes:
+      - ./devops/loki:/etc/promtail
+      - ${FILESTORE}/logs/nginx:/var/log/nginx
+      - ${FILESTORE}/logs/postgres:/var/log/postgresql
+    command: -config.file=/etc/promtail/loki-promtail-config.yml
+    links:
+      - loki
+    networks:
+      - tb-network
 
 volumes:
   db-data:

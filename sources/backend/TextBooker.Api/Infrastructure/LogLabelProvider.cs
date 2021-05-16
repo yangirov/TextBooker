@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-
 using Serilog.Sinks.Loki.Labels;
 
 namespace TextBooker.Api.Infrastructure

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-
 using App.Metrics;
 using App.Metrics.Counter;
 
@@ -15,8 +13,8 @@ namespace TextBooker.Api.Infrastructure
 		{
 			if (context.Request.Path.Value == "/favicon.ico")
 				return;
-
-			var keys = new List<string>();
+			
+			var keys = new List<string>() {};
 			var vals = new List<string>();
 
 			var routeData = context.GetRouteData();
@@ -26,12 +24,8 @@ namespace TextBooker.Api.Infrastructure
 				vals.AddRange(routeData.Values.Values.Select(p => p.ToString()));
 			}
 
-			keys.Add("method");
-			vals.Add(context.Request.Method);
-			keys.Add("response");
-			vals.Add(context.Response.StatusCode.ToString());
-			keys.Add("url");
-			vals.Add(context.Request.Path.Value);
+			keys.AddRange(new string[] { "method", "response", "url" });
+			vals.AddRange(new string[] { context.Request.Method, context.Response.StatusCode.ToString(), context.Request.Path.Value });
 
 			Program.Metrics.Measure.Counter.Increment(new CounterOptions
 			{

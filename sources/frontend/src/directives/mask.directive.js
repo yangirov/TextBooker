@@ -11,7 +11,7 @@ export default Vue.directive('mask', {
                           inputFormat: binding.value,
                           placeholder: binding.value.replace(
                               /\w/gi,
-                              char => ({ d: 'д', m: 'м', y: 'г', h: 'ч' }[char.toLocaleLowerCase()])
+                              char => ({ d: 'd', m: 'm', y: 'y', h: 'h' }[char.toLocaleLowerCase()])
                           ),
                       }
                     : binding.value;

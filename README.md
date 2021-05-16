@@ -24,7 +24,9 @@ docker-compose up -d --build
 
 ```
 docker volume rm textbooker_db-data
-docker volume rm textbooker_prometheus-data
-docker volume rm textbooker_loki-data
+docker volume rm textbooker_db-logs
 docker volume rm textbooker_grafana-data
+docker volume rm textbooker_loki-data
+docker volume rm textbooker_nginx-logs
+docker volume rm textbooker_prometheus-data
 ```

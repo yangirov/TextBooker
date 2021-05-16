@@ -3,7 +3,7 @@
         <el-tooltip
             slot="reference"
             effect="dark"
-            content="Удалить"
+            content="Delete"
             placement="top-end"
             :enterable="false"
             transition=""
@@ -48,7 +48,7 @@ export default {
     props: {
         text: {
             type: String,
-            default: 'Удалить данный пункт?'
+            default: 'The action is irreversible! Delete it??'
         },
         placement: {
             type: String,
