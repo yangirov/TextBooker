@@ -1,25 +1,26 @@
 <template>
-  <InnerContainer>
-    <template #right-aside>
+  <div class="columns">
+    <div class="column is-3">
       <BlocksMenu />
-    </template>
+    </div>
 
-    <template #content>
-      
-    </template>
-  </InnerContainer>
+    <div class="column"></div>
+  </div>
 </template>
 
 <script>
 import BlocksMenu from './BlocksMenu.vue'
-import InnerContainer from '@/components/Layout/InnerContainer.vue'
 
 export default {
   name: 'Blocks',
 
   components: {
-    InnerContainer,
     BlocksMenu
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.columns
+  height: 100%
+</style>

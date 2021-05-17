@@ -2,14 +2,15 @@ const modal = {
   USER_MODAL: 'USER_MODAL'
 }
 
-export const {
-  USER_MODAL
-} = modal
+export const { USER_MODAL } = modal
 
 export default {
   namespaced: true,
 
-  state: Object.keys(modal).reduce((acc, modalName) => (acc[modalName] = false, acc), {}),
+  state: Object.keys(modal).reduce(
+    (acc, modalName) => ((acc[modalName] = false), acc),
+    {}
+  ),
 
   mutations: {
     SET_MODAL(state, payload) {

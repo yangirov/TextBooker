@@ -4,10 +4,10 @@
       {{ currentLocale.name }} <i class="el-icon-arrow-down el-icon--right"></i>
     </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item 
-        v-for="(lang, i) in langs" 
-        :key="i" 
-        :command="lang.short" 
+      <el-dropdown-item
+        v-for="(lang, i) in langs"
+        :key="i"
+        :command="lang.short"
         :disabled="lang.short === $i18n.locale"
       >
         {{ lang.flag }} {{ lang.name }}
@@ -19,15 +19,15 @@
 <script>
 export default {
   name: 'LocaleChanger',
-  data () {
-    return { 
+  data() {
+    return {
       langs: [
-        { 
+        {
           short: 'ru',
           name: 'Русский',
           flag: '🇷🇺'
         },
-        { 
+        {
           short: 'en',
           name: 'English',
           flag: '🇬🇧'

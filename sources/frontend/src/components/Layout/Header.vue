@@ -1,10 +1,15 @@
 <template>
-  <header class="navbar header" role="navigation" aria-label="main navigation" id="header">
+  <header
+    class="navbar header"
+    role="navigation"
+    aria-label="main navigation"
+    id="header"
+  >
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item logo" exact>
           <div class="logo">
-            <img class= "logo__img" src="@/assets/logo.svg" alt="Logo">
+            <img class="logo__img" src="@/assets/logo.svg" alt="Logo" />
             <span class="logo__text">{{ systemName }}</span>
           </div>
         </router-link>
@@ -14,9 +19,20 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <router-link class="navbar-item" to="help"><i class="el-icon-question"></i> {{ $t('common.help') }}</router-link>
-              <router-link class="button is-light" id="login-button" to="login"> {{ $t('user.login') }}</router-link> 
-              <router-link class="button bold is-blue is-outlined" id="get-started" to="signup"> {{ $t('user.register') }}</router-link>
+              <router-link class="navbar-item" to="help"
+                ><i class="el-icon-question"></i>
+                {{ $t('common.help') }}</router-link
+              >
+              <router-link class="button is-light" id="login-button" to="login">
+                {{ $t('user.login') }}</router-link
+              >
+              <router-link
+                class="button bold is-blue is-outlined"
+                id="get-started"
+                to="signup"
+              >
+                {{ $t('user.register') }}</router-link
+              >
               <LocaleChanger />
             </div>
           </div>
@@ -36,11 +52,12 @@ export default {
     LocaleChanger
   },
   computed: {
-    ...mapGetters('appState', ['isAuth', 'systemName', 'user']),
+    ...mapGetters('appState', ['isAuth', 'systemName', 'user'])
   },
   methods: {
     async logout() {
-      await this.$store.dispatch('appState/logout')
+      await this.$store
+        .dispatch('appState/logout')
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))
     }
@@ -48,14 +65,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.logo {
-  display: flex;
-  align-items: center;
-
-  &__text {
-    margin-left: 0.3em;
-    font-size: 1.3em;
-  }
-}
+<style lang="sass" scoped>
+.logo
+  display: flex
+  align-items: center
+  &__text
+    margin-left: 0.3em
+    font-size: 1.3em
 </style>

@@ -22,13 +22,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.page {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+<style lang="sass" scoped>
+.page
+  width: 100%
+  margin: 0
+  padding: 0
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
 </style>

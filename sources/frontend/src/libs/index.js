@@ -1,6 +1,5 @@
-
 import './VueAxios'
 import './VueMoment'
 import './Modals'
-import './CssUtils/index.css'
+import './CssUtils/index.sass'
 import 'bulma/bulma.sass'

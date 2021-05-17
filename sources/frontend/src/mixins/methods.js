@@ -5,7 +5,8 @@ export default {
     if (!rulesName.length) return
     return rulesName
       .map(nameField => ({
-        [nameField]: [{
+        [nameField]: [
+          {
             required: true,
             message: this.$t('validation.required')
           },
@@ -16,10 +17,16 @@ export default {
           ...option
         ]
       }))
-      .reduce((acc, item) => ((acc = {
-        ...acc,
-        ...item
-      }), acc), {})
+      .reduce(
+        (acc, item) => (
+          (acc = {
+            ...acc,
+            ...item
+          }),
+          acc
+        ),
+        {}
+      )
   },
 
   validation(type = '', success = () => {}, error = () => {}) {
@@ -27,30 +34,31 @@ export default {
       if (!type || !value) return callback()
       switch (type) {
         case 'name':
-          return /^[A-Za-zА-Яа-яЁё]*$/.test(value) ? callback() : callback(new Error(rule.message))
+          return /^[A-Za-zА-Яа-яЁё]*$/.test(value)
+            ? callback()
+            : callback(new Error(rule.message))
         case 'isNotEmpty':
-          return /^(?!\s)/.test(value) ? callback() : callback(new Error(rule.message))
+          return /^(?!\s)/.test(value)
+            ? callback()
+            : callback(new Error(rule.message))
         default:
-          return window.validation[type](value) ?
-            (success(), callback()) :
-            (error(), callback(new Error(rule.message)))
+          return window.validation[type](value)
+            ? (success(), callback())
+            : (error(), callback(new Error(rule.message)))
       }
     }
   },
 
-  validationUniqueName({
-      data: dataGrid,
-      index: indexEditRow,
-      form,
-      key = 'name'
-    },
+  validationUniqueName(
+    { data: dataGrid, index: indexEditRow, form, key = 'name' },
     success = () => {},
     error = () => {}
   ) {
     return (rule, value, callback) => {
       const data = [...dataGrid.filter((_, index) => index !== indexEditRow)]
       for (const item of data) {
-        const isMatchName = this.formatString(form[key]) === this.formatString(item[key])
+        const isMatchName =
+          this.formatString(form[key]) === this.formatString(item[key])
         if (isMatchName) return error(), callback(new Error(rule.message))
       }
       return success(), callback()
@@ -58,7 +66,12 @@ export default {
   },
 
   formatString(str) {
-    return str && String(str).trim().toLowerCase()
+    return (
+      str &&
+      String(str)
+        .trim()
+        .toLowerCase()
+    )
   },
 
   resetForm(formName) {
@@ -80,7 +93,10 @@ export default {
 
   getName(fisrtName = '', middleName = '', lastName = '') {
     let isString = val => val && typeof val === 'string'
-    let _upper = value => (isString(value) ? value[0].toUpperCase() + value.slice(1).toLowerCase() : '')
+    let _upper = value =>
+      isString(value)
+        ? value[0].toUpperCase() + value.slice(1).toLowerCase()
+        : ''
     let _first = value => (isString(value) ? `${value[0].toUpperCase()}.` : '')
 
     return {

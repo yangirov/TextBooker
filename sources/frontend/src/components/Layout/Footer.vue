@@ -9,11 +9,16 @@
             </div>
             <div class="column text-right">
               © 2020
-              <el-divider direction="vertical" ></el-divider>
+              <el-divider direction="vertical"></el-divider>
               {{ version }}
-              <el-divider direction="vertical" ></el-divider>
-              <a href="https://github.com/yangirov/TextBooker" target="_blank" rel="nofollow noreferrer">
-                <img class="github-icon" src="@/assets/github.png" alt="Icon"> Github
+              <el-divider direction="vertical"></el-divider>
+              <a
+                href="https://github.com/yangirov/TextBooker"
+                target="_blank"
+                rel="nofollow noreferrer"
+              >
+                <img class="github-icon" src="@/assets/github.png" alt="Icon" />
+                Github
               </a>
             </div>
           </div>
@@ -29,21 +34,19 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'PageFooter',
   computed: {
-    ...mapGetters('appState', ['version']),
+    ...mapGetters('appState', ['version'])
   }
 }
 </script>
 
-<style lang="scss" scoped>
-footer {
-  margin-top: auto;
-  height: 30px;
-  padding-top: 10px;
-}
+<style lang="sass" scoped>
+footer
+  margin-top: auto
+  height: 30px
+  padding-top: 10px
 
-.github-icon {
-  width: 16px;
-  margin-bottom: -2px;
-  height: auto;
-}
+.github-icon
+  width: 16px
+  margin-bottom: -2px
+  height: auto
 </style>

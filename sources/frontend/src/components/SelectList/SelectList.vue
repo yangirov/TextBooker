@@ -1,14 +1,14 @@
 <template>
-  <el-menu 
-    :default-active="selectedIndex" 
+  <el-menu
+    :default-active="selectedIndex"
     :class="className"
     @select="selectItem"
     @open="openHandler"
     @close="closeHandler"
   >
-    <el-menu-item 
-      v-for="(item, index) in items" 
-      :key="index" 
+    <el-menu-item
+      v-for="(item, index) in items"
+      :key="index"
       :index="index"
       :label="item.name"
       :class="{ 'is-active': isActiveItem(index) }"
@@ -27,7 +27,7 @@ export default {
       selectedIndex: 0
     }
   },
-  
+
   props: {
     items: {
       type: Array,
@@ -57,22 +57,20 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.el-menu {
-  overflow-y: scroll;
-  width: 100%;
-  height: 100%;
-  min-width: 13em;
-}
+<style lang="sass" scoped>
+.el-menu
+  overflow-y: scroll
+  width: 100%
+  height: 100%
+  min-width: 13em
 
-.el-menu-item {
-  height: auto;
-  line-height: 1.5;
-  padding: 10px 15px;
-}
+.el-menu-item
+  height: auto
+  line-height: 1.5
+  padding: 10px 15px
 
-.el-menu-item.is-active {
-  outline: 0;
-  background-color: #ecf5ff;
-}
+
+.el-menu-item.is-active
+  outline: 0
+  background-color: #ecf5ff
 </style>
