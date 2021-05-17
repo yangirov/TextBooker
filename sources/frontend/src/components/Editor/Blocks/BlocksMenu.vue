@@ -4,11 +4,12 @@
       :items="blocks"
       @handler="selectBlock"
       class-name="max-wh m-1"
+      id="blocks_list"
     ></SelectList>
 
     <div class="buttons mt-1 ml-1">
       <el-button type="primary" @click="addBlock">
-        {{ $t('common.add') }}
+        ➕ {{ $t('common.add') }}
       </el-button>
 
       <el-popconfirm
