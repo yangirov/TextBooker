@@ -4,14 +4,17 @@
       <div class="columns is-centered">
         <div class="column">
           <div class="columns is-vcentered">
-            <div class="column is-2">
-              <a href="/">TextBooker</a>
+            <div class="column text-left">
+              <router-link to="donate">{{ $t('common.donate') }}</router-link>
             </div>
-            <div class="column is-8 text-center">
+            <div class="column text-right">
               © 2020
-            </div>
-            <div class="column is-2 text-center">
-              {{ version }} | Github
+              <el-divider direction="vertical" ></el-divider>
+              {{ version }}
+              <el-divider direction="vertical" ></el-divider>
+              <a href="https://github.com/yangirov/TextBooker" target="_blank" rel="nofollow noreferrer">
+                <img class="github-icon" src="@/assets/github.png" alt="Icon"> Github
+              </a>
             </div>
           </div>
         </div>
@@ -21,23 +24,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PageFooter',
   computed: {
     ...mapGetters('appState', ['version']),
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 footer {
   margin-top: auto;
   height: 30px;
+  padding-top: 10px;
 }
 
-.columns {
-  padding: 0 5px;
+.github-icon {
+  width: 16px;
+  margin-bottom: -2px;
+  height: auto;
 }
 </style>

@@ -1,7 +1,7 @@
-export const getSettings = async () => (await axios.get('/settings')).data;
+export const getSettings = async () => (await axios.get('/settings')).data
 
 const common = {
   getSettings
-};
+}
 
-export default common;
+export default common

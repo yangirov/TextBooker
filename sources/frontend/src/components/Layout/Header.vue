@@ -5,7 +5,7 @@
         <router-link to="/" class="navbar-item logo" exact>
           <div class="logo">
             <img class= "logo__img" src="@/assets/logo.svg" alt="Logo">
-            <span class="logo__text">TextBooker</span>
+            <span class="logo__text">{{ systemName }}</span>
           </div>
         </router-link>
       </div>
@@ -14,10 +14,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <router-link class="navbar-item" to="help"><i class="el-icon-question"></i> Руководство</router-link>
-                <!-- <span>{{ getName(user.lastName, user.firstName, user.middleName).short }}</span> -->
-              <router-link class="button is-light" id="login-button" to="login"> Войти </router-link>
-              <router-link class="button bold is-blue is-outlined" id="get-started" to="signup"> Начать </router-link>
+              <router-link class="navbar-item" to="help"><i class="el-icon-question"></i> {{ $t('common.help') }}</router-link>
+              <router-link class="button is-light" id="login-button" to="login"> {{ $t('user.login') }}</router-link> 
+              <router-link class="button bold is-blue is-outlined" id="get-started" to="signup"> {{ $t('user.register') }}</router-link>
+              <LocaleChanger />
             </div>
           </div>
         </div>
@@ -27,10 +27,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
+import LocaleChanger from './LocaleChanger.vue'
 
 export default {
   name: 'PageHeader',
+  components: {
+    LocaleChanger
+  },
   computed: {
     ...mapGetters('appState', ['isAuth', 'systemName', 'user']),
   },
@@ -41,10 +45,10 @@ export default {
         .catch(err => console.log(err))
     }
   }
-};
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .logo {
   display: flex;
   align-items: center;
@@ -53,8 +57,5 @@ export default {
     margin-left: 0.3em;
     font-size: 1.3em;
   }
-}
-.navbar-menu {
-  display: block !important;
 }
 </style>
