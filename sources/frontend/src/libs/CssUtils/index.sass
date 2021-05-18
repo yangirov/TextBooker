@@ -1,22 +1,22 @@
 \:root
-  --blue:#007bff
-  --white:#fff
-  --background:#f2f7fc
-  --lightblue:#f2f7fc
-  --black:#404244
-  --darkblack:#131313
-  --lightBorder:#ececec
-  --secondaryBackground:#ccc
-  --aws:#ec6a10
-  --aws-color:#fff
-  --google-cloud:#1a73e8
-  --google-cloud-color:#fff
-  --healthchecks:#09301a
-  --healthchecks-color:#fff
-  --apex-ping:#000000
-  --apex-ping-color:#fff
-  --uptime-robot:#4ca74c
-  --uptime-robot-color:#fff
+  --blue: #007bff
+  --white: #fff
+  --background: #f2f7fc
+  --lightblue: #f2f7fc
+  --black: #404244
+  --darkblack: #131313
+  --lightBorder: #ececec
+  --secondaryBackground: #ccc
+  --aws: #ec6a10
+  --aws-color: #fff
+  --google-cloud: #1a73e8
+  --google-cloud-color: #fff
+  --healthchecks: #09301a
+  --healthchecks-color: #fff
+  --apex-ping: #000000
+  --apex-ping-color: #fff
+  --uptime-robot: #4ca74c
+  --uptime-robot-color: #fff
 
 html, body
   height: 100% !important
@@ -436,3 +436,40 @@ a i
     float: none
     padding: 0
     text-align: left
+  
+.container
+  max-width: 90% !important
+
+i
+  font-style: normal
+
+.el-button+span
+  margin-left: 10px
+
+.quillWrapper
+  height: 100%
+  max-height: 100%
+
+.prism-editor-wrapper
+  padding-right: 1em
+  padding: 0
+
+.noselect
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.el-drawer__header>:first-child
+
+
+.el-drawer__header
+  font-size: 1.5em
+  span
+    &:focus
+      outline: none !important
+
+.el-drawer__body
+  padding: 20px 20px

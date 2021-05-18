@@ -42,8 +42,7 @@ export default {
 <style lang="sass" scoped>
 footer
   margin-top: auto
-  height: 30px
-  padding-top: 10px
+  margin-bottom: 10px
 
 .github-icon
   width: 16px

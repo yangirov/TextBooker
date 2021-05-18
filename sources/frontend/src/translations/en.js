@@ -43,6 +43,10 @@ export const ENGLISH_TRANSLATIONS = {
     required: 'Required',
     notEmpty: 'Field cannot be empty'
   },
+  siteActions: {
+    view: 'Open site',
+    generate: 'Generate site'
+  },
   common: {
     donate: 'I ❤️ TextBooker',
     help: 'Help',
@@ -52,6 +56,9 @@ export const ENGLISH_TRANSLATIONS = {
     delete: 'Delete',
     yes: 'Yes',
     no: 'No',
-    deleteWarning: 'The action is irreversible. Delete it?'
+    deleteWarning: 'The action is irreversible. Delete it?',
+    preview: 'Preview',
+    htmlEditor: 'HTML-code',
+    wysiwygEditor: 'Wysiwyg editor'
   }
 }

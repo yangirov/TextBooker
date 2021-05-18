@@ -1,5 +1,5 @@
 <template>
-  <div class="blocks_menu">
+  <div class="blocks_list">
     <SelectList
       :items="blocks"
       @handler="selectBlock"
@@ -9,7 +9,8 @@
 
     <div class="buttons mt-1 ml-1">
       <el-button type="primary" @click="addBlock">
-        ➕ {{ $t('common.add') }}
+        <i class="el-icon-circle-plus-outline"></i>
+        {{ $t('common.add') }}
       </el-button>
 
       <el-popconfirm
@@ -21,7 +22,8 @@
         iconColor="red"
       >
         <el-button slot="reference" type="danger">
-          ➖ {{ $t('common.delete') }}
+          <i class="el-icon-remove-outline"></i>
+          {{ $t('common.delete') }}
         </el-button>
       </el-popconfirm>
     </div>
@@ -30,7 +32,7 @@
 
 <script>
 export default {
-  name: 'BlocksMenu',
+  name: 'BlocksList',
 
   data() {
     return {
@@ -67,9 +69,13 @@ export default {
 
 <style lang="sass" scoped>
 .buttons
+  display: flex
   flex-wrap: nowrap
-  justify-content: space-evenly
+  justify-content: flex-start
 
-.blocks_menu
-  height: 94%
+.blocks_list
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 100%
 </style>
