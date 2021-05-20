@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-tabs type="card" value="5">
+    <el-tabs type="card" value="0">
       <el-tab-pane class="full-wh" :lazy="true">
         <span slot="label">
           <i class="el-icon-s-home"></i> {{ $t('tabs.start.name') }}
