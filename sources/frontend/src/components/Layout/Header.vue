@@ -19,10 +19,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <router-link class="navbar-item" to="help">
+              <a class="navbar-item" href="help">
                 <i class="el-icon-question"></i>
                 {{ $t('common.help') }}
-              </router-link>
+              </a>
               <router-link class="button is-light" id="login-button" to="login">
                 {{ $t('user.login') }}
               </router-link>
@@ -31,8 +31,8 @@
                 id="get-started"
                 to="signup"
               >
-                {{ $t('user.register') }}</router-link
-              >
+                {{ $t('user.register') }}
+              </router-link>
               <LocaleChanger />
             </div>
           </div>

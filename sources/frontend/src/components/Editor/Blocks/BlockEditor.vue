@@ -1,42 +1,44 @@
 <template>
   <div class="block_editor">
     <el-form :model="form" :rules="rules" ref="blockEditorForm" size="small">
-      <el-form-item prop="title">
-        <el-input
-          id="block_title"
-          v-model="form.title"
-          :placeholder="$t('tabs.blocks.title')"
-        >
+      <el-form-item prop="title" id="block_title">
+        <el-input v-model="title" :placeholder="$t('tabs.blocks.title')">
+          <template #prepend>
+            <el-tooltip
+              effect="dark"
+              :content="$t('tabs.blocks.description')"
+              placement="left-start"
+            >
+              <el-button icon="el-icon-question"></el-button>
+            </el-tooltip>
+          </template>
+
           <template #append>
-            <div id="editorActions">
-              <el-button icon="el-icon-view" @click="drawer = true">
-                {{ $t('common.preview') }}
-              </el-button>
-              <el-button @click="enabledHtmlMode = !enabledHtmlMode">
-                <i :class="editorButtonIcon"></i>
-                {{
-                  enabledHtmlMode
-                    ? $t('common.wysiwygEditor')
-                    : $t('common.htmlEditor')
-                }}
-              </el-button>
-            </div>
+            <el-button icon="el-icon-view" @click="previewVisible = true">
+              {{ $t('common.preview') }}
+            </el-button>
+            <el-button @click="enabledHtmlMode = !enabledHtmlMode">
+              <i :class="editorButtonIcon"></i>
+              {{ editorButtonText }}
+            </el-button>
           </template>
         </el-input>
       </el-form-item>
     </el-form>
 
-    <ContentEditor @change-content="handler" />
+    <ContentEditor
+      :html-mode="enabledHtmlMode"
+      :preview-visible="previewVisible"
+      :style="style"
+      :title="title"
+      @change-content="changeContent"
+      @close-previewer="closePreview"
+    ></ContentEditor>
   </div>
 </template>
 
 <script>
 import ContentEditor from '@/components/Editor/ContentEditor/ContentEditor.vue'
-
-let initState = {
-  title: '',
-  content: ''
-}
 
 export default {
   name: 'BlockEditor',
@@ -47,7 +49,13 @@ export default {
 
   data() {
     return {
-      form: { ...initState }
+      style: '',
+
+      previewVisible: false,
+      enabledHtmlMode: false,
+
+      title: '',
+      content: ''
     }
   },
 
@@ -60,23 +68,30 @@ export default {
 
     editorButtonIcon() {
       return this.enabledHtmlMode ? 'el-icon-picture' : 'el-icon-edit-outline'
+    },
+
+    editorButtonText() {
+      return this.enabledHtmlMode
+        ? this.$t('common.wysiwygEditor')
+        : this.$t('common.htmlEditor')
     }
   },
 
   methods: {
-    handler(data) {
+    changeContent(data) {
       this.form.content = data
     },
 
-    calculateStyles(height, width) {
-      this.style = `height: calc(${height}px - 7em); width: calc(${width}px + 2.7em);`
+    closePreview() {
+      this.previewVisible = false
     },
 
     resizeHandler() {
       let menuHeight = document.getElementById('blocks_list').clientHeight
       let inputWidth = document.getElementById('block_title').clientWidth
-      let actionsWidth = document.getElementById('editorActions').clientWidth
-      this.calculateStyles(menuHeight, inputWidth + actionsWidth)
+
+      this.style = `height: calc(${menuHeight}px - 7em); 
+                    width: calc(${inputWidth}px - 0.1em);`
     }
   },
 
@@ -91,7 +106,7 @@ export default {
   },
 
   destroyed() {
-    window.removeEventListener('resize', this.myEventHandler)
+    window.removeEventListener('resize', this.resizeHandler)
   }
 }
 </script>
