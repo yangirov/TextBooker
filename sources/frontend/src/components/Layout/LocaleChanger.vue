@@ -23,14 +23,14 @@ export default {
     return {
       langs: [
         {
-          short: 'ru',
-          name: 'Русский',
-          flag: '🇷🇺'
-        },
-        {
           short: 'en',
           name: 'English',
           flag: '🇬🇧'
+        },
+        {
+          short: 'ru',
+          name: 'Русский',
+          flag: '🇷🇺'
         }
       ]
     }
