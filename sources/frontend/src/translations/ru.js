@@ -93,7 +93,9 @@ export const RUSSIAN_TRANSLATIONS = {
     login: 'Войти',
     logout: 'Выйти',
     male: 'Мужской',
-    female: 'Женский'
+    female: 'Женский',
+    projects: 'Проекты',
+    settings: 'Настройки'
   },
   status: {
     success: 'Успешно',

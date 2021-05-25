@@ -92,9 +92,11 @@ export const ENGLISH_TRANSLATIONS = {
   user: {
     register: 'Sign up',
     login: 'Sign in',
-    logout: 'Sign out',
+    logout: 'Log out',
     male: 'Male',
-    female: 'Female'
+    female: 'Female',
+    projects: 'Projects',
+    settings: 'Settings'
   },
   status: {
     success: 'Success',
