@@ -6,13 +6,22 @@ import Feedback from '@/views/Feedback.vue'
 import About from '@/views/About.vue'
 import SignIn from '@/views/SignIn.vue'
 import SignUp from '@/views/SignUp.vue'
+import NotFound from '@/views/NotFound.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '*',
-    name: 'About',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: NotFound
+  },
+  {
+    path: '/',
     component: About
   },
   {
