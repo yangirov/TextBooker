@@ -116,6 +116,7 @@ export const ENGLISH_TRANSLATIONS = {
   common: {
     donate: 'I ❤️ TextBooker',
     help: 'Help',
+    docs: 'Docs',
     empty: 'Empty',
     add: 'Add',
     edit: 'Edit',
@@ -125,6 +126,9 @@ export const ENGLISH_TRANSLATIONS = {
     deleteWarning: 'The action is irreversible. Delete it?',
     preview: 'Preview',
     htmlEditor: 'HTML editor',
-    wysiwygEditor: 'Wysiwyg editor'
+    wysiwygEditor: 'Wysiwyg editor',
+    email: 'Email',
+    password: 'Password',
+    continue: 'Continue'
   }
 }

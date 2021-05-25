@@ -89,7 +89,7 @@ export const RUSSIAN_TRANSLATIONS = {
     ]
   },
   user: {
-    register: 'Начать',
+    register: 'Регистрация',
     login: 'Войти',
     logout: 'Выйти',
     male: 'Мужской',
@@ -115,6 +115,7 @@ export const RUSSIAN_TRANSLATIONS = {
   common: {
     donate: 'Я ❤️ TextBooker',
     help: 'Руководство',
+    docs: 'Документация',
     empty: 'Пусто',
     add: 'Добавить',
     edit: 'Редактировать',
@@ -126,6 +127,9 @@ export const RUSSIAN_TRANSLATIONS = {
     htmlEditor: 'HTML-код',
     wysiwygEditor: 'Визуальный редактор',
     field: 'Field',
-    value: 'Value'
+    value: 'Value',
+    email: 'Электронная почта',
+    password: 'Пароль',
+    continue: 'Продолжить'
   }
 }
