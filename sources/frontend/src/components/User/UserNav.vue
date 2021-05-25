@@ -39,10 +39,10 @@ export default {
     async handleCommand(command) {
       switch (command) {
         case 'projects':
-          this.$router.push('/projects')
+          this.$router.push('/user/projects')
           break
         case 'settings':
-          this.$router.push('/settings')
+          this.$router.push('/user/settings')
           break
         case 'logout':
           await this.logout()
