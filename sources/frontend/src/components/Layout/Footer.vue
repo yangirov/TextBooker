@@ -4,10 +4,12 @@
       <div class="columns is-centered">
         <div class="column">
           <div class="columns is-vcentered">
-            <div class="column text-left">
+            <div class="column text-left footer-left">
               © 2020
               <el-divider direction="vertical"></el-divider>
-              {{ version }}
+              <span>{{ version }}</span>
+              <el-divider direction="vertical"></el-divider>
+              <span>{{ $t('common.metrics') }}</span>
             </div>
 
             <div class="column text-center">
@@ -71,4 +73,7 @@ footer
   width: 16px
   margin-bottom: -2px
   height: auto
+
+.footer-left
+  color: #7e8184
 </style>

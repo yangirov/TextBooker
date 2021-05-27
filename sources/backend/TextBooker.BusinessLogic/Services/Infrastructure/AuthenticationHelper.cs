@@ -1,23 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using TextBooker.Api.Infrastructure.Models;
-using TextBooker.Contracts.Dto;
+using TextBooker.Contracts.Dto.Config;
 
-namespace Api.Infrastructure
+namespace TextBooker.BusinessLogic.Services.Infrastructure
 {
 	public static class AuthenticationHelper
 	{
-		public static string GenerateJwtToken(string email, ApplicationUser user, JwtSettings jwtSettings)
+		public static string GenerateJwtToken(string email, string userId, JwtSettings jwtSettings)
 		{
 			var claims = new List<Claim>
 			{
 				new Claim(JwtRegisteredClaimNames.Sub, email),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+				new Claim(ClaimTypes.NameIdentifier, userId)
 			};
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable(jwtSettings.Key)));

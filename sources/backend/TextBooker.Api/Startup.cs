@@ -3,7 +3,6 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +19,14 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Sinks.Loki;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
 using TextBooker.Api.Infrastructure;
 using TextBooker.Api.Infrastructure.Converters;
 using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.DataAccess;
+using TextBooker.Api.Infrastructure.Models;
+using TextBooker.BusinessLogic.Services;
+using TextBooker.Contracts.Dto.Config;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -55,20 +54,15 @@ namespace TextBooker.Api
 			}
 
 			services.AddResponseCompression();
-			var serializationSettings = new JsonSerializerSettings
-			{
-				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				Formatting = Formatting.None
-			};
-			JsonConvert.DefaultSettings = () => serializationSettings;
-
 			services.AddControllers();
 
 			var lokiUrl = Configuration.GetValue<string>("Serilog:LokiUrl");
-			services.AddSingleton((ILogger) new LoggerConfiguration()
+			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
 				.WriteTo.LokiHttp(new NoAuthCredentials(Environment.GetEnvironmentVariable(lokiUrl)), new LogLabelProvider(Configuration, HostingEnvironment))
-				.CreateLogger());
+				.CreateLogger();
+
+			services.AddSingleton<ILogger>(logger);
 
 			services.AddMvcCore(options =>
 				{
@@ -81,13 +75,14 @@ namespace TextBooker.Api
 				.AddFormatterMappings()
 				.AddNewtonsoftJson()
 				.AddApiExplorer()
-				//.AddCacheTagHelper()
 				.AddDataAnnotations();
 
 			services
 				.AddCors()
 				.AddLocalization()
 				.AddMemoryCache();
+
+			services.AddHttpContextAccessor();
 
 			var connectionOptions = Configuration.GetValue<string>("Database:Options");
 			var connectionString = Environment.GetEnvironmentVariable(connectionOptions);
@@ -99,45 +94,32 @@ namespace TextBooker.Api
 					builder.EnableRetryOnFailure();
 				});
 
+				options.UseSnakeCaseNamingConvention();
 				options.EnableSensitiveDataLogging(false);
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 			}, 16);
 
-			//services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-			//.AddIdentityServerAuthentication(options =>
-			//{
-			//	options.Authority = authorityUrl;
-			//	options.ApiName = apiName;
-			//	options.RequireHttpsMetadata = true;
-			//	options.SupportedTokens = SupportedTokens.Jwt;
-			//});
+			services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+			var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
 
-			//services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
-			//var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
-
-			//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-			//services.AddAuthentication(options =>
-			//{
-			//	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-			//	options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-			//	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			//})
-			//.AddJwtBearer(cfg =>
-			//{
-			//	cfg.RequireHttpsMetadata = false;
-			//	cfg.SaveToken = true;
-			//	cfg.TokenValidationParameters =
-			//		new TokenValidationParameters
-			//		{
-			//			ValidIssuer = jwtSettings.Issuer,
-			//			ValidAudience = jwtSettings.Issuer,
-			//			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable(jwtSettings.Key))),
-			//			ClockSkew = TimeSpan.Zero
-			//		};
-			//});
-
-			services.AddSingleton<IVersionService, VersionService>();
-			services.AddSingleton<IJsonSerializer, CustomJsonSerializer>();
+			services
+				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+				{
+					options.RequireHttpsMetadata = false;
+					options.SaveToken = true;
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuer = true,
+						ValidateAudience = true,
+						ValidateLifetime = true,
+						ValidateIssuerSigningKey = true,
+						ValidIssuer = jwtSettings.Issuer,
+						ValidAudience = jwtSettings.Issuer,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable(jwtSettings.Key))),
+						ClockSkew = TimeSpan.FromDays(30)
+					};
+				});
 
 			services.AddHealthChecks()
 					.AddDbContextCheck<TextBookerContext>();
@@ -187,6 +169,10 @@ namespace TextBooker.Api
 					}
 				});
 			});
+
+			services.AddSingleton<IJsonSerializer, CustomJsonSerializer>();
+			services.AddSingleton<IVersionService, VersionService>();
+			services.AddTransient<IUserService, UserService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

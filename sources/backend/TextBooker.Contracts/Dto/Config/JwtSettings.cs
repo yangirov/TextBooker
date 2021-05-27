@@ -1,4 +1,4 @@
-namespace TextBooker.Api.Infrastructure.Models
+namespace TextBooker.Contracts.Dto.Config
 {
 	public class JwtSettings
 	{

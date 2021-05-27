@@ -1,5 +1,4 @@
 import axiosInstance from 'axios'
-import { showErrorNotify } from '@/utils/notify'
 
 const axios = axiosInstance.create({
   baseURL:
@@ -31,24 +30,6 @@ axios.interceptors.response.use(
     const { status } = response
 
     if (status >= 500) {
-      return Promise.reject(response)
-    }
-
-    let responseURL = response.request.responseURL
-
-    if (/\/auth\/expired/.test(responseURL)) {
-      showErrorNotify('Повторно авторизуйтесь в системе', {
-        title: 'Сессия авторизации закончилась'
-      })
-
-      setTimeout(() => {
-        window.location.href = '/auth/expired'
-      }, 2000)
-      return Promise.reject(response)
-    }
-
-    if (/\/auth\/accessdenied/.test(responseURL)) {
-      window.location.href = '/auth/accessdenied'
       return Promise.reject(response)
     }
 

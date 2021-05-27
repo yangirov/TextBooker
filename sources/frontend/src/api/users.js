@@ -10,8 +10,8 @@ export const loginUser = async data =>
 export const updateUser = async payload =>
   (await axios.put('/user/update', payload)).data
 
-export const addUser = async payload =>
-  (await axios.post('/user/add', payload)).data
+export const registerUser = async payload =>
+  (await axios.post('/user/register', payload)).data
 
 const users = {
   isAuth,
@@ -19,7 +19,7 @@ const users = {
   getUser,
   loginUser,
   updateUser,
-  addUser
+  registerUser
 }
 
 export default users

@@ -2,7 +2,7 @@
   <div class="columns is-mobile is-centered">
     <div class="column is-4">
       <h1 class="title mb-2">{{ $t('user.login') }}</h1>
-      <SignForm type="login" />
+      <SignForm action="login" />
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('appState', ['isAuth'])
+    ...mapGetters('user', ['isAuth'])
   },
 
   created() {
