@@ -104,6 +104,8 @@ namespace TextBooker.Api
 				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options =>
 				{
+					var jwtKey = Environment.GetEnvironmentVariable(jwtSettings.Key);
+
 					options.RequireHttpsMetadata = false;
 					options.SaveToken = true;
 					options.TokenValidationParameters = new TokenValidationParameters
@@ -114,7 +116,7 @@ namespace TextBooker.Api
 						ValidateIssuerSigningKey = true,
 						ValidIssuer = jwtSettings.Issuer,
 						ValidAudience = jwtSettings.Issuer,
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable(jwtSettings.Key))),
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
 						ClockSkew = TimeSpan.FromDays(30)
 					};
 				});
