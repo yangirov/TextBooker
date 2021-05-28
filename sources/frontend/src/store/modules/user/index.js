@@ -49,7 +49,6 @@ export default {
         }
         router.push('/user/projects')
       } catch (error) {
-        console.log(error)
         showErrorNotify(i18n.t('status.authError'))
       } finally {
         setState(commit, { loading: false })
@@ -59,11 +58,9 @@ export default {
     async register({ commit }, { email, password }) {
       try {
         setState(commit, { loading: true })
-        let result = await api.register({ email, password })
-        console.log(result)
+        let result = await api.registerUser({ email, password })
       } catch (error) {
-        console.log(error)
-        showErrorNotify(i18n.t('status.registerError'))
+        showErrorNotify(error)
       } finally {
         setState(commit, { loading: false })
       }

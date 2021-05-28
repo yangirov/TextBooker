@@ -5,6 +5,8 @@
       :model="signForm"
       :rules="rules"
       label-width="200px"
+      @submit.native.prevent="onSubmit"
+      v-loading="loading"
     >
       <el-form-item :label="$t('common.email')" prop="email" class="mb-2">
         <el-input
@@ -34,7 +36,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('signForm')">
+        <el-button type="primary" native-type="submit">
           {{ $t('common.continue') }}
         </el-button>
       </el-form-item>
@@ -43,12 +45,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SignForm',
 
   computed: {
+    ...mapGetters('user', ['loading']),
+
     passwordType() {
       return this.passwordVisible ? 'text' : 'password'
+    },
+
+    $form() {
+      return this.$refs['signForm']
     }
   },
 
@@ -93,12 +103,12 @@ export default {
   },
 
   methods: {
-    login() {
-      this.$store.dispatch('user/login', this.signForm)
+    async login() {
+      await this.$store.dispatch('user/login', this.signForm)
     },
 
-    register() {
-      this.$store.dispatch('user/register', this.signForm)
+    async register() {
+      await this.$store.dispatch('user/register', this.signForm)
     },
 
     validationEmail(rule, value, callback) {
@@ -108,16 +118,17 @@ export default {
         : callback(new Error(rule.message))
     },
 
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    onSubmit() {
+      const { $form, action } = this
+
+      $form.validate(async valid => {
         if (valid) {
-          if (this.action === 'login') {
-            this.login()
+          if (action === 'login') {
+            await this.login()
           } else {
-            this.register()
+            await this.register()
           }
         } else {
-          console.log('Error submit!')
           return false
         }
       })
