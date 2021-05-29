@@ -1,10 +1,5 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    @submit.native.prevent="onSubmit"
-    v-loading="loading"
-  >
+  <el-form ref="form" @submit.native.prevent="onSubmit" v-loading="loading">
     <el-form-item>
       <el-input
         :placeholder="$t('user.username')"
@@ -35,12 +30,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data: () => ({
     form: {
       username: ''
     }
   }),
+
+  computed: {
+    ...mapGetters('user', ['user', 'loading'])
+  },
 
   methods: {
     onSubmit() {
@@ -50,6 +51,10 @@ export default {
     deleteUser() {
       this.$store.dispatch('user/delete')
     }
+  },
+
+  mounted() {
+    this.form.username = this.user.username
   }
 }
 </script>

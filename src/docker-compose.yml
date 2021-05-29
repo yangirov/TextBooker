@@ -7,10 +7,9 @@ networks:
 services:
   tb-postgres:
     container_name: tb-postgres
-    restart: always
     build:
-      context: ./devops/postgres
-      dockerfile: Dockerfile
+      context: ./devops/docker/postgres
+    restart: always
     ports:
       - 5432:5432
     environment:
@@ -18,19 +17,19 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - ./devops/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./devops/docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
       - db-data:/var/lib/postgresql/data
-      - ${FILESTORE}/logs/postgres:/var/log/postgresql
+      - db-logs:/var/log/postgresql
     networks:
       - tb-network
 
   tb-backend:
-    restart: always
-    container_name: tb-backend
     image: tb-backend:latest
+    container_name: tb-backend
     build:
       context: ./backend
-      dockerfile: ./TextBooker.Api/Dockerfile
+      dockerfile: ../devops/docker/backend/Dockerfile
+    restart: always
     ports:
       - 2055:80
     environment:
@@ -38,20 +37,21 @@ services:
       DB_CONNECTION_STRING: 'Server=tb-postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};'
       LOKI_URL: 'http://loki:3100'
       JWT_KEY: '${JWT_KEY}'
+    depends_on:
+      - tb-postgres
     networks:
       - tb-network
     links:
       - tb-postgres
       - loki
-    depends_on:
-      - tb-postgres
 
   tb-frontend:
-    restart: always
-    container_name: tb-frontend
     image: tb-frontend:latest
+    container_name: tb-frontend
     build:
       context: ./frontend
+      dockerfile: ../devops/docker/frontend/Dockerfile
+    restart: always
     ports:
       - 2050:2050
     environment:
@@ -61,15 +61,13 @@ services:
       - tb-network
 
   tb-nginx:
+    image: nginx:1.16.0-alpine
     container_name: tb-nginx
     restart: always
-    image: nginx:1.16.0-alpine
     volumes:
-      - ./devops/nginx/html:/var/www/html/errors
       - ./devops/nginx/page.conf:/etc/nginx/page.conf
-      - ./devops/nginx/error_pages.conf:/etc/nginx/error_pages.conf
       - ./devops/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ${FILESTORE}/logs/nginx:/var/log/nginx
+      - nginx-logs:/var/log/nginx
     ports:
       - 80:80
     networks:
@@ -81,12 +79,12 @@ services:
   cadvisor:
     image: gcr.io/google-containers/cadvisor:v0.36.0
     container_name: cadvisor
+    restart: always
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
-    restart: always
     networks:
       - tb-network
     labels:
@@ -95,6 +93,7 @@ services:
   node-exporter:
     image: prom/node-exporter:v1.0.0-rc.1
     container_name: node-exporter
+    restart: always
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -104,16 +103,15 @@ services:
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-    restart: always
     networks:
       - tb-network
     labels:
       org.label-schema.group: 'monitoring'
 
   nginx-exporter:
-    restart: always
-    container_name: nginx-exporter
     image: nginx/nginx-prometheus-exporter:0.7.0
+    container_name: nginx-exporter
+    restart: always
     environment:
       - SCRAPE_URI=http://tb-nginx/nginx_status
       - TELEMETRY_PATH=/metrics
@@ -130,8 +128,8 @@ services:
       org.label-schema.group: 'monitoring'
 
   postgres-exporter:
-    container_name: postgres-exporter
     image: wrouesnel/postgres_exporter:v0.8.0
+    container_name: postgres-exporter
     restart: always
     environment:
       - DATA_SOURCE_URI=tb-postgres/${POSTGRES_DB}?sslmode=disable
@@ -147,9 +145,11 @@ services:
       org.label-schema.group: 'monitoring'
 
   prometheus:
-    restart: always
-    container_name: prometheus
     image: prom/prometheus:v2.18.1
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
     volumes:
       - ./devops/prometheus/:/etc/prometheus/
       - prometheus-data:/prometheus
@@ -158,23 +158,21 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-    ports:
-      - 9090:9090
+    networks:
+      - tb-network
     links:
       - tb-backend
       - cadvisor
       - postgres-exporter
       - nginx-exporter
       - node-exporter
-    networks:
-      - tb-network
     labels:
       org.label-schema.group: 'monitoring'
 
   loki:
     image: grafana/loki:master-2739551
-    restart: always
     container_name: loki
+    restart: always
     ports:
       - 3100:3100
     volumes:
@@ -185,12 +183,9 @@ services:
       - tb-network
 
   grafana:
-    restart: always
-    container_name: grafana
     image: grafana/grafana:6.4.4
-    depends_on:
-      - prometheus
-      - loki
+    container_name: grafana
+    restart: always
     ports:
       - 3000:3000
     volumes:
@@ -201,6 +196,9 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP}
     networks:
       - tb-network
+    depends_on:
+      - prometheus
+      - loki
     labels:
       org.label-schema.group: 'monitoring'
 
@@ -210,8 +208,8 @@ services:
     restart: always
     volumes:
       - ./devops/loki:/etc/promtail
-      - ${FILESTORE}/logs/nginx:/var/log/nginx
-      - ${FILESTORE}/logs/postgres:/var/log/postgresql
+      - nginx-logs:/var/log/nginx
+      - db-logs:/var/log/postgresql
     command: -config.file=/etc/promtail/loki-promtail-config.yml
     links:
       - loki
@@ -219,6 +217,8 @@ services:
       - tb-network
 
 volumes:
+  nginx-logs:
+  db-logs:
   db-data:
   prometheus-data:
   loki-data:

@@ -18,5 +18,8 @@ namespace TextBooker.Contracts.Dto.User
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
+
+		[Required]
+		public string Token { get; set; }
 	}
 }

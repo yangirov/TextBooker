@@ -12,6 +12,15 @@ import './libs'
 import ButtonAction from './components/ButtonAction'
 import ButtonDelete from './components/ButtonDelete'
 import SelectList from './components/SelectList'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
+
+Vue.use(VueReCaptcha, {
+  siteKey: process.env.VUE_APP_RECAPTCHA_SITE,
+  loaderOptions: {
+    useRecaptchaNet: true,
+    autoHideBadge: true
+  }
+})
 
 Vue.use(SelectList)
 Vue.use(ButtonAction)

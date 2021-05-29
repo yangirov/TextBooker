@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using TextBooker.Contracts.Dto.Config;
 
-namespace TextBooker.BusinessLogic.Services.Infrastructure
+namespace TextBooker.BusinessLogic.Infrastructure
 {
 	public static class AuthenticationHelper
 	{
@@ -19,7 +19,7 @@ namespace TextBooker.BusinessLogic.Services.Infrastructure
 				new Claim(ClaimTypes.NameIdentifier, userId)
 			};
 
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable(jwtSettings.Key)));
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 			var expires = DateTime.Now.AddDays(Convert.ToDouble(jwtSettings.ExpireDays));
 

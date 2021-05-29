@@ -7,10 +7,12 @@ namespace TextBooker.BusinessLogic.Services
 {
 	public interface IUserService
 	{
-		Task<Result<UserShortInfoDto>> UserInfo(ClaimsPrincipal user);
+		Task<Result<UserInfoDto>> GetInfo(ClaimsPrincipal user);
 
-		Task<Result<string>> Register(SignDto dto);
+		Task<Result<bool>> Register(SignDto dto);
 
 		Task<Result<SignResponse>> Login(SignDto dto);
+
+		Task<Result<bool>> Update(ClaimsPrincipal user, UserUpdateDto dto);
 	}
 }

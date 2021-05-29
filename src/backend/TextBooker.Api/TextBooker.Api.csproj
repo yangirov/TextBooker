@@ -56,9 +56,5 @@
     <ProjectReference Include="..\TextBooker.DataAccess\TextBooker.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Conventions\" />
-  </ItemGroup>
-
 
 </Project>

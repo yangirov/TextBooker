@@ -62,7 +62,8 @@ export default {
 
     signForm: {
       email: '',
-      password: ''
+      password: '',
+      token: ''
     }
   }),
 
@@ -103,6 +104,11 @@ export default {
   },
 
   methods: {
+    async recaptcha() {
+      await this.$recaptchaLoaded()
+      this.signForm.token = await this.$recaptcha('login')
+    },
+
     async login() {
       await this.$store.dispatch('user/login', this.signForm)
     },
@@ -123,6 +129,8 @@ export default {
 
       $form.validate(async valid => {
         if (valid) {
+          await this.recaptcha()
+
           if (action === 'login') {
             await this.login()
           } else {

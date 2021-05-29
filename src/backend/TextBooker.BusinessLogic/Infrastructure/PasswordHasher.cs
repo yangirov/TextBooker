@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using TextBooker.Contracts.Dto.User;
 
-namespace TextBooker.BusinessLogic.Services.Infrastructure
+namespace TextBooker.BusinessLogic.Infrastructure
 {
 	public class PasswordHasher
 	{

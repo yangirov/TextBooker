@@ -25,6 +25,7 @@ using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.DataAccess;
 using TextBooker.Contracts.Dto.Config;
+using TextBooker.DataAccess.Entities;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -51,25 +52,23 @@ namespace TextBooker.Api
 				}
 			}
 
-			services.AddResponseCompression();
-			services.AddControllers();
-
 			var lokiUrl = Configuration.GetValue<string>("Serilog:LokiUrl");
 			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
-				.WriteTo.LokiHttp(new NoAuthCredentials(Environment.GetEnvironmentVariable(lokiUrl)), new LogLabelProvider(Configuration, HostingEnvironment))
+				.WriteTo.LokiHttp(new NoAuthCredentials(
+					EnvironmentVariable.Get(lokiUrl)),
+					new LogLabelProvider(Configuration, HostingEnvironment)
+				)
 				.CreateLogger();
 
 			services.AddSingleton<ILogger>(logger);
 
-			services.AddMvcCore(options =>
+			services
+				.AddMvcCore(options =>
 				{
-					//options.Conventions.Insert(0, new LocalizationConvention());
-					//options.Conventions.Add(new AuthorizeControllerModelConvention());
 					options.Filters.Add(new MiddlewareFilterAttribute(typeof(LocalizationPipelineFilter)));
 					options.Filters.Add(typeof(ModelValidationFilter));
 				})
-				.AddAuthorization()
 				.AddCors()
 				.AddControllersAsServices()
 				.AddFormatterMappings()
@@ -78,14 +77,18 @@ namespace TextBooker.Api
 				.AddDataAnnotations();
 
 			services
-				.AddCors()
+				.AddResponseCompression()
+				.AddControllers();
+
+			services
 				.AddLocalization()
 				.AddMemoryCache();
 
 			services.AddHttpContextAccessor();
 
 			var connectionOptions = Configuration.GetValue<string>("Database:Options");
-			var connectionString = Environment.GetEnvironmentVariable(connectionOptions);
+			var connectionString = EnvironmentVariable.Get(connectionOptions);
+			var poolSize = Configuration.GetValue<int?>("Database:PoolSize") ?? 16;
 			services.AddEntityFrameworkNpgsql().AddDbContextPool<TextBookerContext>(options =>
 			{
 				options.UseNpgsql(connectionString, builder =>
@@ -97,17 +100,34 @@ namespace TextBooker.Api
 				options.UseSnakeCaseNamingConvention();
 				options.EnableSensitiveDataLogging(false);
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-			}, 16);
-
-			services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
-			var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+			}, poolSize);
 
 			services
+				.AddHealthChecks()
+				.AddDbContextCheck<TextBookerContext>();
+
+			var emailOptions = Configuration.GetSection("Email").Get<EmailSettings>();
+			var emailSettings = new EmailSettings()
+			{
+				Username = EnvironmentVariable.Get(emailOptions.Username),
+				Password = EnvironmentVariable.Get(emailOptions.Password),
+				Host = EnvironmentVariable.Get(emailOptions.Host),
+				Port = EnvironmentVariable.Get(emailOptions.Port)
+			};
+
+			var jwtOptions = Configuration.GetSection("Jwt").Get<JwtSettings>();
+			var jwtSettings = new JwtSettings()
+			{
+				Key = EnvironmentVariable.Get(jwtOptions.Key),
+				Issuer = jwtOptions.Issuer,
+				ExpireDays = jwtOptions.ExpireDays
+			};
+
+			services
+				.AddAuthorization()
 				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options =>
 				{
-					var jwtKey = Environment.GetEnvironmentVariable(jwtSettings.Key);
-
 					options.RequireHttpsMetadata = false;
 					options.SaveToken = true;
 					options.TokenValidationParameters = new TokenValidationParameters
@@ -118,15 +138,10 @@ namespace TextBooker.Api
 						ValidateIssuerSigningKey = true,
 						ValidIssuer = jwtSettings.Issuer,
 						ValidAudience = jwtSettings.Issuer,
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
 						ClockSkew = TimeSpan.FromDays(30)
 					};
 				});
-
-			services.AddHealthChecks()
-					.AddDbContextCheck<TextBookerContext>();
-
-			services.AddMetrics(Program.Metrics);
 
 			var swaggerTitle = Configuration.GetValue<string>("SystemInfo:Name");
 			services.AddSwaggerGen(c =>
@@ -172,9 +187,18 @@ namespace TextBooker.Api
 				});
 			});
 
+			services.AddMetrics(Program.Metrics);
+
 			services.AddSingleton<IJsonSerializer, CustomJsonSerializer>();
+
 			services.AddSingleton<IVersionService, VersionService>();
-			services.AddTransient<IUserService, UserService>();
+
+			services.AddTransient<IUserService, UserService>(
+				x => new UserService(
+					x.GetRequiredService<ILogger>(),
+					x.GetRequiredService<TextBookerContext>(),
+					jwtSettings
+				));
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -191,9 +215,10 @@ namespace TextBooker.Api
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});
 
+
 			app.UseCors(builder => builder
 				.AllowAnyOrigin()
-				.AllowAnyHeader()
+				.AllowAnyMethod()
 				.AllowAnyHeader());
 
 			app.UseResponseCompression();
