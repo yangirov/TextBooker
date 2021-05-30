@@ -14,9 +14,9 @@ namespace TextBooker.BusinessLogic.Infrastructure
 		{
 			var claims = new List<Claim>
 			{
+				new Claim(ClaimTypes.NameIdentifier, userId),
 				new Claim(JwtRegisteredClaimNames.Sub, email),
-				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-				new Claim(ClaimTypes.NameIdentifier, userId)
+				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 			};
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
