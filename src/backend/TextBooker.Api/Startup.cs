@@ -219,8 +219,8 @@ namespace TextBooker.Api
 				x => new UserService(
 					x.GetRequiredService<ILogger>(),
 					x.GetRequiredService<TextBookerContext>(),
-					jwtSettings,
 					x.GetRequiredService<IMailSender>(),
+					jwtSettings,
 					googleSettings,
 					x.GetRequiredService<IHttpClientFactory>(),
 					x.GetRequiredService<IHttpContextAccessor>()
