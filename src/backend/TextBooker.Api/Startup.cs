@@ -3,7 +3,9 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Net.Http;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
@@ -25,9 +27,6 @@ using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.DataAccess;
 using TextBooker.Contracts.Dto.Config;
-using TextBooker.DataAccess.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Design;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -106,9 +105,18 @@ namespace TextBooker.Api
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 			}, poolSize);
 
+			services.AddHttpClient(HttpClientNames.GoogleRecaptcha);
+
 			services
 				.AddHealthChecks()
 				.AddDbContextCheck<TextBookerContext>();
+
+			var googleOptions = Configuration.GetSection("Google").Get<GoogleSettings>();
+			var googleSettings = new GoogleSettings()
+			{
+				RecaptchaVerifyApi = googleOptions.RecaptchaVerifyApi,
+				SecretKey = EnvironmentVariable.Get(googleOptions.SecretKey)
+			};
 
 			var emailOptions = Configuration.GetSection("Email").Get<EmailSettings>();
 			var emailSettings = new EmailSettings()
@@ -213,6 +221,8 @@ namespace TextBooker.Api
 					x.GetRequiredService<TextBookerContext>(),
 					jwtSettings,
 					x.GetRequiredService<IMailSender>(),
+					googleSettings,
+					x.GetRequiredService<IHttpClientFactory>(),
 					x.GetRequiredService<IHttpContextAccessor>()
 				));
 		}
@@ -230,7 +240,6 @@ namespace TextBooker.Api
 				var swaggerJsonBasePath = env.IsProduction() ? "api" : string.Empty;
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});
-
 
 			app.UseCors(builder => builder
 				.AllowAnyOrigin()
