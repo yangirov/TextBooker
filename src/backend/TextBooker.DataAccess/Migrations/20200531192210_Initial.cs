@@ -53,7 +53,7 @@ namespace TextBooker.DataAccess.Migrations
                 columns: new[] { "id", "body", "importance", "subject" },
                 values: new object[,]
                 {
-                    { 1, "Hi! Please follow <a href=\"%host%/user/confirm?email=%email%&token=%token%\">this link</a> to verify your email address.", false, "Invite to TextBooker" },
+                    { 1, "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.", false, "Invite to TextBooker" },
                     { 2, "Name: %name%<br> Email: %email%<br> Message: %message%", false, "Feedback from TextBooker" }
                 });
 

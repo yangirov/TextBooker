@@ -8,7 +8,8 @@ import NotFound from '@/views/NotFound.vue'
 
 import SignIn from '@/views/User/SignIn.vue'
 import SignUp from '@/views/User/SignUp.vue'
-import Confirm from '@/views/User/Confirm.vue'
+import EmailConfirm from '@/views/User/EmailConfirm.vue'
+import EmailCheck from '@/views/User/EmailCheck.vue'
 import Projects from '@/views/User/Projects.vue'
 import Settings from '@/views/User/Settings.vue'
 
@@ -49,9 +50,14 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/user/confirm',
-    name: 'confirm',
-    component: Confirm
+    path: '/email-check',
+    name: 'email-check',
+    component: EmailCheck
+  },
+  {
+    path: '/user/email-confirm',
+    name: 'email-confirm',
+    component: EmailConfirm
   },
   {
     path: '/user/projects',

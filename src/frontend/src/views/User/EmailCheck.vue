@@ -18,7 +18,7 @@ export default {
 
 <style lang="sass" scoped>
 .columns
-  height: 100%
+  height: 80%
   display: flex
   align-items: center
 </style>
