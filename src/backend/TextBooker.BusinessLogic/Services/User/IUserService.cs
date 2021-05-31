@@ -12,6 +12,8 @@ namespace TextBooker.BusinessLogic.Services
 
 		Task<Result<SignResponse>> Login(SignDto dto);
 
+		Task<Result<bool>> ConfirmEmail(string email, string token);
+
 		Task<Result<bool>> Update(string userId, UserUpdateDto dto);
 
 		Task<Result<bool>> Delete(string userId);

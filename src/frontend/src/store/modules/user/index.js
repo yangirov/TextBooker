@@ -59,7 +59,7 @@ export default {
       try {
         setState(commit, { loading: true })
         let result = await api.registerUser(payload)
-        // TODO: Push to verification page
+        router.push({ name: 'confirm', params: { email: payload.email } })
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {
@@ -72,6 +72,20 @@ export default {
         setState(commit, { loading: true })
         let result = await api.updateUser({ username })
         await dispatch('fetchUserInfo')
+        showSuccessNotify(i18n.t('status.success'))
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
+    },
+
+    async delete({ commit, dispatch }) {
+      try {
+        setState(commit, { loading: true })
+        let result = await api.deleteUser()
+        await dispatch('logout')
+        router.push('/')
         showSuccessNotify(i18n.t('status.success'))
       } catch (error) {
         showErrorNotify(error.detail)

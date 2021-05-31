@@ -5,7 +5,7 @@ using Serilog;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 
-namespace TextBooker.BusinessLogic.Services.Base
+namespace TextBooker.BusinessLogic.Services
 {
 	public class BaseService
 	{

@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+ARG Configuration=Release
+
+WORKDIR /src
+
+COPY . .
+
+WORKDIR /src/TextBooker.DataAccess
+
+RUN dotnet tool restore
+
+CMD dotnet ef database update

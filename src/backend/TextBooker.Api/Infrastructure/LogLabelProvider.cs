@@ -16,7 +16,8 @@ namespace TextBooker.Api.Infrastructure
 			this.env = env;
 		}
 
-		public IList<LokiLabel> GetLabels() => new List<LokiLabel>
+		public IList<LokiLabel> GetLabels()
+			=> new List<LokiLabel>
 			{
 				new LokiLabel("app", configuraion.GetValue<string>("SystemInfo:Name")),
 				new LokiLabel("environment", env.EnvironmentName)

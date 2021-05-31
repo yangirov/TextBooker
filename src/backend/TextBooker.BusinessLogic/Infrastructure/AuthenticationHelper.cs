@@ -33,5 +33,30 @@ namespace TextBooker.BusinessLogic.Infrastructure
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
+
+		public static bool ValidateJwtToken(string token, JwtSettings jwtSettings)
+		{
+			var validationParameters = new TokenValidationParameters()
+			{
+				ValidateIssuer = true,
+				ValidateAudience = true,
+				ValidateLifetime = true,
+				ValidateIssuerSigningKey = true,
+				ValidIssuer = jwtSettings.Issuer,
+				ValidAudience = jwtSettings.Issuer,
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+				ClockSkew = TimeSpan.FromDays(30)
+			};
+
+			new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out var validToken);
+
+			if (!( validToken is JwtSecurityToken validJwt ))
+				return false;
+
+			if (!validJwt.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.Ordinal))
+				return false;
+
+			return true;
+		}
 	}
 }

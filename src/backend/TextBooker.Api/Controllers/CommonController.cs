@@ -1,0 +1,30 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TextBooker.BusinessLogic.Services;
+using TextBooker.Contracts.Dto;
+
+namespace TextBooker.Api.Controllers
+{
+	[ApiController]
+	[Produces("application/json")]
+	public class CommonController : BaseController
+	{
+		private readonly ICommonService commonService;
+
+		public CommonController(ICommonService commonService)
+		{
+			this.commonService = commonService;
+		}
+
+		// GET /settings
+		[AllowAnonymous]
+		[HttpGet("settings")]
+		public IActionResult GetSetting() => OkOrBadRequest(commonService.GetSettings());
+
+		// POST /feedback
+		[AllowAnonymous]
+		[HttpPost("feedback")]
+		public async Task<IActionResult> SendFeedback(Feedback dto) => OkOrBadRequest(await commonService.SendFeedback(dto));
+	}
+}

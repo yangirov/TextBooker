@@ -4,6 +4,8 @@
     :model="feedbackForm"
     :rules="rules"
     label-width="180px"
+    @submit.native.prevent="onSubmit"
+    v-loading="loading"
   >
     <el-form-item :label="$t('feedback.name')" prop="name" class="mb-2">
       <el-input v-model="feedbackForm.name" clearable></el-input>
@@ -28,7 +30,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm('feedbackForm')">
+      <el-button type="primary" native-type="submit">
         {{ $t('feedback.send') }}
       </el-button>
     </el-form-item>
@@ -36,6 +38,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'FeedbackForm',
 
@@ -48,6 +52,12 @@ export default {
   }),
 
   computed: {
+    ...mapGetters('user', ['user', 'loading']),
+
+    $form() {
+      return this.$refs['feedbackForm']
+    },
+
     rules() {
       return {
         ...this.mapRules(
@@ -89,15 +99,22 @@ export default {
         ? callback()
         : callback(new Error(rule.message))
     },
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+
+    onSubmit(formName) {
+      const { $form, feedbackForm } = this
+
+      $form.$refs[formName].validate(valid => {
         if (valid) {
-          alert('Submit!')
+          this.$store.dispatch('appState/sendFeedback', feedbackForm)
         } else {
           return false
         }
       })
     }
+  },
+
+  mounted() {
+    if (this.user.email) this.feedbackForm.email = this.user.email
   }
 }
 </script>
