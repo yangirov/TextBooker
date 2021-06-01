@@ -32,11 +32,12 @@ services:
     restart: always
     ports:
       - 2055:80
+    env_file:
+      - ./.env
     environment:
       ASPNETCORE_ENVIRONMENT: 'Production'
       DB_CONNECTION_STRING: 'Server=tb-postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User ID=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};'
       LOKI_URL: 'http://loki:3100'
-      JWT_KEY: '${JWT_KEY}'
     depends_on:
       - tb-postgres
     networks:

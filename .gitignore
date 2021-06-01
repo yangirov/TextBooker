@@ -23,4 +23,4 @@ deploy/
 .sonarlint
 logs/
 dist/
-.env.production
+.env
