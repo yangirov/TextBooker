@@ -21,12 +21,13 @@
     <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="4.0.0-preview1.0.9" />
     <PackageReference Include="App.Metrics.AspNetCore.Tracking" Version="4.0.0-preview1.0.9" />
     <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.0.0-preview1.0.9" />
+		
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.7.1" />
     <PackageReference Include="DotNetEnv" Version="1.4.0" />
     <PackageReference Include="EFCore.NamingConventions" Version="1.1.0" />
+		
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-		
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
@@ -53,7 +54,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TextBooker.BusinessLogic\TextBooker.BusinessLogic.csproj" />
     <ProjectReference Include="..\TextBooker.Contracts\TextBooker.Contracts.csproj" />
-    <ProjectReference Include="..\TextBooker.DataAccess\TextBooker.DataAccess.csproj" />
+    <ProjectReference Include="..\Textbooker.Utils\Textbooker.Utils.csproj" />
   </ItemGroup>
 
 

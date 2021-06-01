@@ -47,12 +47,14 @@ export default {
     feedbackForm: {
       name: '',
       email: '',
-      message: ''
+      message: '',
+      token: ''
     }
   }),
 
   computed: {
-    ...mapGetters('user', ['user', 'loading']),
+    ...mapGetters('appState', ['loading']),
+    ...mapGetters('user', ['user']),
 
     $form() {
       return this.$refs['feedbackForm']
@@ -93,6 +95,11 @@ export default {
   },
 
   methods: {
+    async recaptcha() {
+      await this.$recaptchaLoaded()
+      this.feedbackForm.token = await this.$recaptcha('login')
+    },
+
     validationEmail(rule, value, callback) {
       if (!value) return callback()
       return window.validation.email(value)
@@ -103,9 +110,10 @@ export default {
     onSubmit(formName) {
       const { $form, feedbackForm } = this
 
-      $form.$refs[formName].validate(valid => {
+      $form.validate(async valid => {
         if (valid) {
-          this.$store.dispatch('appState/sendFeedback', feedbackForm)
+          await this.recaptcha()
+          await this.$store.dispatch('appState/sendFeedback', feedbackForm)
         } else {
           return false
         }

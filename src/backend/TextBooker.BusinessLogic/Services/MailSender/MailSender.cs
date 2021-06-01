@@ -10,8 +10,8 @@ using MailKit.Security;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using Serilog;
-using TextBooker.Contracts.Dto.Config;
-using TextBooker.Contracts.Enums;
+using TextBooker.Common.Config;
+using TextBooker.Common.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 

@@ -3,7 +3,6 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Net.Http;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,11 +21,11 @@ using Serilog;
 using Serilog.Sinks.Loki;
 
 using TextBooker.Api.Infrastructure;
-using TextBooker.Api.Infrastructure.Converters;
 using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
+using TextBooker.Common.Config;
 using TextBooker.DataAccess;
-using TextBooker.Contracts.Dto.Config;
+using Textbooker.Utils;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -54,16 +53,28 @@ namespace TextBooker.Api
 				}
 			}
 
-			var lokiUrl = Configuration.GetValue<string>("Serilog:LokiUrl");
+			services.AddSingleton(Configuration);
+
+			var dbSettings = OptionsClient.GetData(Configuration.GetSection("Database").Get<DatabaseSettings>());
+			services.AddSingleton(dbSettings);
+
+			var jwtSettings = OptionsClient.GetData(Configuration.GetSection("Jwt").Get<JwtSettings>());
+			services.AddSingleton(jwtSettings);
+
+			var emailSettings = OptionsClient.GetData(Configuration.GetSection("Email").Get<EmailSettings>());
+			services.AddSingleton(emailSettings);
+
+			var googleSettings = OptionsClient.GetData(Configuration.GetSection("Google").Get<GoogleSettings>());
+			services.AddSingleton(googleSettings);
+
 			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
-				.WriteTo.LokiHttp(new NoAuthCredentials(
-					EnvironmentVariable.Get(lokiUrl)),
+				.WriteTo.LokiHttp(
+					new NoAuthCredentials(OptionsClient.GetData(Configuration.GetValue<string>("Serilog:LokiUrl"))),
 					new LogLabelProvider(Configuration, HostingEnvironment)
 				)
 				.CreateLogger();
 
-			services.AddSingleton<IConfiguration>(Configuration);
 			services.AddSingleton<ILogger>(logger);
 
 			services
@@ -89,12 +100,9 @@ namespace TextBooker.Api
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-			var connectionOptions = Configuration.GetValue<string>("Database:Options");
-			var connectionString = EnvironmentVariable.Get(connectionOptions);
-			var poolSize = Configuration.GetValue<int?>("Database:PoolSize") ?? 16;
 			services.AddEntityFrameworkNpgsql().AddDbContextPool<TextBookerContext>(options =>
 			{
-				options.UseNpgsql(connectionString, builder =>
+				options.UseNpgsql(dbSettings.ConnectionString, builder =>
 				{
 					builder.UseNetTopologySuite();
 					builder.EnableRetryOnFailure();
@@ -103,38 +111,13 @@ namespace TextBooker.Api
 				options.UseSnakeCaseNamingConvention();
 				options.EnableSensitiveDataLogging(false);
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-			}, poolSize);
+			}, dbSettings.PoolSize);
 
 			services.AddHttpClient(HttpClientNames.GoogleRecaptcha);
 
 			services
 				.AddHealthChecks()
 				.AddDbContextCheck<TextBookerContext>();
-
-			var googleOptions = Configuration.GetSection("Google").Get<GoogleSettings>();
-			var googleSettings = new GoogleSettings()
-			{
-				RecaptchaVerifyApi = googleOptions.RecaptchaVerifyApi,
-				SecretKey = EnvironmentVariable.Get(googleOptions.SecretKey)
-			};
-
-			var emailOptions = Configuration.GetSection("Email").Get<EmailSettings>();
-			var emailSettings = new EmailSettings()
-			{
-				Username = EnvironmentVariable.Get(emailOptions.Username),
-				Password = EnvironmentVariable.Get(emailOptions.Password),
-				Host = EnvironmentVariable.Get(emailOptions.Host),
-				Port = EnvironmentVariable.Get(emailOptions.Port),
-				Sender = EnvironmentVariable.Get(emailOptions.Sender)
-			};
-
-			var jwtOptions = Configuration.GetSection("Jwt").Get<JwtSettings>();
-			var jwtSettings = new JwtSettings()
-			{
-				Key = EnvironmentVariable.Get(jwtOptions.Key),
-				Issuer = jwtOptions.Issuer,
-				ExpireDays = jwtOptions.ExpireDays
-			};
 
 			services
 				.AddAuthorization()
@@ -201,30 +184,10 @@ namespace TextBooker.Api
 			});
 
 			services.AddMetrics(Program.Metrics);
-
-			services.AddSingleton<IJsonSerializer, CustomJsonSerializer>();
-
 			services.AddSingleton<IVersionService, VersionService>();
-
-			services.AddTransient<IMailSender>(
-				x => new MailSender(
-					x.GetRequiredService<ILogger>(),
-					x.GetRequiredService<TextBookerContext>(),
-					emailSettings
-				));
-
+			services.AddTransient<IMailSender, MailSender>();
 			services.AddTransient<ICommonService, CommonService>();
-
-			services.AddTransient<IUserService>(
-				x => new UserService(
-					x.GetRequiredService<ILogger>(),
-					x.GetRequiredService<TextBookerContext>(),
-					x.GetRequiredService<IMailSender>(),
-					jwtSettings,
-					googleSettings,
-					x.GetRequiredService<IHttpClientFactory>(),
-					x.GetRequiredService<IHttpContextAccessor>()
-				));
+			services.AddTransient<IUserService, UserService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -40,7 +40,7 @@ export default {
     selectedBlock: 0,
     blocks: [
       {
-        name: `${this.$t('tabs.blocks.defaultBlockName')} 1`,
+        name: 'Block 1',
         alias: 'block1'
       }
     ]

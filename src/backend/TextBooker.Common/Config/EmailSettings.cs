@@ -1,4 +1,4 @@
-namespace TextBooker.Contracts.Dto.Config
+namespace TextBooker.Common.Config
 {
 	public class EmailSettings
 	{

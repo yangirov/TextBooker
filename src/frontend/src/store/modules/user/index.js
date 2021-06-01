@@ -47,9 +47,9 @@ export default {
           setState(commit, { isAuth: true })
           await dispatch('fetchUserInfo')
         }
-        router.push('/user/projects')
+        router.push('/editor')
       } catch (error) {
-        showErrorNotify(i18n.t('status.authError'))
+        showErrorNotify(error.detail)
       } finally {
         setState(commit, { loading: false })
       }
@@ -58,7 +58,7 @@ export default {
     async register({ commit }, payload) {
       try {
         setState(commit, { loading: true })
-        let result = await api.registerUser(payload)
+        await api.registerUser(payload)
         router.push({ name: 'email-check', params: { email: payload.email } })
       } catch (error) {
         showErrorNotify(error.detail)
@@ -67,12 +67,15 @@ export default {
       }
     },
 
-    async confirmEmail({ commit }, payload) {
+    async confirmEmail({ commit, dispatch }, payload) {
       try {
         setState(commit, { loading: true })
-        let result = await api.confirmEmail(payload)
+        await api.confirmEmail(payload)
+        localStorage.setItem('access_token', payload.token)
+        setState(commit, { isAuth: true })
+        await dispatch('fetchUserInfo')
+        router.push('/editor')
         showSuccessNotify(i18n.t('status.success'))
-        router.push('/signin')
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {
@@ -83,7 +86,7 @@ export default {
     async update({ commit, dispatch }, { username }) {
       try {
         setState(commit, { loading: true })
-        let result = await api.updateUser({ username })
+        await api.updateUser({ username })
         await dispatch('fetchUserInfo')
         showSuccessNotify(i18n.t('status.success'))
       } catch (error) {
@@ -96,7 +99,7 @@ export default {
     async delete({ commit, dispatch }) {
       try {
         setState(commit, { loading: true })
-        let result = await api.deleteUser()
+        await api.deleteUser()
         await dispatch('logout')
         router.push('/')
         showSuccessNotify(i18n.t('status.success'))

@@ -1,15 +1,25 @@
-using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Textbooker.Utils;
+using TextBooker.Common.Config;
 
 namespace TextBooker.DataAccess
 {
 	public class TextBookerContextFactory : IDesignTimeDbContextFactory<TextBookerContext>
 	{
 		public TextBookerContext CreateDbContext(string[] args)
+		{
+			var dbContextOptions = new DbContextOptionsBuilder<TextBookerContext>();
+			dbContextOptions.UseNpgsql(GetConnectionString(), builder => builder.UseNetTopologySuite());
+			dbContextOptions.UseSnakeCaseNamingConvention();
+
+			return new TextBookerContext(dbContextOptions.Options);
+		}
+
+		private static string GetConnectionString()
 		{
 			var configuration = new ConfigurationBuilder()
 				.SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
@@ -22,21 +32,8 @@ namespace TextBooker.DataAccess
 				DotNetEnv.Env.Load(envFilepath);
 			}
 
-			var builder = new DbContextOptionsBuilder<TextBookerContext>();
-
-			var connectionOptions = configuration.GetValue<string>("Database:Options");
-			var connectionString = Environment.GetEnvironmentVariable(connectionOptions);
-			builder.UseNpgsql(connectionString, builder =>
-			{
-				builder.UseNetTopologySuite();
-				builder.EnableRetryOnFailure();
-			});
-
-			builder.UseSnakeCaseNamingConvention();
-			builder.EnableSensitiveDataLogging(false);
-			builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
-			return new TextBookerContext(builder.Options);
+			var dbSettings = OptionsClient.GetData(configuration.GetSection("Database").Get<DatabaseSettings>());
+			return dbSettings.ConnectionString;
 		}
 	}
 }

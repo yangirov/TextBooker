@@ -2,7 +2,7 @@
 	"EnvFilepath": "../../.env",
 
 	"Database": {
-		"Options": "DB_CONNECTION_STRING",
+		"ConnectionString": "DB_CONNECTION_STRING",
 		"PoolSize": 16
 	}
 }

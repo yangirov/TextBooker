@@ -38,7 +38,7 @@ export default {
     selectedPage: 0,
     pages: [
       {
-        name: `${this.$t('tabs.pages.defaultPageName')} 1`,
+        name: 'Page 1',
         alias: 'page1'
       }
     ]
