@@ -18,35 +18,61 @@ namespace TextBooker.Api.Controllers
 			this.userService = userService;
 		}
 
-		// POST /user/register
+		/// <summary>
+		/// Register user
+		/// </summary>
+		/// <param name="dto">Sign data</param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromBody] SignDto dto) => OkOrBadRequest(await userService.Register(dto));
 
-		// POST /user/login
+		/// <summary>
+		/// Login user
+		/// </summary>
+		/// <param name="dto">Sign data</param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] SignDto dto) => OkOrBadRequest(await userService.Login(dto));
 
-		// GET /user/confirm
+		/// <summary>
+		/// Confirm user email
+		/// </summary>
+		/// <param name="email">Email</param>
+		/// <param name="token">Authorization token</param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpGet("confirm")]
 		public async Task<IActionResult> ConfirmEmail(string email, string token) => OkOrBadRequest(await userService.ConfirmEmail(email, token));
 
-		// GET /user/is-auth
+		/// <summary>
+		/// Get user authorization status
+		/// </summary>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpGet("is-auth")]
 		public IActionResult IsAuth() => Ok(User.Identity.IsAuthenticated);
 
-		// GET /user/info
+		/// <summary>
+		/// Get user info
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet("info")]
 		public async Task<IActionResult> UserInfo() => OkOrBadRequest(await userService.GetInfo(UserId));
 
-		// PUT /user
+		/// <summary>
+		/// Update user info
+		/// </summary>
+		/// <param name="dto">User data</param>
+		/// <returns></returns>
 		[HttpPut]
 		public async Task<IActionResult> Update([FromBody] UserUpdateDto dto) => OkOrBadRequest(await userService.Update(UserId, dto));
 
-		// DELETE /user
+		/// <summary>
+		/// Delete user
+		/// </summary>
+		/// <returns></returns>
 		[HttpDelete]
 		public async Task<IActionResult> Delete() => OkOrBadRequest(await userService.Delete(UserId));
 	}

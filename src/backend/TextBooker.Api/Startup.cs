@@ -99,6 +99,7 @@ namespace TextBooker.Api
 				.AddMemoryCache();
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddHttpClient(HttpClientNames.GoogleRecaptcha);
 
 			services.AddEntityFrameworkNpgsql().AddDbContextPool<TextBookerContext>(options =>
 			{
@@ -112,8 +113,6 @@ namespace TextBooker.Api
 				options.EnableSensitiveDataLogging(false);
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 			}, dbSettings.PoolSize);
-
-			services.AddHttpClient(HttpClientNames.GoogleRecaptcha);
 
 			services
 				.AddHealthChecks()
@@ -200,7 +199,7 @@ namespace TextBooker.Api
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{
-				var swaggerJsonBasePath = env.IsProduction() ? "api" : string.Empty;
+				var swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});
 
