@@ -12,17 +12,17 @@ scrape_configs:
   - job_name: nginx
     entry_parser: raw
     static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: nginx
-        __path__: /var/log/nginx/*.log
+      - targets:
+          - localhost
+        labels:
+          job: nginx
+          __path__: /var/log/nginx/*.log
 
   - job_name: postgres
     entry_parser: raw
     static_configs:
-    - targets:
-        - localhost
-      labels:
-        job: postgres
-        __path__: /var/log/postgresql/*.log
+      - targets:
+          - localhost
+        labels:
+          job: postgres
+          __path__: /var/log/postgresql/*.log

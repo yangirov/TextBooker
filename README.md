@@ -25,7 +25,7 @@ Make sure you have a [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.
 
 ```
 cd src/frontend
-npm install
+npm i
 ```
 
 #### Compiles and hot-reloads for development

@@ -7,6 +7,9 @@ COPY . .
 
 WORKDIR /src/TextBooker.DataAccess
 
-RUN dotnet tool restore
+ENV PATH="${PATH}:/root/.dotnet/tools"
+RUN export PATH="$PATH:/root/.dotnet/tools"
+
+RUN dotnet tool install --global dotnet-ef --version 3.1.4
 
 CMD dotnet ef database update
