@@ -18,7 +18,11 @@
                   {{ $t('about.shortTitle') }}
                 </router-link>
                 <el-divider direction="vertical"></el-divider>
-                <a href="help" target="_blank" rel="nofollow noreferrer">
+                <a
+                  href="https://github.com/yangirov/TextBooker/wiki"
+                  target="_blank"
+                  rel="nofollow noreferrer"
+                >
                   {{ $t('common.help') }}
                 </a>
                 <el-divider direction="vertical"></el-divider>
