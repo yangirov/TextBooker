@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Textbooker.Utils;
 using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.DataAccess
@@ -8,27 +9,22 @@ namespace TextBooker.DataAccess
 		public static void AddData(ModelBuilder builder)
 		{
 			AddEmailTeplates(builder);
+			AddSiteTemplate(builder);
 		}
 
 		private static void AddEmailTeplates(ModelBuilder builder)
 		{
-			builder.Entity<EmailTemplate>().HasData(
-				new EmailTemplate()
-				{
-					Id = 1,
-					Subject = "Invite to TextBooker",
-					Body = "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
-					Importance = false
-				},
+			var emails = FileSeeder.FromJson<EmailTemplate>("emails");
+			builder.Entity<EmailTemplate>().HasData(emails);
+		}
 
-				new EmailTemplate()
-				{
-					Id = 2,
-					Subject = "Feedback from TextBooker",
-					Body = "Name: %name%<br> Email: %email%<br> Message: %message%",
-					Importance = false
-				}
-			);
+		private static void AddSiteTemplate(ModelBuilder builder)
+		{
+			var templates = FileSeeder.FromJson<Template>("templates");
+			builder.Entity<Template>().HasData(templates);
+
+			var sectionKeys = FileSeeder.FromJson<TemplateKey>("templateKeys");
+			builder.Entity<TemplateKey>().HasData(sectionKeys);
 		}
 	}
 }

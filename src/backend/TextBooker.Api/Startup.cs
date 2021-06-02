@@ -17,6 +17,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+using AutoMapper;
+
 using Serilog;
 using Serilog.Sinks.Loki;
 
@@ -182,11 +184,15 @@ namespace TextBooker.Api
 				});
 			});
 
+			var mapper = new MapperConfiguration(cfg => cfg.AddMaps("TextBooker.BusinessLogic")).CreateMapper();
+			services.AddSingleton(mapper);
+
 			services.AddMetrics(Program.Metrics);
 			services.AddSingleton<IVersionService, VersionService>();
 			services.AddTransient<IMailSender, MailSender>();
 			services.AddTransient<ICommonService, CommonService>();
 			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IEditorService, EditorService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

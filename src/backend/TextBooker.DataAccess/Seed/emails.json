@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"subject": "Invite to TextBooker",
+		"body": "Hi! Please follow <a href=\"%host%/#/user/email-confirm?email=%email%&token=%token%\">this link</a> to verify your email address.",
+		"importance": false
+	},
+	{
+		"id": 2,
+		"subject": "Feedback from TextBooker",
+		"body": "Name: %name%<br> Email: %email%<br> Message: %message%",
+		"importance": false
+	}
+]

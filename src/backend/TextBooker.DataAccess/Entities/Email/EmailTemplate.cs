@@ -1,12 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace TextBooker.DataAccess.Entities
 {
-	public class EmailTemplate : IEntity
+	public class EmailTemplate : IEntity<int>
 	{
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		public string Subject { get; set; }
