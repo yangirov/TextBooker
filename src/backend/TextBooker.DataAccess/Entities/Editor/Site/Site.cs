@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TextBooker.DataAccess.Entities
 {
-	public class Site : IEntity<Guid>
+	public class Site : IEntity<string>
 	{
-		public Guid Id { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public string Id { get; set; }
 
 		public string UserId { get; set; }
 
@@ -28,6 +30,6 @@ namespace TextBooker.DataAccess.Entities
 
 		public ICollection<UserScript> UserScripts { get; set; }
 
-		public ICollection<SectionName> SiteSectionKeys { get; set; }
+		public ICollection<SectionName> SectionNames { get; set; }
 	}
 }

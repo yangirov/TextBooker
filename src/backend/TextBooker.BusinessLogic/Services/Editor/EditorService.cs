@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -5,6 +6,8 @@ using AutoMapper;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+
+using TextBooker.Common.Enums;
 using TextBooker.Contracts.Dto;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
@@ -26,9 +29,14 @@ namespace TextBooker.BusinessLogic.Services
 			this.db = db;
 		}
 
-		public Task<Result<SiteCreateDto>> Create(SiteCreateDto dto)
+		public async Task<Result<SiteCreateDto>> Create(SiteCreateDto dto)
 		{
-			return null;
+			var entity = mapper.Map<Site>(dto);
+
+			db.Sites.Add(entity);
+			await db.SaveChangesAsync();
+
+			return Result.Ok(new SiteCreateDto());
 		}
 
 		public async Task<Result<List<SiteListItemDto>>> GetUserSites(string userId)

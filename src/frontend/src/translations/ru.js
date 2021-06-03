@@ -145,6 +145,10 @@ export const RUSSIAN_TRANSLATIONS = {
     email: 'Электронная почта',
     password: 'Пароль',
     continue: 'Продолжить',
-    metrics: 'Мы не следим за вами и не собираем никаких данных.'
+    metrics: 'Мы не следим за вами и не собираем никаких данных.',
+    title: 'Название',
+    description: 'Описание',
+    updatedOn: 'Дата обновления',
+    createdOn: 'Дата создания'
   }
 }

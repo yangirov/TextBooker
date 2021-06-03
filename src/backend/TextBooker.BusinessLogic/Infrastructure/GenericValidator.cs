@@ -7,16 +7,17 @@ namespace TextBooker.BusinessLogic.Infrastructure
 {
 	public class GenericValidator<T> : AbstractValidator<T>
 	{
-		public static Result Validate(Action<GenericValidator<T>> configureAction, T entity)
+		public static Result Validate(Action<GenericValidator<T>> action, T entity)
 		{
 			var validator = new GenericValidator<T>();
-			configureAction(validator);
+			action(validator);
 			return validator.GetValidationResult(entity);
 		}
 
 		private Result GetValidationResult(T entity)
 		{
-			var validationResult = base.Validate(entity);
+			var validationResult = Validate(entity);
+
 			return validationResult.IsValid
 				? Result.Ok()
 				: Result.Combine(validationResult

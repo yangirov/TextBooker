@@ -75,7 +75,7 @@ export default {
         setState(commit, { isAuth: true })
         await dispatch('fetchUserInfo')
         router.push('/editor')
-        showSuccessNotify(i18n.t('status.success'))
+        showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {
@@ -88,7 +88,7 @@ export default {
         setState(commit, { loading: true })
         await api.updateUser({ username })
         await dispatch('fetchUserInfo')
-        showSuccessNotify(i18n.t('status.success'))
+        showSuccessNotify()
       } catch (error) {
         showErrorNotify(error.detail)
       } finally {

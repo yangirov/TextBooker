@@ -33,7 +33,7 @@ export default {
     ...mapGetters('user', ['user']),
 
     shortUsername() {
-      return this.user.email
+      return this.user.username || this.user.email
     }
   },
 

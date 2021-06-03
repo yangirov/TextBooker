@@ -63,22 +63,18 @@ namespace TextBooker.DataAccess.Migrations
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.SectionName", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnName("content")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SiteId")
+                    b.Property<string>("SiteId")
                         .HasColumnName("site_id")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("TemplateKeyId")
-                        .HasColumnName("template_key_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("text");
 
                     b.HasKey("Id")
                         .HasName("pk_section_names");
@@ -86,18 +82,15 @@ namespace TextBooker.DataAccess.Migrations
                     b.HasIndex("SiteId")
                         .HasName("ix_section_names_site_id");
 
-                    b.HasIndex("TemplateKeyId")
-                        .HasName("ix_section_names_template_key_id");
-
                     b.ToTable("section_names");
                 });
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.Site", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnName("created_on")
@@ -131,18 +124,14 @@ namespace TextBooker.DataAccess.Migrations
                         .HasColumnName("user_id")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnName("user_id1")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id")
                         .HasName("pk_sites");
 
                     b.HasIndex("TemplateId")
                         .HasName("ix_sites_template_id");
 
-                    b.HasIndex("UserId1")
-                        .HasName("ix_sites_user_id1");
+                    b.HasIndex("UserId")
+                        .HasName("ix_sites_user_id");
 
                     b.ToTable("sites");
                 });
@@ -756,10 +745,10 @@ namespace TextBooker.DataAccess.Migrations
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnName("access_failed_count")
@@ -829,10 +818,10 @@ namespace TextBooker.DataAccess.Migrations
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.UserScript", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .HasColumnName("content")
@@ -842,9 +831,9 @@ namespace TextBooker.DataAccess.Migrations
                         .HasColumnName("location")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SiteId")
+                    b.Property<string>("SiteId")
                         .HasColumnName("site_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.HasKey("Id")
                         .HasName("pk_user_scripts");
@@ -858,18 +847,9 @@ namespace TextBooker.DataAccess.Migrations
             modelBuilder.Entity("TextBooker.DataAccess.Entities.SectionName", b =>
                 {
                     b.HasOne("TextBooker.DataAccess.Entities.Site", "Site")
-                        .WithMany("SiteSectionKeys")
+                        .WithMany("SectionNames")
                         .HasForeignKey("SiteId")
-                        .HasConstraintName("fk_section_names_sites_site_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TextBooker.DataAccess.Entities.TemplateKey", "TemplateKey")
-                        .WithMany()
-                        .HasForeignKey("TemplateKeyId")
-                        .HasConstraintName("fk_section_names_template_keys_template_key_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_section_names_sites_site_id");
                 });
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.Site", b =>
@@ -882,9 +862,9 @@ namespace TextBooker.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("TextBooker.DataAccess.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1")
-                        .HasConstraintName("fk_sites_users_user_id1");
+                        .WithMany("Sites")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_sites_users_user_id");
                 });
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.UserScript", b =>
@@ -892,9 +872,7 @@ namespace TextBooker.DataAccess.Migrations
                     b.HasOne("TextBooker.DataAccess.Entities.Site", "Site")
                         .WithMany("UserScripts")
                         .HasForeignKey("SiteId")
-                        .HasConstraintName("fk_user_scripts_sites_site_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_user_scripts_sites_site_id");
                 });
 #pragma warning restore 612, 618
         }

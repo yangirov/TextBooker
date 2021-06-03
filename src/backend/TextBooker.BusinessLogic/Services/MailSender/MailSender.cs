@@ -87,7 +87,7 @@ namespace TextBooker.BusinessLogic.Services
 					await smtpClient.AuthenticateAsync(new NetworkCredential(emailSettings.Username, emailSettings.Password));
 					await smtpClient.SendAsync(message);
 					await smtpClient.DisconnectAsync(true);
-				}
+				}	
 
 				logger.Information("The email was successfully sent", message);
 				return Result.Ok();

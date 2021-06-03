@@ -1,9 +1,15 @@
 <template>
-  <el-form ref="form" @submit.native.prevent="onSubmit" v-loading="loading">
-    <el-form-item>
+  <el-form
+    ref="userForm"
+    :model="userForm"
+    :rules="rules"
+    @submit.native.prevent="onSubmit"
+    v-loading="loading"
+  >
+    <el-form-item prop="username">
       <el-input
         :placeholder="$t('user.username')"
-        v-model="form.username"
+        v-model="userForm.username"
         clearable
       ></el-input>
     </el-form-item>
@@ -34,18 +40,41 @@ import { mapGetters } from 'vuex'
 
 export default {
   data: () => ({
-    form: {
+    userForm: {
       username: ''
     }
   }),
 
   computed: {
-    ...mapGetters('user', ['user', 'loading'])
+    ...mapGetters('user', ['user', 'loading']),
+
+    rules() {
+      return {
+        username: [
+          {
+            max: 20,
+            message: this.$t('validation.maxLength', { count: 20 })
+          }
+        ]
+      }
+    },
+
+    $form() {
+      return this.$refs['userForm']
+    }
   },
 
   methods: {
     onSubmit() {
-      this.$store.dispatch('user/update', this.form)
+      const { $form, userForm } = this
+
+      $form.validate(async valid => {
+        if (valid) {
+          this.$store.dispatch('user/update', userForm)
+        } else {
+          return false
+        }
+      })
     },
 
     deleteUser() {
@@ -54,7 +83,7 @@ export default {
   },
 
   mounted() {
-    this.form.username = this.user.username
+    this.userForm.username = this.user.username
   }
 }
 </script>

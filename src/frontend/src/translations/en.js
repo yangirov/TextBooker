@@ -144,6 +144,10 @@ export const ENGLISH_TRANSLATIONS = {
     email: 'Email',
     password: 'Password',
     continue: 'Continue',
-    metrics: 'We does not track you or collect analytics.'
+    metrics: 'We does not track you or collect analytics.',
+    title: 'Title',
+    description: 'Description',
+    updatedOn: 'Updated on',
+    createdOn: 'Created on'
   }
 }
