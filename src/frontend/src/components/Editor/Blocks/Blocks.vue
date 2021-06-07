@@ -6,13 +6,11 @@
 
     <div class="column">
       <BlockEditor />
-      <SiteActions />
     </div>
   </div>
 </template>
 
 <script>
-import SiteActions from '@/components/Editor/SiteActions/SiteActions.vue'
 import BlocksList from './BlocksList.vue'
 import BlockEditor from './BlockEditor'
 
@@ -20,7 +18,6 @@ export default {
   name: 'Blocks',
 
   components: {
-    SiteActions,
     BlocksList,
     BlockEditor
   }
