@@ -10,5 +10,7 @@ namespace TextBooker.BusinessLogic.Services
 		Task<Result<SiteCreateDto>> Create(SiteCreateDto dto);
 
 		Task<Result<List<SiteListItemDto>>> GetUserSites(string userId);
+
+		Task<Result<List<TemplateDto>>> GetTemplates();
 	}
 }

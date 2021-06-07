@@ -31,25 +31,49 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<SiteCreateDto>> Create(SiteCreateDto dto)
 		{
-			var entity = mapper.Map<Site>(dto);
+			return await Map(dto)
+				.Bind(Create)
+				.OnFailure(LogError);
 
-			db.Sites.Add(entity);
-			await db.SaveChangesAsync();
+			Result<Site> Map(SiteCreateDto site) => Result.Ok(mapper.Map<Site>(site));
 
-			return Result.Ok(new SiteCreateDto());
+			async Task<Result<SiteCreateDto>> Create(Site entity)
+			{
+				db.Sites.Add(entity);
+				await db.SaveChangesAsync();
+
+				return Result.Ok(dto);
+			};
 		}
 
 		public async Task<Result<List<SiteListItemDto>>> GetUserSites(string userId)
 		{
 			return await FindSites()
-				.Bind(list => Map(list))
+				.Bind(Map)
 				.OnFailure(LogError);
 
 			async Task<Result<List<Site>>> FindSites()
-				=> Result.Ok(await db.Sites.Where(x => x.UserId == userId).ToListAsync());
+				=> Result.Ok(
+					await db.Sites
+							.Where(x => x.UserId == userId)
+							.OrderByDescending(x => x.UpdatedOn)
+							.ToListAsync());
 
 			Result<List<SiteListItemDto>> Map(List<Site> sites)
 				=> Result.Ok(mapper.Map<List<SiteListItemDto>>(sites));
+		}
+
+		public async Task<Result<List<TemplateDto>>> GetTemplates()
+		{
+			return await FindTemplates()
+				.Bind(Map)
+				.OnFailure(LogError);
+
+			async Task<Result<List<Template>>> FindTemplates()
+				=> Result.Ok(await db.Templates.OrderBy(t => t.Name).ToListAsync());
+
+			Result<List<TemplateDto>> Map(List<Template> templates)
+				=> Result.Ok(mapper.Map<List<TemplateDto>>(templates));
 		}
 	}
 }

@@ -1,20 +1,29 @@
 <template>
   <div class="columns">
     <div class="column is-3">
+      <el-input
+        :placeholder="$t('common.search')"
+        class="mb-1"
+        size="small"
+        v-model="searchText"
+        clearable
+      >
+      </el-input>
+
       <SelectList
-        :items="templates"
+        class="template-list"
+        :items="templatesData"
         @handler="handleClick"
-        class-name="full-height-select"
       ></SelectList>
     </div>
 
     <div class="column">
-      <div class="template-info mt-2" v-if="currentTemplate">
-        <h2 class="title">{{ currentTemplate.name }}</h2>
+      <div class="template-info" v-if="currentTemplate">
+        <h2 class="tab-title">{{ currentTemplate.name }}</h2>
         <p>
-          <b>{{ $t('tabs.template.name') }}: </b>
+          <b>{{ $t('tabs.template.author') }}: </b>
           <a
-            :href="currentTemplate.authorurl"
+            :href="currentTemplate.authorUrl"
             target="_blank"
             rel="nofollow noreferrer"
           >
@@ -42,15 +51,27 @@
 </template>
 
 <script>
-let templates = require('./templates.json')
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'TemplateGallery',
 
   data: () => ({
-    templates,
-    currentTemplate: templates[0]
+    searchText: '',
+    currentTemplate: {}
   }),
+
+  computed: {
+    ...mapGetters('sites', ['site', 'templates']),
+
+    templatesData() {
+      return this.templates.filter(item => {
+        return (
+          item.name.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1
+        )
+      })
+    }
+  },
 
   methods: {
     handleClick(index) {
@@ -63,6 +84,11 @@ export default {
         this.currentTemplate && images(`./${this.currentTemplate.name}.jpg`)
       )
     }
+  },
+
+  created() {
+    this.$store.dispatch('sites/fetchTemplates')
+    this.currentTemplate = this.site.id ?? this.templates[0]
   }
 }
 </script>
@@ -70,4 +96,12 @@ export default {
 <style lang="sass" scoped>
 .columns
   height: 100%
+
+.template-list
+  height: 95% !important
+
+.template-image
+  text-align: right
+  img
+    max-width: 350px
 </style>

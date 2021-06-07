@@ -149,6 +149,7 @@ export const RUSSIAN_TRANSLATIONS = {
     title: 'Название',
     description: 'Описание',
     updatedOn: 'Дата обновления',
-    createdOn: 'Дата создания'
+    createdOn: 'Дата создания',
+    search: 'Поиск'
   }
 }
