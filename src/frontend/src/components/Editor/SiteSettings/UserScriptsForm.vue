@@ -18,7 +18,7 @@
 
     <footer class="mt-2 text-right">
       <el-button @click="closeModal">
-        Закрыть
+        {{ $t('common.close') }}
       </el-button>
 
       <el-button
@@ -26,7 +26,7 @@
         native-type="submit"
         :loading="loading"
       >
-        {{ isEdit ? 'Обновить' : 'Добавить' }}
+        {{ isEdit ? $t('common.update') : $t('common.add') }}
       </el-button>
     </footer>
   </div>

@@ -36,7 +36,11 @@ export const RUSSIAN_TRANSLATIONS = {
       name: 'Страницы',
       defaultPageName: 'Страница',
       editor: 'Редактор',
-      settings: 'Параметры страницы'
+      settings: 'Параметры страницы',
+      url: 'Свой адрес страницы',
+      title: 'Свой заголовок',
+      description: 'Своё описание',
+      keywords: 'Свои ключевые слова'
     },
     blocks: {
       name: 'Блоки',
@@ -135,6 +139,7 @@ export const RUSSIAN_TRANSLATIONS = {
     docs: 'Документация',
     empty: 'Пусто',
     add: 'Добавить',
+    update: 'Обновить',
     edit: 'Редактировать',
     delete: 'Удалить',
     yes: 'Да',
@@ -156,6 +161,7 @@ export const RUSSIAN_TRANSLATIONS = {
     createdOn: 'Дата создания',
     search: 'Поиск',
     enabled: 'Включен',
-    disabled: 'Выключен'
+    disabled: 'Выключен',
+    close: 'Закрыть'
   }
 }

@@ -34,9 +34,14 @@ export const ENGLISH_TRANSLATIONS = {
     },
     pages: {
       name: 'Pages',
+      title: 'Page title',
       defaultPageName: 'Page',
       editor: 'Editor',
-      settings: 'Settings'
+      settings: 'Settings',
+      url: 'Custom url',
+      title: 'Custom title',
+      description: 'Custom description',
+      keywords: 'Custom keywords'
     },
     blocks: {
       name: 'Blocks',
@@ -136,6 +141,7 @@ export const ENGLISH_TRANSLATIONS = {
     docs: 'Docs',
     empty: 'Empty',
     add: 'Add',
+    update: 'Update',
     edit: 'Edit',
     delete: 'Delete',
     yes: 'Yes',
@@ -155,6 +161,7 @@ export const ENGLISH_TRANSLATIONS = {
     createdOn: 'Created on',
     search: 'Search',
     enabled: 'Enabled',
-    disabled: 'Disabled'
+    disabled: 'Disabled',
+    close: 'Close'
   }
 }

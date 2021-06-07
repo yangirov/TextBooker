@@ -7,6 +7,7 @@ import setWith from 'lodash/setWith'
 import keyBy from 'lodash/keyBy'
 import difference from 'lodash/difference'
 import debounce from 'lodash/debounce'
+import isEmpty from 'lodash/isEmpty'
 
 const lodash = {
   cloneDeep,
@@ -17,7 +18,8 @@ const lodash = {
   setWith,
   keyBy,
   difference,
-  debounce
+  debounce,
+  isEmpty
 }
 
 window.lodash = lodash
