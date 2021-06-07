@@ -27,8 +27,7 @@ Vue.use(ButtonAction)
 Vue.use(ButtonDelete)
 
 Vue.use(Element, {
-  i18n: (key, value) => i18n.t(key, value),
-  size: 'small'
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 Vue.config.productionTip = false

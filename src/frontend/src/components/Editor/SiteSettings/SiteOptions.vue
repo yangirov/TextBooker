@@ -7,18 +7,6 @@
       v-loading="loading"
       size="small"
     >
-      <el-form-item :label="$t('tabs.settings.icon')" prop="title">
-        <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleIconSuccess"
-          :before-upload="beforeIconUpload"
-        >
-          <img v-if="siteForm.icon" :src="siteForm.icon" class="icon" />
-          <i v-else class="el-icon-plus icon-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-
       <el-form-item :label="$t('tabs.settings.siteTitle')" prop="title">
         <el-input v-model="siteForm.title"></el-input>
       </el-form-item>
@@ -29,6 +17,18 @@
 
       <el-form-item :label="$t('tabs.settings.keywords')" prop="title">
         <el-input v-model="siteForm.keywords"></el-input>
+      </el-form-item>
+
+      <el-form-item :label="$t('tabs.settings.icon')" prop="title">
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleIconSuccess"
+          :before-upload="beforeIconUpload"
+        >
+          <img v-if="siteForm.icon" :src="siteForm.icon" class="icon" />
+          <i v-else class="el-icon-plus icon-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
 
       <el-form-item :label="$t('tabs.settings.userScripts')" prop="title">

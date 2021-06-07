@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    async handleCommand(command) {
+    handleCommand(command) {
       switch (command) {
         case 'projects':
           this.$router.push('/user/projects')
@@ -48,12 +48,12 @@ export default {
           this.$router.push('/user/settings')
           break
         case 'logout':
-          await this.logout()
+          this.logout()
           break
       }
     },
 
-    async logout() {
+    logout() {
       resetStore()
       localStorage.clear()
       this.$router.push('/')

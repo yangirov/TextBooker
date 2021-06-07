@@ -162,6 +162,7 @@ export const ENGLISH_TRANSLATIONS = {
     search: 'Search',
     enabled: 'Enabled',
     disabled: 'Disabled',
-    close: 'Close'
+    close: 'Close',
+    select: 'Select'
   }
 }

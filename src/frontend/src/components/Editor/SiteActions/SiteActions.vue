@@ -1,10 +1,10 @@
 <template>
   <div class="site-actions buttons" v-if="show">
-    <el-button type="primary">
+    <el-button type="primary" size="small">
       <i class="el-icon-view"></i> {{ $t('siteActions.view') }}
     </el-button>
 
-    <el-button type="success">
+    <el-button type="success" size="small">
       <i class="el-icon-video-play"></i> {{ $t('siteActions.generate') }}
     </el-button>
   </div>

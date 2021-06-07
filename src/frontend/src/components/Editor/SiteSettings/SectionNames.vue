@@ -9,7 +9,6 @@
       :label="labelKey(item.id)"
       v-for="item in templateKeys"
       :key="item.templateKeyId"
-      size="small"
     >
       <el-input
         v-model="keysForm[item.id]"
