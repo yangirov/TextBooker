@@ -44,5 +44,12 @@ namespace TextBooker.Api.Controllers
 		/// <returns></returns>
 		[HttpGet("templates")]
 		public async Task<IActionResult> GetTemplates() => OkOrBadRequest(await editorService.GetTemplates());
+
+		/// <summary>
+		/// Get template section names
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("template-keys")]
+		public async Task<IActionResult> GetTemplateKeys() => OkOrBadRequest(await editorService.GetTemplateKeys());
 	}
 }

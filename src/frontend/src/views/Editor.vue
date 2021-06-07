@@ -19,7 +19,7 @@
         <span slot="label">
           <i class="el-icon-setting"></i> {{ $t('tabs.settings.name') }}
         </span>
-        {{ $t('common.empty') }}
+        <SiteSettings />
       </el-tab-pane>
 
       <el-tab-pane v-if="isAuth" class="full-wh" :lazy="true">
@@ -51,6 +51,7 @@ import { mapGetters } from 'vuex'
 
 import StartWork from '@/components/Editor/StartWork/StartWork.vue'
 import TemplateGallery from '@/components/Editor/Templates/TemplateGallery.vue'
+import SiteSettings from '@/components/Editor/SiteSettings/SiteSettings.vue'
 import Pages from '@/components/Editor/Pages/Pages.vue'
 import Blocks from '@/components/Editor/Blocks/Blocks.vue'
 import Publisher from '@/components/Editor/Publisher/Publisher.vue'
@@ -61,6 +62,7 @@ export default {
   components: {
     StartWork,
     TemplateGallery,
+    SiteSettings,
     Pages,
     Blocks,
     Publisher
@@ -68,10 +70,6 @@ export default {
 
   computed: {
     ...mapGetters('user', ['isAuth'])
-  },
-
-  created() {
-    if (!this.isAuth) this.$router.push('/signin')
   }
 }
 </script>

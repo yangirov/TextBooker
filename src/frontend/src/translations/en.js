@@ -19,13 +19,14 @@ export const ENGLISH_TRANSLATIONS = {
       shortDescription: 'Short description of the site',
       keywords: 'Keyword',
       customCode: 'Custom code',
-      templateSection: 'Template fields',
+      templateSection: 'Template section names',
       templateFields: {
-        subtitle: 'Subtitle',
-        menuTitle: 'Menu title',
-        aboutTitle: 'About title',
-        short: 'Short about site',
-        footerText: 'Footer content'
+        1: 'Main menu title',
+        2: 'Subtitle',
+        3: 'Aside menu title',
+        4: 'About title',
+        5: 'Short about site',
+        6: 'Footer content'
       }
     },
     pages: {
