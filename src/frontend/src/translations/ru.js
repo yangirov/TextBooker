@@ -27,7 +27,10 @@ export const RUSSIAN_TRANSLATIONS = {
         4: 'Заголовок о сайте',
         5: 'Коротко о сайте',
         6: 'Подвал'
-      }
+      },
+      userScripts: 'Пользовательский код',
+      iconFormatError: 'Формат иконки должен быть ICO, JPG или PNG!',
+      iconSizeError: 'Размер иконки должен быть меньше 100 Кб!'
     },
     pages: {
       name: 'Страницы',
@@ -151,6 +154,8 @@ export const RUSSIAN_TRANSLATIONS = {
     description: 'Описание',
     updatedOn: 'Дата обновления',
     createdOn: 'Дата создания',
-    search: 'Поиск'
+    search: 'Поиск',
+    enabled: 'Включен',
+    disabled: 'Выключен'
   }
 }

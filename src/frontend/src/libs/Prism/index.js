@@ -1,3 +1,3 @@
 import 'prismjs'
-import 'prismjs/themes/prism-tomorrow.css'
+import './prism-light.css'
 import 'vue-prism-editor/dist/VuePrismEditor.css'

@@ -1,8 +1,8 @@
 const modal = {
-  USER_MODAL: 'USER_MODAL'
+  USER_SCRIPTS_MODAL: 'USER_SCRIPTS_MODAL'
 }
 
-export const { USER_MODAL } = modal
+export const { USER_SCRIPTS_MODAL } = modal
 
 export default {
   namespaced: true,

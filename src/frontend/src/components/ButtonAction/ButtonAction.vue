@@ -49,7 +49,7 @@ export default {
     },
     icon: {
       type: String,
-      default: 'fal fa-pen'
+      default: 'el-icon-edit'
     },
     disabled: {
       type: Boolean,

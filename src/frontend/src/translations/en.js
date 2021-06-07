@@ -15,9 +15,9 @@ export const ENGLISH_TRANSLATIONS = {
       main: 'Main settings',
       advanced: 'Advanced settings',
       icon: 'Icon',
-      siteTitle: 'The title of the site',
-      shortDescription: 'Short description of the site',
-      keywords: 'Keyword',
+      siteTitle: 'Site title',
+      shortDescription: 'Short description',
+      keywords: 'Keywords',
       customCode: 'Custom code',
       templateSection: 'Template section names',
       templateFields: {
@@ -27,7 +27,10 @@ export const ENGLISH_TRANSLATIONS = {
         4: 'About title',
         5: 'Short about site',
         6: 'Footer content'
-      }
+      },
+      userScripts: 'User scripts',
+      iconFormatError: 'Icon picture must be ICO, JPG or PNG format!',
+      iconSizeError: 'Icon picture size can not exceed 100 Kb!'
     },
     pages: {
       name: 'Pages',
@@ -150,6 +153,8 @@ export const ENGLISH_TRANSLATIONS = {
     description: 'Description',
     updatedOn: 'Updated on',
     createdOn: 'Created on',
-    search: 'Search'
+    search: 'Search',
+    enabled: 'Enabled',
+    disabled: 'Disabled'
   }
 }
