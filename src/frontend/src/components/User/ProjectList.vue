@@ -63,8 +63,9 @@ export default {
 
   methods: {
     handleEdit({ id }) {
-      this.$router.push({ name: 'editor', params: { id } })
+      this.$store.dispatch('sites/fetchSiteInfo', id)
     },
+
     handleDelete({ id }) {
       this.$store.dispatch('sites/deleteUserSite', id)
     }

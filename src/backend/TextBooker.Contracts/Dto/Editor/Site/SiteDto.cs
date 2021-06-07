@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class SiteCreateDto
+	public class SiteDto
 	{
 		public string Id { get; set; }
 
@@ -16,6 +16,8 @@ namespace TextBooker.Contracts.Dto
 		public string Description { get; set; }
 
 		public string Keywords { get; set; }
+
+		public bool EnabledUserScripts { get; set; }
 
 		public DateTime CreatedOn { get; set; } = DateTime.Now;
 

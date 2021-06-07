@@ -1,6 +1,7 @@
 import api from '@/api'
 import { SET_STATE, setState } from '@/store/helpers'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -22,7 +23,11 @@ export default {
   },
 
   mutations: {
-    SET_STATE
+    SET_STATE,
+
+    UPDATE_TEMPLATE(state, data = {}) {
+      state.site = { ...state.site, ...data }
+    }
   },
 
   actions: {
@@ -58,6 +63,19 @@ export default {
       const keys = await api.getTemplateKeys()
       setState(commit, { state: 'templateKeys', payload: keys })
       setState(commit, { loading: false })
+    },
+
+    async fetchSiteInfo({ commit }, siteId) {
+      try {
+        setState(commit, { loading: true })
+        let site = await api.getSiteInfo(siteId)
+        setState(commit, { state: 'site', payload: site })
+        router.push('/editor')
+      } catch (error) {
+        showErrorNotify(error.detail)
+      } finally {
+        setState(commit, { loading: false })
+      }
     }
   }
 }

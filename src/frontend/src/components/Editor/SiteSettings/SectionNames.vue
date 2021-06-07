@@ -55,16 +55,13 @@ export default {
   created() {
     this.$store.dispatch('sites/fetchTemplateKeys')
 
-    let data = [
-      { templateKeyId: 1, content: 'Main menu titile' },
-      { templateKeyId: 4, content: 'Lorem ipsum dollar' },
-      { templateKeyId: 6, content: '2020 (c)' }
-    ]
-
-    this.keysForm = data.reduce((acc, { templateKeyId, content }) => {
-      acc[templateKeyId] = content
-      return acc
-    }, {})
+    this.keysForm = this.site.sectionNames.reduce(
+      (acc, { templateKeyId, content }) => {
+        acc[templateKeyId] = content
+        return acc
+      },
+      {}
+    )
   }
 }
 </script>

@@ -35,6 +35,10 @@ export default {
     className: {
       type: String,
       required: false
+    },
+    defaultIndex: {
+      type: Number,
+      default: 0
     }
   },
 
@@ -52,6 +56,10 @@ export default {
       this.selectedIndex = index
       this.$emit('handler', index)
     }
+  },
+
+  created() {
+    this.selectedIndex = this.defaultIndex
   }
 }
 </script>
