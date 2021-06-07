@@ -27,6 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { resetStore } from '@/store'
 
 export default {
   computed: {
@@ -53,10 +54,9 @@ export default {
     },
 
     async logout() {
-      await this.$store
-        .dispatch('user/logout')
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+      resetStore()
+      localStorage.clear()
+      this.$router.push('/')
     }
   }
 }
