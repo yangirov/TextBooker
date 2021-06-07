@@ -4,7 +4,9 @@
       prop="updatedOn"
       :label="$t('common.updatedOn')"
       width="140px"
-      :formatter="() => $moment(date).format('DD.MM.YYYY HH:mm')"
+      :formatter="
+        ({ updatedOn }) => $moment(updatedOn).format('DD.MM.YYYY HH:mm')
+      "
     ></el-table-column>
 
     <el-table-column

@@ -14,7 +14,7 @@
 
             <div class="column text-center">
               <nav class="footer-menu">
-                <router-link to="about">
+                <router-link to="/about">
                   {{ $t('about.shortTitle') }}
                 </router-link>
                 <el-divider direction="vertical"></el-divider>
@@ -26,7 +26,7 @@
                   {{ $t('common.help') }}
                 </a>
                 <el-divider direction="vertical"></el-divider>
-                <router-link to="feedback">
+                <router-link to="/feedback">
                   {{ $t('feedback.title') }}
                 </router-link>
               </nav>
