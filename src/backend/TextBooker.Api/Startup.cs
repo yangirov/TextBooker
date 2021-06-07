@@ -28,6 +28,7 @@ using TextBooker.BusinessLogic.Services;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
 using Textbooker.Utils;
+using Masking.Serilog;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -75,6 +76,7 @@ namespace TextBooker.Api
 					new NoAuthCredentials(OptionsClient.GetData(Configuration.GetValue<string>("Serilog:LokiUrl"))),
 					new LogLabelProvider(Configuration, HostingEnvironment)
 				)
+				.Destructure.ByMaskingProperties("Password", "Token")
 				.CreateLogger();
 
 			services.AddSingleton<ILogger>(logger);
