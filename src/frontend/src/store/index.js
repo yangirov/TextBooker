@@ -5,6 +5,7 @@ import modals from './modals'
 import appState from './modules/appState'
 import user from './modules/user'
 import sites from './modules/sites'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 window.Vuex = Vuex
@@ -15,7 +16,8 @@ let store = new Vuex.Store({
     appState,
     user,
     sites
-  }
+  },
+  plugins: [createPersistedState()]
 })
 
 export default store
