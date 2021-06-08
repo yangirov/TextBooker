@@ -27,16 +27,42 @@
         </el-button>
       </el-popconfirm>
 
-      <el-button class="ml-1" type="info" icon="el-icon-dish"></el-button>
+      <el-dropdown
+        trigger="click"
+        placement="top-start"
+        @command="selectBlockTemplate"
+      >
+        <span class="el-dropdown-link">
+          <el-button class="ml-1" type="info" icon="el-icon-dish"></el-button>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="twitter">
+            <div class="dropdown_item">
+              <img class="twitter_icon" src="@/assets/twitter.svg" />
+              Twitter
+            </div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
+      <TwitterWidget @change="handleTwitterWidget" />
     </div>
   </div>
 </template>
 
 <script>
+import { TWITTER_MODAL } from '@/store/modals'
+import TwitterWidget from './Generators/TwitterWidget.vue'
+
 export default {
   name: 'BlocksList',
 
+  components: {
+    TwitterWidget
+  },
+
   data: () => ({
+    TWITTER_MODAL,
     selectedBlock: 0,
     blocks: [
       {
@@ -47,6 +73,16 @@ export default {
   }),
 
   methods: {
+    selectBlockTemplate(template) {
+      switch (template) {
+        case 'twitter':
+          this.$modal.open(TWITTER_MODAL)
+          break
+        default:
+          break
+      }
+    },
+
     addBlock() {
       let index = this.blocks.length + 1
       let block = {
@@ -62,7 +98,9 @@ export default {
 
     selectBlock(index) {
       this.selectedBlock = index
-    }
+    },
+
+    handleTwitterWidget(data) {}
   }
 }
 </script>
@@ -78,4 +116,11 @@ export default {
   flex-direction: column
   justify-content: space-between
   height: 100%
+
+.dropdown_item
+  display: flex
+  .twitter_icon
+    height: 2em
+    width: 2em
+    margin-right: .3em
 </style>

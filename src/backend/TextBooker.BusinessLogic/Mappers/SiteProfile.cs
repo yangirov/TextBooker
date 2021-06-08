@@ -19,6 +19,8 @@ namespace TextBooker.BusinessLogic.Mappers
 			CreateMap<Template, TemplateDto>().ReverseMap();
 
 			CreateMap<TemplateKey, TemplateKeyDto>().ReverseMap();
+
+			CreateMap<Block, BlockDto>().ReverseMap();
 		}
 	}
 }

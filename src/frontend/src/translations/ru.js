@@ -127,7 +127,8 @@ export const RUSSIAN_TRANSLATIONS = {
     required: 'Обязательное поле',
     notEmpty: 'Поле не может быть пустым',
     email: 'Формат не соответсвует email адресу — example@mail.com',
-    maxLength: 'Ограничение на {count} символов'
+    maxLength: 'Ограничение на {count} символов',
+    minLength: 'Минимальная длина {count} символов'
   },
   siteActions: {
     view: 'Открыть сайт',
@@ -163,6 +164,16 @@ export const RUSSIAN_TRANSLATIONS = {
     enabled: 'Включен',
     disabled: 'Выключен',
     close: 'Закрыть',
-    select: 'Выбрать'
+    select: 'Выбрать',
+    lang: 'Язык',
+    width: 'Ширина',
+    height: 'Высота',
+    theme: 'Тема'
+  },
+  twitter: {
+    feedTitle: 'Твиттер-лента',
+    buttonTitle: 'Твиттер-кнопка',
+    url: 'Ссылка на Твиттер',
+    invalidUrl: 'Некорректная ссылка для Twitter'
   }
 }
