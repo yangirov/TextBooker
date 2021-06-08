@@ -78,7 +78,12 @@ export default {
     },
 
     deleteUser() {
-      this.$store.dispatch('user/delete')
+      this.$store.dispatch('user/delete').then(() => {
+        localStorage.clear()
+        this.$store.dispatch('user/reset')
+        this.$store.dispatch('sites/reset')
+        this.$router.push('/')
+      })
     }
   },
 

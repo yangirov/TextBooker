@@ -122,7 +122,7 @@ export default {
   },
 
   mounted() {
-    if (this.user.email) this.feedbackForm.email = this.user.email
+    this.feedbackForm.email = this.user.email ?? ''
   }
 }
 </script>

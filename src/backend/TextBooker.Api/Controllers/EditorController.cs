@@ -32,12 +32,32 @@ namespace TextBooker.Api.Controllers
 		}
 
 		/// <summary>
+		/// Update site info
+		/// </summary>
+		/// <param name="id">Site identifier</param>
+		/// <returns></returns>
+		[HttpPut("site")]
+		public async Task<IActionResult> UpdateSite([FromBody] SiteDto dto)
+		{
+			dto.UserId = UserId;
+			return OkOrBadRequest(await editorService.Update(dto));
+		}
+
+		/// <summary>
 		/// Get site info
 		/// </summary>
 		/// <param name="id">Site identifier</param>
 		/// <returns></returns>
 		[HttpGet("site")]
 		public async Task<IActionResult> GetSite([FromQuery] string id) => OkOrBadRequest(await editorService.Get(id, UserId));
+		
+		/// <summary>
+		/// Delete site
+		/// </summary>
+		/// <param name="id">Site identifier</param>
+		/// <returns></returns>
+		[HttpDelete("site")]
+		public async Task<IActionResult> DeleteSite([FromQuery] string id) => OkOrBadRequest(await editorService.Delete(id, UserId));
 
 		/// <summary>
 		/// Get user projects (sites) list

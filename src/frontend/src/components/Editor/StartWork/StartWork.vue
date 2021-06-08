@@ -1,8 +1,6 @@
 <template>
   <div class="tab center-block">
-    <el-button type="success" size="large">
-      <i class="el-icon-document-add"></i> {{ $t('tabs.start.createProject') }}
-    </el-button>
+    <CreateSiteButton size="large" />
 
     <el-button
       type="primary"
@@ -15,7 +13,13 @@
 </template>
 
 <script>
+import CreateSiteButton from './CreateSiteButton.vue'
+
 export default {
-  name: 'StartWork'
+  name: 'StartWork',
+
+  components: {
+    CreateSiteButton
+  }
 }
 </script>

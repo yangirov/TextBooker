@@ -8,6 +8,7 @@ import keyBy from 'lodash/keyBy'
 import difference from 'lodash/difference'
 import debounce from 'lodash/debounce'
 import isEmpty from 'lodash/isEmpty'
+import union from 'lodash/union'
 
 const lodash = {
   cloneDeep,
@@ -19,7 +20,8 @@ const lodash = {
   keyBy,
   difference,
   debounce,
-  isEmpty
+  isEmpty,
+  union
 }
 
 window.lodash = lodash

@@ -20,7 +20,10 @@ namespace TextBooker.BusinessLogic.Services
 
 		public async Task<Result<User>> FindUserById(string userId)
 		{
-			var user = await db.Users.SingleOrDefaultAsync(u => u.Id == userId) ?? Maybe<User>.None;
+			var user = await db.Users
+				.Include(x => x.Sites)
+				.SingleOrDefaultAsync(u => u.Id == userId) ?? Maybe<User>.None;
+
 			return user.HasNoValue
 				? Result.Failure<User>($"The user with this identifier was not found: {userId}")
 				: Result.Ok(user.Value);
