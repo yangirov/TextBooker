@@ -41,7 +41,7 @@
 
       <el-tab-pane v-if="siteExists" class="full-wh" :lazy="true" name="blocks">
         <span slot="label">
-          <i class="el-icon-document-copy"></i>{{ $t('tabs.blocks.name') }}
+          <i class="el-icon-document-copy"></i> {{ $t('tabs.blocks.name') }}
         </span>
         <Blocks />
       </el-tab-pane>
@@ -101,7 +101,7 @@ export default {
     },
 
     siteExists() {
-      return !_.isEmpty(this.site)
+      return !_.isEmpty(this.site) && this.site.id
     }
   }
 }

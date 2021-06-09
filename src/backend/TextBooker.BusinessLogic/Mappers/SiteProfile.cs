@@ -5,21 +5,21 @@ using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.BusinessLogic.Mappers
 {
-	public class SiteProfile : Profile
+	public class EditorProfile : Profile
 	{
-		public SiteProfile()
+		public EditorProfile()
 		{
-			CreateMap<UserScript, UserScriptDto>().ReverseMap();
+			CreateMap<Template, TemplateDto>().ReverseMap();
 
-			CreateMap<SectionName, SectionNameDto>().ReverseMap();
+			CreateMap<TemplateKey, TemplateKeyDto>().ReverseMap();
 
 			CreateMap<Site, SiteDto>().ReverseMap();
 
 			CreateMap<Site, ProjectDto>().ReverseMap();
 
-			CreateMap<Template, TemplateDto>().ReverseMap();
+			CreateMap<UserScript, UserScriptDto>().ReverseMap();
 
-			CreateMap<TemplateKey, TemplateKeyDto>().ReverseMap();
+			CreateMap<SectionName, SectionNameDto>().ReverseMap();
 
 			CreateMap<Block, BlockDto>().ReverseMap();
 

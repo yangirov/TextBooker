@@ -16,20 +16,20 @@
       :style="style"
     ></vue-editor>
 
-    <prism-editor
+    <VueAceEditor
       v-if="htmlMode"
       v-model="content"
-      language="html"
-      lineNumbers="true"
-      :style="style"
-    ></prism-editor>
+      :options="aceOptions"
+      id="ace-container"
+      class="mt-1"
+    ></VueAceEditor>
   </div>
 </template>
 
 <script>
 import { lodash as _ } from '@/utils'
 
-import PrismEditor from 'vue-prism-editor'
+import VueAceEditor from './VueAceEditor.vue'
 
 import { VueEditor, Quill } from 'vue2-editor'
 import BlotFormatter from 'quill-blot-formatter'
@@ -41,7 +41,7 @@ Quill.register('modules/blotFormatter', BlotFormatter)
 export default {
   components: {
     VueEditor,
-    PrismEditor
+    VueAceEditor
   },
 
   props: {
@@ -50,6 +50,10 @@ export default {
       default: ''
     },
     title: {
+      type: String,
+      default: ''
+    },
+    text: {
       type: String,
       default: ''
     },
@@ -102,9 +106,10 @@ export default {
                 'ul',
                 'ol',
                 'li',
-                'span'
+                'span',
+                'script'
               ],
-              attributes: ['href', 'rel', 'target', 'class']
+              attributes: ['href', 'rel', 'target', 'class', 'src']
             },
             keepSelection: true
           }
@@ -114,12 +119,28 @@ export default {
   },
 
   data: () => ({
-    content: ''
+    content: '',
+
+    aceOptions: {
+      mode: 'html',
+      theme: 'clouds',
+      fontSize: 16,
+      fontFamily: 'monospace',
+      highlightActiveLine: true,
+      highlightGutterLine: true,
+      maxLines: 35,
+      wrap: true,
+      autoScrollEditorIntoView: true,
+      showPrintMargin: false
+    }
   }),
 
   watch: {
     content(newValue) {
       this.handler(newValue)
+    },
+    text(newValue) {
+      this.content = newValue
     }
   },
 

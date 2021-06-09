@@ -4,6 +4,7 @@ import { showSuccessNotify, showErrorNotify } from '@/utils'
 import router from '@/router'
 
 let initState = {
+  id: '',
   title: '',
   description: '',
   keywords: '',
@@ -43,14 +44,6 @@ export default {
 
     UPDATE_SITE(state, data = {}) {
       state.site = { ...state.site, ...data }
-    },
-
-    UPDATE_BLOCKS(state, data = {}) {
-      state.site.blocks = [...state.site.blocks, data]
-    },
-
-    UPDATE_PAGES(state, data = {}) {
-      state.site.pages = [...state.site.pages, data]
     }
   },
 
@@ -116,7 +109,7 @@ export default {
       }
     },
 
-    async updateSiteInfo({ commit, state }) {
+    async updateSite({ commit, state }) {
       try {
         setState(commit, { loading: true })
         let site = await api.updateSite(state.site)

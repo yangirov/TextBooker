@@ -1,32 +1,25 @@
 <template>
   <el-menu
-    :default-active="currentId"
+    :default-active="defaultActive"
     :class="className"
-    @select="selectItem"
+    @select="selectHandler"
     @open="openHandler"
     @close="closeHandler"
   >
     <el-menu-item
       v-for="item in items"
-      :key="item.id"
+      :index="item.id"
       :id="item.id"
-      :label="item.name"
-      :class="{ 'is-active': isActiveItem(item.id) }"
+      :key="item.id"
+      :label="item.title"
     >
-      <span class="noselect">{{ item.name }}</span>
-      <slot name="actions"></slot>
+      <span class="noselect">{{ item.title }}</span>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script>
 export default {
-  name: 'SelectList',
-
-  data: () => ({
-    currentId: ''
-  }),
-
   props: {
     items: {
       type: Array,
@@ -35,30 +28,27 @@ export default {
     className: {
       type: String,
       required: false
-    },
-    defaultId: {
-      type: String
+    }
+  },
+
+  computed: {
+    defaultActive() {
+      return this.items && this.items[0]?.id
     }
   },
 
   methods: {
+    selectHandler(id) {
+      this.$emit('handler', id)
+    },
+
     openHandler(data) {
       this.$emit('open', data)
     },
+
     closeHandler(data) {
       this.$emit('close', data)
-    },
-    isActiveItem(id) {
-      return this.currentId === id
-    },
-    selectItem(id) {
-      this.currentId = id
-      this.$emit('handler', id)
     }
-  },
-
-  created() {
-    this.currentId = this.defaultId
   }
 }
 </script>

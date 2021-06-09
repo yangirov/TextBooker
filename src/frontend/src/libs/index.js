@@ -1,6 +1,5 @@
 import './VueAxios'
 import './VueMoment'
 import './Modals'
-import './Prism'
 import 'bulma/bulma.sass'
 import './CssUtils/index.sass'

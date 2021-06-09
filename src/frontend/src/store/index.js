@@ -6,6 +6,7 @@ import modals from './modals'
 import appState from './modules/appState'
 import user from './modules/user'
 import sites from './modules/sites'
+import blocks from './modules/blocks'
 
 Vue.use(Vuex)
 window.Vuex = Vuex
@@ -15,7 +16,8 @@ let store = new Vuex.Store({
     modals,
     appState,
     user,
-    sites
+    sites,
+    blocks
   },
   plugins: [createPersistedState()]
 })

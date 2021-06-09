@@ -9,6 +9,8 @@ import difference from 'lodash/difference'
 import debounce from 'lodash/debounce'
 import isEmpty from 'lodash/isEmpty'
 import union from 'lodash/union'
+import isEqual from 'lodash/isEqual'
+import values from 'lodash/values'
 
 const lodash = {
   cloneDeep,
@@ -21,7 +23,9 @@ const lodash = {
   difference,
   debounce,
   isEmpty,
-  union
+  union,
+  isEqual,
+  values
 }
 
 window.lodash = lodash

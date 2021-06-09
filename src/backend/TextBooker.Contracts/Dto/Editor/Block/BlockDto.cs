@@ -9,6 +9,9 @@ namespace TextBooker.Contracts.Dto
 		[Required]
 		public string Title { get; set; }
 
+		[Required]
+		public string Alias { get; set; }
+
 		public string Content { get; set; }
 
 		[Required]

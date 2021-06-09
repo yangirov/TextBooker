@@ -21,7 +21,9 @@ export default {
     ...mapGetters('sites', ['site']),
 
     show() {
-      return !_.isEmpty(this.site) && this.$route.name == 'editor'
+      return (
+        !_.isEmpty(this.site) && this.site.id && this.$route.name == 'editor'
+      )
     }
   },
 
@@ -31,7 +33,8 @@ export default {
     },
 
     updateSite() {
-      this.$store.dispatch('sites/updateSiteInfo')
+      this.$store.dispatch('sites/updateSite')
+      this.$store.dispatch('blocks/updateBlocks')
     }
   }
 }

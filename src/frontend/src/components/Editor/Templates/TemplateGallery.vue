@@ -53,7 +53,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import SelectList from '@/components/SelectList/SelectList.vue'
+import SelectList from '@/components/Editor/SelectList/SelectList.vue'
 
 export default {
   name: 'TemplateGallery',

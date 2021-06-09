@@ -7,8 +7,6 @@
       id="blocks_list"
     ></SelectList>
 
-    {{ blocks }}
-
     <div class="buttons mt-1">
       <el-button type="primary" @click="addBlock">
         <i class="el-icon-circle-plus-outline"></i>
@@ -53,14 +51,12 @@
 </template>
 
 <script>
-import SelectList from '@/components/SelectList/SelectList.vue'
+import SelectList from '@/components/Editor/SelectList/SelectList.vue'
 import { mapGetters } from 'vuex'
 import { TWITTER_MODAL } from '@/store/modals'
 import TwitterWidget from './Generators/TwitterWidget.vue'
 
 export default {
-  name: 'BlocksList',
-
   components: {
     SelectList,
     TwitterWidget
@@ -68,36 +64,43 @@ export default {
 
   data: () => ({
     TWITTER_MODAL,
-    selectedBlock: {}
+    isEdit: false
   }),
 
   computed: {
-    ...mapGetters('sites', ['site', 'blocks'])
+    ...mapGetters('sites', ['site']),
+    ...mapGetters('blocks', ['blocks', 'block'])
   },
 
   methods: {
     addBlock() {
-      let index = (this.blocks && this.blocks.length + 1) ?? 1
+      let index = this.blocks.length + 1 ?? 1
 
       let data = {
-        name: `${this.$t('tabs.blocks.defaultBlockName')} ${index}`,
+        title: `${this.$t('tabs.blocks.defaultBlockName')} ${index}`,
         alias: `block${index}`,
         siteId: this.site.id
       }
 
-      this.$store.commit('sites/UPDATE_BLOCKS', data)
+      this.$store.dispatch('blocks/addBlock', data)
     },
 
     deleteBlock() {
-      //this.$store.dispatch('sites/deleteBlock', this.selectedBlock.id)
+      this.$store.dispatch('blocks/deleteBlock', {
+        id: this.block.id,
+        siteId: this.site.id
+      })
     },
 
     selectBlock(id) {
-      //this.$store.dispatch('sites/deleteBlock', this.selectedBlock.id)
-      //this.selectedBlock = this.blocks.find(x => x.id === id) ?? {}
+      let block = this.blocks.find(x => x.id === id) ?? {}
+      this.$store.commit('blocks/SET_BLOCK', block)
     },
 
-    handleTwitterWidget(data) {},
+    handleTwitterWidget(content) {
+      console.log(content)
+      this.$store.commit('blocks/SET_BLOCK', { content })
+    },
 
     insertBlockTemplate(template) {
       switch (template) {
@@ -108,6 +111,10 @@ export default {
           break
       }
     }
+  },
+
+  created() {
+    if (this.blocks) this.selectBlock(this.blocks[0]?.id)
   }
 }
 </script>
