@@ -71,6 +71,7 @@ export default {
       try {
         setState(commit, { loading: true })
         let result = await api.deleteBlock(payload)
+        await dispatch('reset')
         await dispatch('fetchBlocks', payload.siteId)
         showSuccessNotify()
       } catch (error) {

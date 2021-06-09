@@ -4,7 +4,6 @@ import { showSuccessNotify, showErrorNotify } from '@/utils'
 import router from '@/router'
 
 let initState = {
-  id: '',
   title: '',
   description: '',
   keywords: '',
@@ -12,9 +11,7 @@ let initState = {
   templateId: 1,
   icon: '',
   userScripts: [],
-  sectionNames: [],
-  blocks: [],
-  pages: []
+  sectionNames: []
 }
 
 export default {
@@ -34,9 +31,7 @@ export default {
     templates: state => state.templates,
     templateKeys: state => state.templateKeys,
     projects: state => state.projects,
-    site: state => state.site,
-    blocks: state => state.site.blocks,
-    pages: state => state.site.pages
+    site: state => state.site
   },
 
   mutations: {

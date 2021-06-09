@@ -4,7 +4,6 @@
       :items="pages"
       @handler="selectPage"
       class-name="max-wh m-1"
-      id="pages_list"
     ></SelectList>
 
     <div class="buttons mt-1">

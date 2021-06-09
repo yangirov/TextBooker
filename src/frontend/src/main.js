@@ -1,25 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import { VueReCaptcha } from 'vue-recaptcha-v3'
 import i18n from './libs/VueI18n'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import router from './router'
 import store from './store'
+
 import './utils'
 import './mixins'
 import './directives'
 import './libs'
-
-Vue.use(VueReCaptcha, {
-  siteKey: process.env.VUE_APP_RECAPTCHA_SITE,
-  loaderOptions: {
-    useRecaptchaNet: true,
-    autoHideBadge: true
-  }
-})
 
 Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value),

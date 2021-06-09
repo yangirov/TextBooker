@@ -6,7 +6,7 @@
       ref="blockEditorForm"
       size="small"
     >
-      <el-form-item prop="title" id="block_title">
+      <el-form-item prop="title">
         <el-input
           v-model="blockForm.title"
           :placeholder="$t('tabs.blocks.title')"
@@ -37,10 +37,8 @@
     <ContentEditor
       :html-mode="enabledHtmlMode"
       :preview-visible="previewVisible"
-      :style="style"
       :title="blockForm.title"
-      :text="blockForm.content"
-      @change-content="changeContent"
+      v-model="blockForm.content"
       @close-previewer="closePreview"
     ></ContentEditor>
   </div>
@@ -58,8 +56,6 @@ export default {
   },
 
   data: () => ({
-    style: '',
-
     previewVisible: false,
     enabledHtmlMode: false,
 
@@ -113,36 +109,13 @@ export default {
       }
     }, 100),
 
-    changeContent(data) {
-      this.blockForm.content = data
-    },
-
     closePreview() {
       this.previewVisible = false
-    },
-
-    resizeHandler() {
-      let menuHeight = document.getElementById('blocks_list').clientHeight
-      let inputWidth = document.getElementById('block_title').clientWidth
-
-      this.style = `height: calc(${menuHeight}px - 4em);
-                    width: calc(${inputWidth}px - 0.1em);`
     }
   },
 
   created() {
-    window.addEventListener('resize', this.resizeHandler)
     this.blockForm = this.block
-  },
-
-  mounted() {
-    setTimeout(() => {
-      this.resizeHandler()
-    }, 100)
-  },
-
-  destroyed() {
-    window.removeEventListener('resize', this.resizeHandler)
   }
 }
 </script>
