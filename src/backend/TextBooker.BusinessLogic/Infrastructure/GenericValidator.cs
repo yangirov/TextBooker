@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+
 using CSharpFunctionalExtensions;
+
 using FluentValidation;
 
 namespace TextBooker.BusinessLogic.Infrastructure

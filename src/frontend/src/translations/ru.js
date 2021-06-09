@@ -16,9 +16,8 @@ export const RUSSIAN_TRANSLATIONS = {
       advanced: 'Расширенные настройки',
       icon: 'Иконка',
       siteTitle: 'Заголовок сайта',
-      shortDescription: 'Короткое описание сайта',
+      shortDescription: 'Краткое описание сайта',
       keywords: 'Ключевые слова (СЕО)',
-      customCode: 'Пользовательский код',
       templateSection: 'Поля шаблона',
       templateFields: {
         1: 'Заголовок главного меню',
@@ -77,8 +76,7 @@ export const RUSSIAN_TRANSLATIONS = {
     thanks: 'Спасибо за обратную связь!'
   },
   about: {
-    title:
-      'Генератор статических сайтов и системой управления контентом <br>с открытым исходным кодом',
+    title: 'Генератор статических сайтов c системой управления контентом',
     shortTitle: 'О сервисе',
     getStarted: 'Начать',
     vantages: [

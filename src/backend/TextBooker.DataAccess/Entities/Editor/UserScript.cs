@@ -6,7 +6,7 @@ namespace TextBooker.DataAccess.Entities
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		
+
 		public int Location { get; set; }
 
 		public string Content { get; set; }

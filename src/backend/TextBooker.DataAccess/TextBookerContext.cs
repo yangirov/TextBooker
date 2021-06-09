@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.DataAccess
@@ -14,8 +15,8 @@ namespace TextBooker.DataAccess
 		public DbSet<TemplateKey> TemplateKeys { get; set; }
 		public DbSet<UserScript> UserScripts { get; set; }
 		public DbSet<SectionName> SectionNames { get; set; }
-
 		public DbSet<Block> Blocks { get; set; }
+		public DbSet<Page> Pages { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{

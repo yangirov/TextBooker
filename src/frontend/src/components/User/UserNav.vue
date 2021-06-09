@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown @command="handleCommand" trigger="hover">
+  <el-dropdown @command="handleCommand" trigger="click">
     <span class="el-dropdown-link">
       {{ shortUsername }} <i class="el-icon-arrow-down el-icon--right"></i>
     </span>

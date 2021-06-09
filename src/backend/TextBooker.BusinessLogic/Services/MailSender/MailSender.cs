@@ -4,14 +4,20 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+
 using CSharpFunctionalExtensions;
+
 using MailKit.Net.Smtp;
 using MailKit.Security;
+
 using Microsoft.EntityFrameworkCore;
+
 using MimeKit;
+
 using Serilog;
+
 using TextBooker.Common.Config;
-using TextBooker.Common.Enums;
+using TextBooker.Contracts.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
 
@@ -31,7 +37,7 @@ namespace TextBooker.BusinessLogic.Services
 		}
 
 		public async Task<Result> Send<T>(EmailTemplateKeys templateId, string recipientAddress, T messageData)
-		   => await Send(templateId, new[] { recipientAddress }, messageData);
+			=> await Send(templateId, new[] { recipientAddress }, messageData);
 
 		public async Task<Result> Send<T>(EmailTemplateKeys templateId, IEnumerable<string> recipientAddresses, T messageData)
 		{
@@ -58,10 +64,9 @@ namespace TextBooker.BusinessLogic.Services
 		}
 
 		private Result<Dictionary<string, object>> GetTemplateData<T>(T data)
-			=> Result.Ok(
-				data.GetType()
-					.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-					.ToDictionary(prop => prop.Name.ToLower(), prop => prop.GetValue(data, null)));
+			=> Result.Ok(data.GetType()
+							 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+							 .ToDictionary(prop => prop.Name.ToLower(), prop => prop.GetValue(data, null)));
 
 		private Result<string> BuildMessage(EmailTemplate template, IDictionary<string, object> parameters)
 			=> Result.Ok(parameters.Aggregate(template.Body, (acc, item) => acc.Replace($"%{item.Key}%", item.Value.ToString())));
@@ -87,7 +92,7 @@ namespace TextBooker.BusinessLogic.Services
 					await smtpClient.AuthenticateAsync(new NetworkCredential(emailSettings.Username, emailSettings.Password));
 					await smtpClient.SendAsync(message);
 					await smtpClient.DisconnectAsync(true);
-				}	
+				}
 
 				logger.Information("The email was successfully sent", message);
 				return Result.Ok();
@@ -97,6 +102,6 @@ namespace TextBooker.BusinessLogic.Services
 				var error = $"An error occurred while sending the message: \"{message}\". Error: {e.Message}";
 				return Result.Failure(error);
 			}
-		}		
+		}
 	}
 }

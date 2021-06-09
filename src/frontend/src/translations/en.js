@@ -18,7 +18,6 @@ export const ENGLISH_TRANSLATIONS = {
       siteTitle: 'Site title',
       shortDescription: 'Short description',
       keywords: 'Keywords',
-      customCode: 'Custom code',
       templateSection: 'Template section names',
       templateFields: {
         1: 'Main menu title',
@@ -80,7 +79,7 @@ export const ENGLISH_TRANSLATIONS = {
     thanks: 'Thank you for your feedback!'
   },
   about: {
-    title: 'Open Source static sites generator with content management system',
+    title: 'Static sites generator with content management system',
     shortTitle: 'About',
     getStarted: 'Get started',
     vantages: [

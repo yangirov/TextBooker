@@ -1,8 +1,11 @@
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+
 using CSharpFunctionalExtensions;
+
+using Microsoft.AspNetCore.Mvc;
+
 using TextBooker.Api.Infrastructure;
 
 namespace TextBooker.Api.Controllers

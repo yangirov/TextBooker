@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+
 using TextBooker.Contracts.Dto.User;
 
 namespace TextBooker.BusinessLogic.Infrastructure
 {
 	public class PasswordHasher
 	{
-		private const int SaltSize = 16; 
+		private const int SaltSize = 16;
 		private const int KeySize = 32;
 
 		public PasswordHasher(HashingOptions options)

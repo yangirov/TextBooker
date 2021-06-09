@@ -19,6 +19,34 @@ namespace TextBooker.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("TextBooker.DataAccess.Entities.Block", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .HasColumnName("content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SiteId")
+                        .HasColumnName("site_id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_blocks");
+
+                    b.HasIndex("SiteId")
+                        .HasName("ix_blocks_site_id");
+
+                    b.ToTable("blocks");
+                });
+
             modelBuilder.Entity("TextBooker.DataAccess.Entities.EmailTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -59,6 +87,34 @@ namespace TextBooker.DataAccess.Migrations
                             Importance = false,
                             Subject = "Feedback from TextBooker"
                         });
+                });
+
+            modelBuilder.Entity("TextBooker.DataAccess.Entities.Page", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .HasColumnName("content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SiteId")
+                        .HasColumnName("site_id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_pages");
+
+                    b.HasIndex("SiteId")
+                        .HasName("ix_pages_site_id");
+
+                    b.ToTable("pages");
                 });
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.SectionName", b =>
@@ -846,6 +902,22 @@ namespace TextBooker.DataAccess.Migrations
                         .HasName("ix_user_scripts_site_id");
 
                     b.ToTable("user_scripts");
+                });
+
+            modelBuilder.Entity("TextBooker.DataAccess.Entities.Block", b =>
+                {
+                    b.HasOne("TextBooker.DataAccess.Entities.Site", "Site")
+                        .WithMany("Blocks")
+                        .HasForeignKey("SiteId")
+                        .HasConstraintName("fk_blocks_sites_site_id");
+                });
+
+            modelBuilder.Entity("TextBooker.DataAccess.Entities.Page", b =>
+                {
+                    b.HasOne("TextBooker.DataAccess.Entities.Site", "Site")
+                        .WithMany("Pages")
+                        .HasForeignKey("SiteId")
+                        .HasConstraintName("fk_pages_sites_site_id");
                 });
 
             modelBuilder.Entity("TextBooker.DataAccess.Entities.SectionName", b =>

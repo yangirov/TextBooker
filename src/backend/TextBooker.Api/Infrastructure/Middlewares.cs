@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
+
 using App.Metrics;
 using App.Metrics.Counter;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace TextBooker.Api.Infrastructure
 {
@@ -13,8 +15,8 @@ namespace TextBooker.Api.Infrastructure
 		{
 			if (context.Request.Path.Value == "/favicon.ico")
 				return;
-			
-			var keys = new List<string>() {};
+
+			var keys = new List<string>() { };
 			var vals = new List<string>();
 
 			var routeData = context.GetRouteData();

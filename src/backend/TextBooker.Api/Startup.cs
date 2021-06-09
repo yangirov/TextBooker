@@ -1,15 +1,19 @@
 using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
+
+using Masking.Serilog;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,18 +21,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-using AutoMapper;
-
 using Serilog;
 using Serilog.Sinks.Loki;
-using Masking.Serilog;
 
 using TextBooker.Api.Infrastructure;
 using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
-using Textbooker.Utils;
+using TextBooker.Utils;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -109,7 +110,6 @@ namespace TextBooker.Api
 			{
 				options.UseNpgsql(dbSettings.ConnectionString, builder =>
 				{
-					builder.UseNetTopologySuite();
 					builder.EnableRetryOnFailure();
 				});
 
@@ -190,11 +190,14 @@ namespace TextBooker.Api
 			services.AddSingleton(mapper);
 
 			services.AddMetrics(Program.Metrics);
+
 			services.AddSingleton<IVersionService, VersionService>();
 			services.AddTransient<IMailSender, MailSender>();
 			services.AddTransient<ICommonService, CommonService>();
 			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<IEditorService, EditorService>();
+			services.AddTransient<ISiteService, SiteService>();
+			services.AddTransient<IPageService, PageService>();
+			services.AddTransient<IBlockService, BlockService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

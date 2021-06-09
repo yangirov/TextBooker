@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Textbooker.Utils
+namespace TextBooker.Utils
 {
 	public static class OptionsClient
 	{
-		public static string GetData(string data) => GetValue(data);
+		public static string GetData(string data)
+		{
+			return GetValue(data);
+		}
 
 		public static T GetData<T>(T data)
 		{

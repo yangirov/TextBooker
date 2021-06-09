@@ -1,4 +1,5 @@
 using AutoMapper;
+
 using TextBooker.Contracts.Dto;
 using TextBooker.DataAccess.Entities;
 
@@ -14,13 +15,15 @@ namespace TextBooker.BusinessLogic.Mappers
 
 			CreateMap<Site, SiteDto>().ReverseMap();
 
-			CreateMap<Site, SiteListItemDto>().ReverseMap();
+			CreateMap<Site, ProjectDto>().ReverseMap();
 
 			CreateMap<Template, TemplateDto>().ReverseMap();
 
 			CreateMap<TemplateKey, TemplateKeyDto>().ReverseMap();
 
 			CreateMap<Block, BlockDto>().ReverseMap();
+
+			CreateMap<Page, PageDto>().ReverseMap();
 		}
 	}
 }

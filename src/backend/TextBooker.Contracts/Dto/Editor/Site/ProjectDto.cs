@@ -2,7 +2,7 @@ using System;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class SiteListItemDto
+	public class ProjectDto
 	{
 		public string Id { get; set; }
 

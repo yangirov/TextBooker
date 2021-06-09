@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import FeedbackForm from '@/components/Information/FeedbackForm.vue'
+import FeedbackForm from '@/components/Feedback/FeedbackForm.vue'
 
 export default {
   components: {

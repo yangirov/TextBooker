@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-tabs type="card" :value="tabId">
+    <el-tabs type="card" :value="activeTab">
       <el-tab-pane class="full-wh" :lazy="true" name="start">
         <span slot="label">
           <i class="el-icon-s-home"></i> {{ $t('tabs.start.name') }}
@@ -54,9 +54,10 @@
       </el-tab-pane>
 
       <el-tab-pane
-        v-if="site && $route.name == 'editor'"
-        name="actions"
+        v-if="siteExists && $route.name == 'editor'"
         :disabled="true"
+        :lazy="true"
+        name="actions"
       >
         <span slot="label">
           <SiteActions />
@@ -94,7 +95,7 @@ export default {
   computed: {
     ...mapGetters('sites', ['site']),
 
-    tabId() {
+    activeTab() {
       if (this.siteExists) return 'settings'
       return 'start'
     },

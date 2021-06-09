@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import modals from './modals'
 import appState from './modules/appState'
 import user from './modules/user'
 import sites from './modules/sites'
-import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 window.Vuex = Vuex

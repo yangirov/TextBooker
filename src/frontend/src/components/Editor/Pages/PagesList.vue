@@ -31,8 +31,14 @@
 </template>
 
 <script>
+import SelectList from '@/components/SelectList/SelectList.vue'
+
 export default {
   name: 'PagesList',
+
+  components: {
+    SelectList
+  },
 
   data: () => ({
     selectedPage: 0,

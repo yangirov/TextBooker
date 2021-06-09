@@ -1,16 +1,22 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+
+using AutoMapper;
+
 using CSharpFunctionalExtensions;
+
 using FluentValidation;
+
 using Microsoft.AspNetCore.Http;
+
 using Serilog;
+
 using TextBooker.BusinessLogic.Infrastructure;
 using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto.User;
-using TextBooker.Common.Enums;
+using TextBooker.Contracts.Enums;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
-using AutoMapper;
 
 namespace TextBooker.BusinessLogic.Services
 {
@@ -203,12 +209,15 @@ namespace TextBooker.BusinessLogic.Services
 				? Result.Failure<SignDto>(error)
 				: Result.Ok(dto);
 
-			Result Validate() => GenericValidator<SignDto>.Validate(v =>
+			Result Validate()
 			{
-				v.RuleFor(c => c.Email).EmailAddress().NotEmpty();
-				v.RuleFor(c => c.Password).NotEmpty();
-				v.RuleFor(c => c.Token).NotEmpty();
-			}, dto);
+				return GenericValidator<SignDto>.Validate(v =>
+				{
+					v.RuleFor(c => c.Email).EmailAddress().NotEmpty();
+					v.RuleFor(c => c.Password).NotEmpty();
+					v.RuleFor(c => c.Token).NotEmpty();
+				}, dto);
+			}
 		}
 
 		private Result<SignResponse> GenerateToken(User user)
@@ -218,6 +227,7 @@ namespace TextBooker.BusinessLogic.Services
 			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
 		}
 
-		private async Task<Result> RecaptchaVerify(SignDto dto) => await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
+		private async Task<Result> RecaptchaVerify(SignDto dto)
+			=> await AuthenticationHelper.RecaptchaTokenVerify(clientFactory, googleOptions, dto.Token);
 	}
 }

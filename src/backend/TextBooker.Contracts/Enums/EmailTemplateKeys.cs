@@ -1,4 +1,4 @@
-namespace TextBooker.Common.Enums
+namespace TextBooker.Contracts.Enums
 {
 	public enum EmailTemplateKeys
 	{

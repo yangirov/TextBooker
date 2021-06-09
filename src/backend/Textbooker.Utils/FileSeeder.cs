@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
+
 using Newtonsoft.Json;
 
-namespace Textbooker.Utils
+namespace TextBooker.Utils
 {
 	public static class FileSeeder
 	{

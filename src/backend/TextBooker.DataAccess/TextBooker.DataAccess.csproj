@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TextBooker.Common\TextBooker.Common.csproj" />
-    <ProjectReference Include="..\Textbooker.Utils\Textbooker.Utils.csproj" />
+    <ProjectReference Include="..\TextBooker.Utils\TextBooker.Utils.csproj" />
   </ItemGroup>
 
 </Project>

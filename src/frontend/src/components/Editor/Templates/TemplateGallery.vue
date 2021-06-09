@@ -53,9 +53,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import SelectList from '@/components/SelectList/SelectList.vue'
 
 export default {
   name: 'TemplateGallery',
+
+  components: {
+    SelectList
+  },
 
   data: () => ({
     searchText: '',
