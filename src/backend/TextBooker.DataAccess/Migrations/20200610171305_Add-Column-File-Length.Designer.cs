@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TextBooker.DataAccess;
@@ -9,9 +10,10 @@ using TextBooker.DataAccess;
 namespace TextBooker.DataAccess.Migrations
 {
     [DbContext(typeof(TextBookerContext))]
-    partial class TextBookerContextModelSnapshot : ModelSnapshot
+    [Migration("20200610171305_Add-Column-File-Length")]
+    partial class AddColumnFileLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,10 +173,6 @@ namespace TextBooker.DataAccess.Migrations
                     b.Property<bool>("EnabledUserScripts")
                         .HasColumnName("enabled_user_scripts")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("Icon")
-                        .HasColumnName("icon")
-                        .HasColumnType("text");
 
                     b.Property<string>("Keywords")
                         .HasColumnName("keywords")

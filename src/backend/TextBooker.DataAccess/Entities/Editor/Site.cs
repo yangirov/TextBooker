@@ -19,6 +19,8 @@ namespace TextBooker.DataAccess.Entities
 
 		public string Keywords { get; set; }
 
+		public string Icon { get; set; }
+
 		public bool EnabledUserScripts { get; set; }
 
 		public DateTime CreatedOn { get; set; }
@@ -35,5 +37,7 @@ namespace TextBooker.DataAccess.Entities
 		public ICollection<Block> Blocks { get; set; }
 
 		public ICollection<Page> Pages { get; set; }
+
+		public ICollection<SiteFile> Files { get; set; }
 	}
 }

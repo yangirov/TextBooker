@@ -17,6 +17,7 @@ namespace TextBooker.DataAccess
 		public DbSet<SectionName> SectionNames { get; set; }
 		public DbSet<Block> Blocks { get; set; }
 		public DbSet<Page> Pages { get; set; }
+		public DbSet<SiteFile> Files { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
