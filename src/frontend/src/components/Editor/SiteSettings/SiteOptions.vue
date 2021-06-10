@@ -137,15 +137,17 @@ export default {
     },
 
     beforeIconUpload(file) {
-      const isImage = file.type === 'image/ico' || 'image/jpeg' || 'image/png'
-      const isLimit100Kb = file.size / 1024 < 100
+      const isImage = file.type === 'image/x-icon' || 'image/png'
+      const isLimit100Kb = file.size / 1024 <= 100
 
       if (!isImage) {
         showErrorNotify(this.$t('tabs.settings.iconFormatError'))
       }
 
       if (!isLimit100Kb) {
-        showErrorNotify(this.$t('tabs.settings.iconSizeError'))
+        showErrorNotify(
+          this.$t('tabs.settings.iconSizeError', { size: '100 Kb' })
+        )
       }
 
       return isImage && isLimit100Kb

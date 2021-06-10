@@ -6,16 +6,15 @@ const baseURL =
   process.env.NODE_ENV == 'production' ? 'api/' : process.env.VUE_APP_HOST
 
 const editorOptions = {
-  hideModules: { bold: true },
-  iconOverrides: { bold: "<i class='icon'></i>" },
+  hideModules: { bold: false, image: true },
   image: {
-    uploadURL: `${baseURL}/upload`,
+    uploadURL: `${baseURL}/file/upload`,
     dropzoneOptions: {
       thumbnailWidth: 150,
       maxFilesize: 2 // MB
     }
   },
-  forcePlainTextOnPaste: false,
+  forcePlainTextOnPaste: true,
   locale: process.env.VUE_APP_I18N_LOCALE || 'en'
 }
 

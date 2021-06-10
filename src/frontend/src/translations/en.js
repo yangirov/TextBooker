@@ -28,8 +28,9 @@ export const ENGLISH_TRANSLATIONS = {
         6: 'Footer content'
       },
       userScripts: 'User scripts',
+      imageFormatError: 'Image must be JPG or PNG format!',
       iconFormatError: 'Icon picture must be ICO, JPG or PNG format!',
-      iconSizeError: 'Icon picture size can not exceed 100 Kb!'
+      iconSizeError: 'Icon picture size can not exceed {size}!'
     },
     pages: {
       name: 'Pages',
