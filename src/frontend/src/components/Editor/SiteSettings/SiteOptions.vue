@@ -20,14 +20,10 @@
       </el-form-item>
 
       <el-form-item :label="$t('tabs.settings.icon')" prop="title">
-        <el-upload
-          action=""
-          :http-request="uploadIcon"
-          :on-change="uploadChanged"
+        <ImageUpload
+          v-model="file"
+          :upload="uploadIcon"
           :before-upload="beforeIconUpload"
-          :multiple="false"
-          :auto-upload="true"
-          :show-file-list="false"
           accept="image/png, image/x-icon"
         >
           <img
@@ -36,7 +32,7 @@
             class="icon"
           />
           <i v-else class="el-icon-plus icon-uploader-icon"></i>
-        </el-upload>
+        </ImageUpload>
       </el-form-item>
 
       <el-form-item :label="$t('tabs.settings.userScripts')" prop="title">
@@ -65,10 +61,12 @@
 import { lodash as _ } from '@/utils'
 import { mapGetters } from 'vuex'
 import { showSuccessNotify, showErrorNotify } from '@/utils'
-import UserScriptsModal from './UserScriptsModal.vue'
-import { USER_SCRIPTS_MODAL } from '@/store/modals'
 import { populateObject } from '@/utils'
 import api from '@/api'
+
+import ImageUpload from '@/components/Editor/ContentEditor/ImageUpload.vue'
+import UserScriptsModal from './UserScriptsModal.vue'
+import { USER_SCRIPTS_MODAL } from '@/store/modals'
 
 let initState = {
   title: '',
@@ -85,7 +83,8 @@ let initState = {
 
 export default {
   components: {
-    UserScriptsModal
+    UserScriptsModal,
+    ImageUpload
   },
 
   data: () => ({
@@ -116,15 +115,11 @@ export default {
       this.$modal.open(USER_SCRIPTS_MODAL)
     },
 
-    uploadChanged(file, fileList) {
-      this.file = file.raw
-    },
-
     uploadIcon() {
       const formData = new FormData()
       formData.append('siteId', this.site.id)
       formData.append('type', 1)
-      formData.append('file', this.file)
+      formData.append('file', this.file.raw)
 
       api
         .uploadFile(formData)
@@ -160,8 +155,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.el-upload
+<style lang="sass" scoped>
+/deep/ .el-upload
   border: 1px dashed #d9d9d9
   border-radius: 3px
   cursor: pointer
@@ -172,11 +167,10 @@ export default {
   display: flex
   justify-content: center
   align-items: center
+  &:hover
+    border-color: #409EFF
 
-.el-upload:hover
-  border-color: #409EFF
-
-.icon-uploader-icon
+/deep/ .icon-uploader-icon
   font-size: 20px
   color: #8c939d
   width: 32px

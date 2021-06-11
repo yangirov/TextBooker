@@ -104,7 +104,7 @@ export default {
 
   methods: {
     blockHandler: _.debounce(function(newValue, oldValue) {
-      if (!_.isEqual(newValue, oldValue)) {
+      if (!_.isEmpty(newValue) && !_.isEqual(newValue, oldValue)) {
         this.blockForm = newValue
       }
     }, 100),
