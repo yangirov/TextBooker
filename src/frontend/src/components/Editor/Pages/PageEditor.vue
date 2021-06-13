@@ -1,21 +1,8 @@
 <template>
   <div class="page_editor">
-    <el-form :model="siteForm" :rules="rules" ref="pageEditorForm" size="small">
+    <el-form :model="value" :rules="rules" size="small">
       <el-form-item prop="title">
-        <el-input
-          v-model="siteForm.title"
-          :placeholder="$t('tabs.pages.title')"
-        >
-          <template #prepend>
-            <el-tooltip
-              effect="dark"
-              :content="$t('tabs.pages.description')"
-              placement="left-start"
-            >
-              <el-button icon="el-icon-question"></el-button>
-            </el-tooltip>
-          </template>
-
+        <el-input v-model="value.title" :placeholder="$t('tabs.pages.title')">
           <template #append>
             <el-button icon="el-icon-view" @click="previewVisible = true">
               {{ $t('common.preview') }}
@@ -33,14 +20,15 @@
     <ContentEditor
       :html-mode="enabledHtmlMode"
       :preview-visible="previewVisible"
-      :title="siteForm.title"
-      v-model="siteForm.content"
+      :title="value.title"
+      v-model="value.content"
       @close-previewer="closePreview"
     ></ContentEditor>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ContentEditor from '@/components/Editor/ContentEditor/ContentEditor.vue'
 
 export default {
@@ -50,17 +38,26 @@ export default {
     ContentEditor
   },
 
+  props: {
+    value: {
+      type: Object
+    }
+  },
+
+  watch: {
+    value() {
+      this.$emit('input', this.value)
+    }
+  },
+
   data: () => ({
     previewVisible: false,
-    enabledHtmlMode: false,
-
-    siteForm: {
-      title: '',
-      content: ''
-    }
+    enabledHtmlMode: false
   }),
 
   computed: {
+    ...mapGetters('pages', ['pages', 'page']),
+
     rules() {
       return {
         ...this.mapRules(['title'])
@@ -82,8 +79,6 @@ export default {
     closePreview() {
       this.previewVisible = false
     }
-  },
-
-  created() {}
+  }
 }
 </script>

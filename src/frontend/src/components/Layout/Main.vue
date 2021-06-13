@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-loading="loading">
     <div class="container mt-1">
       <router-view></router-view>
     </div>
@@ -7,8 +7,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'PageMain'
+  name: 'PageMain',
+
+  computed: {
+    ...mapGetters('appState', ['loading'])
+  }
 }
 </script>
 

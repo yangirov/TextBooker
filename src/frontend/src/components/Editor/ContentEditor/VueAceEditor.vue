@@ -26,7 +26,7 @@ export default {
     },
 
     options: {
-      type: Function
+      type: Object
     }
   },
 

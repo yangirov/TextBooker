@@ -7,7 +7,7 @@ export const addPage = async payload =>
 export const getPage = async payload =>
   (await axios.get('/editor/page', { params: { ...payload } })).data
 
-export const updatePage = async payload =>
+export const updatePages = async payload =>
   (await axios.put('/editor/page', payload)).data
 
 export const deletePage = async payload =>
@@ -17,7 +17,7 @@ const pages = {
   getPages,
   addPage,
   getPage,
-  updatePage,
+  updatePages,
   deletePage
 }
 

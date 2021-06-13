@@ -28,13 +28,22 @@ export default {
   },
 
   methods: {
-    openSite() {
-      window.open(`/static/${this.site.id}/index.html`, '_blank')
+    async openSite() {
+      await Promise.all([this.updateSite()]).then(res => {
+        window.open(`/static/${this.site.id}/index.html`, '_blank')
+      })
     },
 
-    updateSite() {
-      this.$store.dispatch('sites/updateSite')
-      this.$store.dispatch('blocks/updateBlocks')
+    async updateSite() {
+      this.$store.commit('appState/SET_STATE', { loading: true })
+
+      await Promise.all([
+        this.$store.dispatch('sites/updateSite'),
+        this.$store.dispatch('pages/updatePages'),
+        this.$store.dispatch('blocks/updateBlocks')
+      ]).then(data => {
+        this.$store.commit('appState/SET_STATE', { loading: false })
+      })
     }
   }
 }

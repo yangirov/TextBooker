@@ -1,7 +1,7 @@
 <template>
-  <div class="columns p-1">
+  <div class="columns">
     <div class="column is-6">
-      <h2 class="tab-title">{{ $t('tabs.publish.name') }}</h2>
+      <h3 class="tab-title">{{ $t('tabs.publish.name') }}</h3>
 
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item name="1">
