@@ -1,6 +1,7 @@
 <template>
   <div class="blocks_list">
     <SelectList
+      :default-active="defaultActive"
       :items="blocks"
       @handler="selectBlock"
       class-name="max-wh m-1"
@@ -62,6 +63,7 @@ export default {
   },
 
   data: () => ({
+    defaultActive: '',
     TWITTER_MODAL
   }),
 
@@ -91,6 +93,7 @@ export default {
     },
 
     selectBlock(id) {
+      this.defaultActive = id
       let block = this.blocks.find(x => x.id === id) ?? {}
       this.$store.commit('blocks/SET_BLOCK', block)
     },
@@ -110,8 +113,10 @@ export default {
     }
   },
 
-  created() {
-    if (this.blocks) this.selectBlock(this.blocks[0]?.id)
+  mounted() {
+    setTimeout(() => {
+      this.selectBlock(this.blocks[0]?.id)
+    }, 100)
   }
 }
 </script>

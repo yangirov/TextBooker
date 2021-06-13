@@ -6,9 +6,11 @@
     :close-on-click-modal="true"
     :before-close="closeModal"
   >
-    <div slot="title" class="twitter_title">
-      <h3>{{ $t('twitter.feedTitle') }}</h3>
-      <h3>{{ $t('common.preview') }}</h3>
+    <div slot="title">
+      <div class="columns">
+        <h3 class="column is-7">{{ $t('twitter.feedTitle') }}</h3>
+        <h3 class="column is-5">{{ $t('common.preview') }}</h3>
+      </div>
     </div>
 
     <el-form
@@ -20,7 +22,7 @@
       size="small"
     >
       <div class="columns">
-        <div class="column is-half">
+        <div class="column is-7">
           <el-form-item prop="url" :label="$t('twitter.url')">
             <el-input
               placeholder="https://twitter.com/twitter"
@@ -70,7 +72,7 @@
           </el-form-item>
         </div>
 
-        <div class="column is-half">
+        <div class="column is-5">
           <div v-html="preview"></div>
         </div>
       </div>
@@ -165,11 +167,10 @@ export default {
 
     previewHandler: _.debounce(function() {
       this.preview = this.generateTwitterWidget()
-    }, 1000),
+      this.loadTwitterResources()
+    }, 500),
 
     generateTwitterWidget() {
-      this.loadTwitterResources()
-
       let { lang, width, height, theme, url } = this.twitterForm
 
       let str = `<a
@@ -197,15 +198,8 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.preview = this.generateTwitterWidget()
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.twitter_title
-  display: flex
-  justify-content: space-between
-  width: 64%
-</style>
