@@ -12,11 +12,11 @@ namespace TextBooker.Api.Controllers
 	[ApiController]
 	[Route("editor/site")]
 	[Produces("application/json")]
-	public class SiteController : BaseController
+	public class SiteSettingsController : BaseController
 	{
-		private readonly ISiteService siteService;
+		private readonly ISiteSettingsService siteService;
 
-		public SiteController(ISiteService siteService)
+		public SiteSettingsController(ISiteSettingsService siteService)
 		{
 			this.siteService = siteService;
 		}

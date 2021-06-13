@@ -51,12 +51,12 @@ namespace TextBooker.Api.Controllers
 			=> OkOrBadRequest(await blockService.Get(id, siteId));
 
 		/// <summary>
-		/// Update block info
+		/// Update blocks
 		/// </summary>
-		/// <param name="list">Block list</param>
+		/// <param name="list">Blocks data</param>
 		/// <returns></returns>
 		[HttpPut]
-        public async Task<IActionResult> UpdateBlock([FromBody] List<BlockDto> list)
+        public async Task<IActionResult> UpdateBlocks([FromBody] List<BlockDto> list)
 			=> OkOrBadRequest(await blockService.UpdateAll(list));
 
 		/// <summary>

@@ -7,7 +7,7 @@ using TextBooker.Contracts.Dto;
 
 namespace TextBooker.BusinessLogic.Services
 {
-	public interface ISiteService
+	public interface ISiteSettingsService
 	{
 		Task<Result<string>> Create(SiteDto dto);
 

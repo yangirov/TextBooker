@@ -26,7 +26,6 @@ using Serilog;
 using Serilog.Sinks.Loki;
 
 using TextBooker.Api.Infrastructure;
-using TextBooker.Api.Infrastructure.Filters;
 using TextBooker.BusinessLogic.Services;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
@@ -89,7 +88,6 @@ namespace TextBooker.Api
 			services
 				.AddMvcCore(options =>
 				{
-					options.Filters.Add(new MiddlewareFilterAttribute(typeof(LocalizationPipelineFilter)));
 					options.Filters.Add(typeof(ModelValidationFilter));
 				})
 				.AddCors()
@@ -199,7 +197,7 @@ namespace TextBooker.Api
 			services.AddTransient<IMailSender, MailSender>();
 			services.AddTransient<ICommonService, CommonService>();
 			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<ISiteService, SiteService>();
+			services.AddTransient<ISiteSettingsService, SiteSettingsService>();
 			services.AddTransient<IPageService, PageService>();
 			services.AddTransient<IBlockService, BlockService>();
 			services.AddTransient<IFileService, FileService>();

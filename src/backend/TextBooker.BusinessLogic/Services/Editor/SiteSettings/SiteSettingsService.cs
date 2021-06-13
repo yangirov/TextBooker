@@ -16,12 +16,12 @@ using TextBooker.DataAccess.Entities;
 
 namespace TextBooker.BusinessLogic.Services
 {
-	public class SiteService : BaseService, ISiteService
+	public class SiteSettingsService : BaseService, ISiteSettingsService
 	{
 		private readonly IMapper mapper;
 		private readonly TextBookerContext db;
 
-		public SiteService(
+		public SiteSettingsService(
 			IMapper mapper,
 			ILogger logger,
 			TextBookerContext db
