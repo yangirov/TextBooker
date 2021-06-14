@@ -24,3 +24,5 @@ deploy/
 logs/
 dist/
 .env
+.idea
+.history

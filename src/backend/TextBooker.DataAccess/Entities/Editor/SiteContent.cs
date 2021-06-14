@@ -14,6 +14,9 @@ namespace TextBooker.DataAccess.Entities
 		public string Content { get; set; }
 
 		public string SiteId { get; set; }
+
+		public int Order { get; set; }
+
 		public Site Site { get; set; }
 	}
 }

@@ -18,6 +18,8 @@ namespace TextBooker.Contracts.Dto
 
 		public string Content { get; set; }
 
+		public int Order { get; set; }
+
 		[Required]
 		public string SiteId { get; set; }
 	}

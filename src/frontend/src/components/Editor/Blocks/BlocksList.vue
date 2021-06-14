@@ -99,7 +99,7 @@ export default {
     },
 
     handleTwitterWidget(content) {
-      this.$store.commit('blocks/SET_BLOCK', { content })
+      this.$store.commit('blocks/SET_BLOCK', { ...this.block, content })
     },
 
     insertBlockTemplate(template) {
