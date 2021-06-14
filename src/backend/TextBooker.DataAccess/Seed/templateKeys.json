@@ -1,26 +1,26 @@
 [
 	{
 		"id": 1,
-		"name": "Заголовок главного меню"
+		"name": "MainMenuTitle"
 	},
 	{
 		"id": 2,
-		"name": "Подзаголовок"
+		"name": "Subtitle"
 	},
 	{
 		"id": 3,
-		"name": "Заголовок списка страниц"
+		"name": "PageListTitle"
 	},
 	{
 		"id": 4,
-		"name": "Заголовок о сайте"
+		"name": "AboutSiteTitle"
 	},
 	{
 		"id": 5,
-		"name": "Коротко о сайте"
+		"name": "AboutSiteShort"
 	},
 	{
 		"id": 6,
-		"name": "Подвал"
+		"name": "Footer"
 	}
 ]
