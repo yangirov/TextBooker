@@ -15,6 +15,7 @@
         :default-active="currentTemplate.id"
         :items="templatesData"
         @handler="selectTemplate"
+        :draggable="false"
       ></SelectList>
     </div>
 

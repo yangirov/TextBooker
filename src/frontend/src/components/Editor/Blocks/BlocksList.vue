@@ -1,10 +1,11 @@
 <template>
   <div class="blocks_list">
     <SelectList
+      class-name="max-wh m-1"
       :default-active="defaultActive"
       :items="blocks"
       @handler="selectBlock"
-      class-name="max-wh m-1"
+      commit-name="blocks/UPDATE_BLOCKS"
     ></SelectList>
 
     <div class="buttons mt-1">

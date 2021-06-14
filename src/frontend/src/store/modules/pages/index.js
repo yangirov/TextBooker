@@ -35,6 +35,10 @@ export default {
       state.pages = _.values(
         _.merge(_.keyBy(state.pages, 'id'), _.keyBy([data], 'id'))
       )
+    },
+
+    UPDATE_PAGES(state, data = []) {
+      state.pages = data
     }
   },
 

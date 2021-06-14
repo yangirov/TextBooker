@@ -35,6 +35,10 @@ export default {
       state.blocks = _.values(
         _.merge(_.keyBy(state.blocks, 'id'), _.keyBy([data], 'id'))
       )
+    },
+
+    UPDATE_BLOCKS(state, data = []) {
+      state.blocks = data
     }
   },
 
