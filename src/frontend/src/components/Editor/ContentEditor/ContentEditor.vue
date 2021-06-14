@@ -113,7 +113,7 @@ export default {
           let position = this.$refs.editor.selection
           this.$refs.editor.exec(
             'insertHTML',
-            `<img src=/static/${res.data}>`,
+            `<img src=${res.data}>`,
             position
           )
         })

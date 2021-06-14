@@ -26,11 +26,7 @@
           :before-upload="beforeIconUpload"
           accept="image/png, image/x-icon"
         >
-          <img
-            v-if="siteForm.icon"
-            :src="'/static/' + siteForm.icon"
-            class="icon"
-          />
+          <img v-if="siteForm.icon" :src="siteForm.icon" class="icon" />
           <i v-else class="el-icon-plus icon-uploader-icon"></i>
         </ImageUpload>
       </el-form-item>

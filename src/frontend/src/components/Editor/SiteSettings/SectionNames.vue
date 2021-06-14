@@ -12,7 +12,7 @@
         :key="item.templateKeyId"
       >
         <el-input
-          v-model="keysForm[item.id]"
+          v-model="keysForm[item.id].content"
           :value="item.content"
           size="small"
           clearable
@@ -44,13 +44,7 @@ export default {
     ...mapGetters('sites', ['site', 'templateKeys', 'loading']),
 
     form() {
-      return Object.keys(this.keysForm).reduce((acc, cur) => {
-        let item = {
-          templateKeyId: cur,
-          content: this.keysForm[cur],
-          siteId: this.site.id
-        }
-
+      return Object.values(this.keysForm).reduce((acc, item) => {
         acc.push(item)
         return acc
       }, [])
@@ -70,12 +64,14 @@ export default {
   created() {
     this.$store.dispatch('sites/fetchTemplateKeys')
 
-    this.keysForm =
-      this.site &&
-      this.site.sectionNames.reduce((acc, { templateKeyId, content }) => {
-        acc[templateKeyId] = content
-        return acc
-      }, {})
+    this.keysForm = this.templateKeys.reduce((acc, { id }) => {
+      acc[id] = this.site.sectionNames.find(x => x.templateKeyId === id) ?? {
+        templateKeyId: id,
+        content: '',
+        siteId: this.site.id
+      }
+      return acc
+    }, {})
   }
 }
 </script>

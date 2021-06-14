@@ -52,7 +52,7 @@ namespace TextBooker.BusinessLogic.Services
 
 			Maybe<string> CheckFileExists(FileUploadDto dto)
 			{
-				var filePath = Path.Combine(fileStoreSettings.BasePath, dto.SiteId, "assets", dto.File.FileName);
+				var filePath = Path.Combine(fileStoreSettings.BasePath, "sites", dto.SiteId, "assets", dto.File.FileName);
 
 				return File.Exists(filePath)
 					? Path.Combine(dto.SiteId, "assets", dto.File.FileName)
@@ -64,7 +64,7 @@ namespace TextBooker.BusinessLogic.Services
 				dto.Hash = GetMD5Hash(dto.File);
 				dto.FileName = dto.File.FileName;
 				dto.Length = dto.File.Length;
-				dto.FilePath = Path.Combine(dto.SiteId, "assets", dto.FileName);
+				dto.FilePath = Path.Combine("sites", dto.SiteId, "assets", dto.FileName);
 
 				return Result.Ok(dto);
 			}

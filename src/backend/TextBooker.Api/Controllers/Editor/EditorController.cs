@@ -14,11 +14,12 @@ namespace TextBooker.Api.Controllers
 	public class EditorController : BaseController
 	{
 		private readonly ISiteSettingsService siteService;
+		private readonly ISiteGenerator siteGenerator;
 
-		public EditorController(ISiteSettingsService siteService)
+		public EditorController(ISiteSettingsService siteService, ISiteGenerator siteGenerator)
 		{
 			this.siteService = siteService;
-			this.siteService = siteService;
+			this.siteGenerator = siteGenerator;
 		}
 
         /// <summary>
@@ -41,5 +42,13 @@ namespace TextBooker.Api.Controllers
         /// <returns></returns>
         [HttpGet("template-keys")]
         public async Task<IActionResult> GetTemplateKeys() => OkOrBadRequest(await siteService.GetTemplateKeys());
-    }
+
+		/// <summary>
+		/// Generate site
+		/// </summary>
+		/// <param name="siteId">Site identifier</param>
+		/// <returns></returns>
+		[HttpGet("generate")]
+		public async Task<IActionResult> GenerateSite(string siteId) => OkOrBadRequest(await siteGenerator.Generate(siteId, UserId));
+	}
 }
