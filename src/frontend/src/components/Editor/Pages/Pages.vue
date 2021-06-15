@@ -49,7 +49,9 @@ export default {
     pageSettings: {
       alias: '',
       description: '',
-      keywords: ''
+      keywords: '',
+      inMainMenu: false,
+      inAsideMenu: true
     }
   }),
 
@@ -84,7 +86,16 @@ export default {
   methods: {
     pageHandler: _.debounce(function(newValue, oldValue) {
       if (!_.isEmpty(newValue) && !_.isEqual(newValue, oldValue)) {
-        let { id, title, content, alias, description, keywords } = newValue
+        let {
+          id,
+          title,
+          content,
+          alias,
+          description,
+          keywords,
+          inMainMenu,
+          inAsideMenu
+        } = newValue
 
         this.pageContent = {
           id,
@@ -96,7 +107,9 @@ export default {
           id,
           alias,
           description,
-          keywords
+          keywords,
+          inMainMenu,
+          inAsideMenu
         }
       }
     }, 300)

@@ -17,6 +17,14 @@
     <el-form-item :label="$t('tabs.pages.keywords')" prop="keywords">
       <el-input v-model="value.keywords"></el-input>
     </el-form-item>
+
+    <el-form-item :label="$t('tabs.pages.inMainMenu')" prop="inMainMenu">
+      <el-checkbox v-model="value.inMainMenu"></el-checkbox>
+    </el-form-item>
+
+    <el-form-item :label="$t('tabs.pages.inAsideMenu')" prop="inAsideMenu">
+      <el-checkbox v-model="value.inAsideMenu"></el-checkbox>
+    </el-form-item>
   </el-form>
 </template>
 

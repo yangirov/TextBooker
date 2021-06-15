@@ -44,7 +44,9 @@ export const ENGLISH_TRANSLATIONS = {
       keywords: 'Custom keywords',
       existsError: 'Page with this URL already exists',
       errorLength:
-        'The string length must be between {from} and {to} characters'
+        'The string length must be between {from} and {to} characters',
+      inMainMenu: 'In main menu',
+      inAsideMenu: 'In aside menu'
     },
     blocks: {
       name: 'Blocks',

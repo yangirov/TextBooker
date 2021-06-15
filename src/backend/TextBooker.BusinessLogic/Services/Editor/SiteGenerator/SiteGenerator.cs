@@ -51,8 +51,6 @@ namespace TextBooker.BusinessLogic.Services
 
 			// TODO: Pages generate
 
-			// TODO: Add menu type option for page: main menu or aside menu, or together
-
 			return Result.Ok(true);
 		}
 

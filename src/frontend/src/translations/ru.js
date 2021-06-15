@@ -42,7 +42,9 @@ export const RUSSIAN_TRANSLATIONS = {
       description: 'Своё описание',
       keywords: 'Свои ключевые слова',
       existsError: 'Страница с таким URL уже существует',
-      errorLength: 'Длина строки должна быть от {from} до {to} символов'
+      errorLength: 'Длина строки должна быть от {from} до {to} символов',
+      inMainMenu: 'В главном меню',
+      inAsideMenu: 'В боковом меню'
     },
     blocks: {
       name: 'Блоки',
