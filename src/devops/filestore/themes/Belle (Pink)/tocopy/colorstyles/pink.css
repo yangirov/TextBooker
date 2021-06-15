@@ -1,0 +1,84 @@
+/* Pink */
+
+a {
+	color: #fe198e;
+}
+a:visited {
+	color: #fe198e;
+}
+a:hover {
+	color: #fe198e;
+}
+#page {
+	background: #FFFFFF url("header_pink.jpg") repeat-x top left;
+}
+h2 {
+	color: #fe198e;
+}
+
+h2 a:visited{
+	color: #fe198e;
+}
+
+::selection {
+	color: #fe198e; /* Safari */
+	background:#ffffff;
+	}
+::-moz-selection {
+	color: #fe198e; /* Firefox */
+	background:#ffffff;
+}
+#headerimg a, #headerimg a:visited{
+	color:fe198e;
+}
+#nav li a:hover {
+       border-bottom:1px solid #fe198e;
+}
+#nav li.current_page_item{
+	border-bottom:1px solid #fe198e;
+}
+.post-day{
+	color: #fe198e;
+}
+.entry-title, .entry-title a, .entry-title a:visited,
+h2, h2 a, h2 a:visited,
+h3, h3 a, h3 a:visited,
+h4, h4 a, h4 a:visited {
+	color: #fe198e;
+	}
+#s:focus {
+	border-color: #fe198e;
+	}
+#sidebar h3{
+	color:#fe198e;
+}
+.widgettitle{
+	color:#fe198e;
+}
+.widget li a:hover{
+	color:#fe198e;
+}
+.ul-cat li a:hover{
+	color: #fe198e;
+}
+.ul-archives li a:hover{
+	color: #fe198e;
+}
+#commentform textarea:focus, #commentform input[type="text"]:focus {
+	background: #ffffff;
+	border:1px solid #fe198e;
+}
+#commentform #submit{
+	color: #fe198e;
+}
+#footer{
+	background: #FFFFFF url("header_pink.jpg") repeat-x top left;
+}
+
+#credits a, #credits a:visited{
+	color:#fe198e;
+}
+
+#footer-logo a, #footer-logo a:visited{
+	color:#fe198e;
+}img { max-width: 100%; }

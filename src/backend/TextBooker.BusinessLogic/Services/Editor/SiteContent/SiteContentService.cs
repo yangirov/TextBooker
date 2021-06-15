@@ -26,8 +26,8 @@ namespace TextBooker.BusinessLogic.Services
 			ILogger logger,
 			TextBookerContext db,
 			string entityName
-		) : base(logger, db)
-		{
+		) : base(logger)
+        {
 			this.mapper = mapper;
 			this.db = db;
 			this.entityName = entityName;

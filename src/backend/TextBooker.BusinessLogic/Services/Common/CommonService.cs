@@ -15,7 +15,6 @@ using TextBooker.BusinessLogic.Infrastructure;
 using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto;
 using TextBooker.Contracts.Enums;
-using TextBooker.DataAccess;
 using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
@@ -29,14 +28,13 @@ namespace TextBooker.BusinessLogic.Services
 
 		public CommonService(
 			ILogger logger,
-			TextBookerContext db,
 			IMailSender mailSender,
 			IVersionService versionService,
 			IConfiguration config,
 			IHttpClientFactory clientFactory,
 			GoogleSettings googleOptions
-		) : base(logger, db)
-		{
+		) : base(logger)
+        {
 			this.mailSender = mailSender;
 			this.clientFactory = clientFactory;
 			this.googleOptions = googleOptions;

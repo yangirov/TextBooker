@@ -25,8 +25,8 @@ namespace TextBooker.BusinessLogic.Services
 			IMapper mapper,
 			ILogger logger,
 			TextBookerContext db
-		) : base(logger, db)
-		{
+		) : base(logger)
+        {
 			this.mapper = mapper;
 			this.db = db;
 		}

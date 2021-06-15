@@ -27,10 +27,9 @@ namespace TextBooker.Utils
 			foreach (var value in values)
 			{
 				var prop = obj.GetType().GetProperty(value.Key, BindingFlags.Instance | BindingFlags.Public);
+
 				if (prop != null && prop.CanWrite)
-				{
 					prop.SetValue(obj, GetValue(value.Value), null);
-				}
 			}
 
 			return obj;
@@ -39,6 +38,7 @@ namespace TextBooker.Utils
 		private static T GetValue<T>(T value)
 		{
 			var envVariable = Environment.GetEnvironmentVariable(value.ToString());
+
 			if (envVariable is null)
 				return value;
 
