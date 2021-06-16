@@ -32,7 +32,8 @@ export default {
 
   methods: {
     openSite() {
-      let siteUrl = `/sites/${this.site.id}/${this.page.alias}.html`
+      let page = this.page.alias ?? 'index'
+      let siteUrl = `/sites/${this.site.id}/${page}.html`
 
       if (
         siteWindow &&
