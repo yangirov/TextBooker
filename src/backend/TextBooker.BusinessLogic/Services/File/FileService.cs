@@ -16,6 +16,7 @@ using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
+using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {
@@ -52,19 +53,20 @@ namespace TextBooker.BusinessLogic.Services
 
 		private Maybe<string> CheckFileExists(FileUploadDto dto)
 		{
-			var filePath = Path.Combine(fileStoreSettings.BasePath, "sites", dto.SiteId, "assets", dto.File.FileName);
+			var filePath = StringUtils.GetFilePath(dto.SiteId, dto.File.FileName);
+			var fullFilePath = Path.Combine(fileStoreSettings.BasePath, filePath);
 
-			return File.Exists(filePath)
-				? Path.Combine(dto.SiteId, "assets", dto.File.FileName)
+			return File.Exists(fullFilePath)
+				? StringUtils.ConvertToUrl(filePath)
 				: Maybe<string>.None;
 		}
 
-		private static Result<FileUploadDto> FillDto(FileUploadDto dto)
+		private Result<FileUploadDto> FillDto(FileUploadDto dto)
 		{
 			dto.Hash = GetMD5Hash(dto.File);
 			dto.FileName = dto.File.FileName;
 			dto.Length = dto.File.Length;
-			dto.FilePath = Path.Combine("sites", dto.SiteId, "assets", dto.FileName);
+			dto.FilePath = StringUtils.GetFilePath(dto.SiteId, dto.FileName);
 
 			return Result.Ok(dto);
 		}
@@ -97,7 +99,8 @@ namespace TextBooker.BusinessLogic.Services
 			db.Files.Add(entity);
 			await db.SaveChangesAsync();
 
-			return Result.Ok(entity.FilePath);
+			var fileUrl = StringUtils.ConvertToUrl(entity.FilePath);
+			return Result.Ok(fileUrl);
 		}
 
 		private static string GetMD5Hash(IFormFile file)

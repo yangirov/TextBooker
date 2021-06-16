@@ -14,6 +14,7 @@ using Serilog;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
+using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {
@@ -78,11 +79,14 @@ namespace TextBooker.BusinessLogic.Services
 				? Result.Failure<bool>("An error occurred when generating pages")
 				: Result.Ok(true);
 
-			static string BuildPage(Page page, string siteTitle, string preparedTemplate)
+			string BuildPage(Page page, string siteTitle, string preparedTemplate)
 			{
 				var html = preparedTemplate.Replace("%WindowTitle%", $"{page.Title} | {siteTitle}");
 				html = html.Replace("%PageTitle%", page.Title);
 				html = html.Replace("%PageContent%", page.Content);
+
+				var folderPath = StringUtils.ConvertToUrl(Path.Combine("sites", site.Id));
+				html = html.Replace($"{folderPath}/", string.Empty);
 				return html;
 			}
 		}
