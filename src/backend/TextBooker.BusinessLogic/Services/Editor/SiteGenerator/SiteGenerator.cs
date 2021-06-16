@@ -82,11 +82,15 @@ namespace TextBooker.BusinessLogic.Services
 			string BuildPage(Page page, string siteTitle, string preparedTemplate)
 			{
 				var html = preparedTemplate.Replace("%WindowTitle%", $"{page.Title} | {siteTitle}");
+
+				html = html.Replace("%Keywords%", page.Keywords ?? site.Keywords);
+				html = html.Replace("%Description%", page.Description ?? site.Description);
 				html = html.Replace("%PageTitle%", page.Title);
 				html = html.Replace("%PageContent%", page.Content);
-
+				
 				var folderPath = StringUtils.ConvertToUrl(Path.Combine("sites", site.Id));
 				html = html.Replace($"{folderPath}/", string.Empty);
+
 				return html;
 			}
 		}
