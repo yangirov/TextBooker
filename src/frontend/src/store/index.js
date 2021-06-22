@@ -8,6 +8,7 @@ import user from './modules/user'
 import sites from './modules/sites'
 import blocks from './modules/blocks'
 import pages from './modules/pages'
+import deploy from './modules/deploy'
 
 Vue.use(Vuex)
 window.Vuex = Vuex
@@ -19,7 +20,8 @@ let store = new Vuex.Store({
     user,
     sites,
     blocks,
-    pages
+    pages,
+    deploy
   },
   plugins: [createPersistedState()]
 })

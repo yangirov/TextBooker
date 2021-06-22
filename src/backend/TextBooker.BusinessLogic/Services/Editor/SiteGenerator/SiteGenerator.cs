@@ -105,6 +105,8 @@ namespace TextBooker.BusinessLogic.Services
 			html = html.Replace($"%SiteTitle%", site.Title);
 			html = html.Replace($"%Blocks%", preparedBlocks);
 
+			html = html.Insert(html.IndexOf("</head>"), $"<link rel=\"shortcut icon\" href=\"{site.Icon}\" type=\"image/x-icon\">");
+
 			foreach (var userScript in site.UserScripts)
 			{
 				var location = userScript.Location switch
