@@ -27,3 +27,4 @@ dist/
 .idea
 .history
 sites/
+.DS_Store
