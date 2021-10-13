@@ -54,7 +54,7 @@ namespace TextBooker.BusinessLogic.Services
 				{ "version", systemInfo.Version }
 			};
 
-			return Result.Ok(settings);
+			return Result.Success(settings);
 		}
 
 		public async Task<Result<bool>> SendFeedback(Feedback dto)
@@ -71,7 +71,7 @@ namespace TextBooker.BusinessLogic.Services
 				var (_, isFailure, error) = await mailSender.Send(EmailTemplateKeys.Feedback, systemInfo.AdminEmail, dto);
 				return isFailure
 					? Result.Failure<bool>($"An error occurred while sending feedback.")
-					: Result.Ok(true);
+					: Result.Success(true);
 			}
 		}
 	}

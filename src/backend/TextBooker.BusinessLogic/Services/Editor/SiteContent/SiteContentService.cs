@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +45,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Set<TEntity>().Add(entity);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(entity);
+				return Result.Success(entity);
 			};
 		}
 
@@ -70,10 +70,10 @@ namespace TextBooker.BusinessLogic.Services
 					.OrderBy(x => x.Order)
 					.ToListAsync();
 
-				return Result.Ok(Ts);
+				return Result.Success(Ts);
 			}
 
-			Result<List<TDto>> MapList(List<TEntity> list) => Result.Ok(mapper.Map<List<TDto>>(list));
+			Result<List<TDto>> MapList(List<TEntity> list) => Result.Success(mapper.Map<List<TDto>>(list));
 		}
 
 		public async Task<Result<TDto>> Update(TDto dto)
@@ -88,7 +88,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Set<TEntity>().Update(entity);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(entity);
+				return Result.Success(entity);
 			};
 		}
 
@@ -99,17 +99,17 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(MapEntity)
 				.OnFailure(LogError);
 
-			Result<List<TEntity>> MapDto(List<TDto> list) => Result.Ok(mapper.Map<List<TEntity>>(list));
+			Result<List<TEntity>> MapDto(List<TDto> list) => Result.Success(mapper.Map<List<TEntity>>(list));
 
 			async Task<Result<List<TEntity>>> Update(List<TEntity> list)
 			{
 				db.Set<TEntity>().UpdateRange(list);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(list);
+				return Result.Success(list);
 			};
 
-			Result<List<TDto>> MapEntity(List<TEntity> list) => Result.Ok(mapper.Map<List<TDto>>(list));
+			Result<List<TDto>> MapEntity(List<TEntity> list) => Result.Success(mapper.Map<List<TDto>>(list));
 		}
 
 		public async Task<Result<bool>> Delete(string id, string siteId)
@@ -123,7 +123,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Set<TEntity>().Remove(entity);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(true);
+				return Result.Success(true);
 			};
 		}
 
@@ -136,11 +136,11 @@ namespace TextBooker.BusinessLogic.Services
 
 			return T.HasNoValue
 				? Result.Failure<TEntity>($"{entityName} not found")
-				: Result.Ok(T.Value);
+				: Result.Success(T.Value);
 		}
 
-		private Result<TEntity> MapDto(TDto dto) => Result.Ok(mapper.Map<TEntity>(dto));
+		private Result<TEntity> MapDto(TDto dto) => Result.Success(mapper.Map<TEntity>(dto));
 
-		private Result<TDto> MapEntity(TEntity entity) => Result.Ok(mapper.Map<TDto>(entity));
+		private Result<TDto> MapEntity(TEntity entity) => Result.Success(mapper.Map<TDto>(entity));
 	}
 }

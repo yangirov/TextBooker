@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 
 using CSharpFunctionalExtensions;
@@ -21,7 +21,7 @@ namespace TextBooker.BusinessLogic.Infrastructure
 			var validationResult = Validate(entity);
 
 			return validationResult.IsValid
-				? Result.Ok()
+				? Result.Success()
 				: Result.Combine(validationResult
 					.Errors
 					.Select(e => Result.Failure(e.ErrorMessage))

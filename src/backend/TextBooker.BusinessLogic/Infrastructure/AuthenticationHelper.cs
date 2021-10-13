@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
@@ -80,7 +80,7 @@ namespace TextBooker.BusinessLogic.Infrastructure
 
 			return ( !tokenResponse.Success || tokenResponse.Score < (decimal)0.5 )
 				 ? Result.Failure("Recaptcha token is invalid")
-				 : Result.Ok();
+				 : Result.Success();
 		}
 	}
 }
