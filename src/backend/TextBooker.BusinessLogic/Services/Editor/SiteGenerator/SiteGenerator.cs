@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -69,7 +69,7 @@ namespace TextBooker.BusinessLogic.Services
 
 				await File.WriteAllTextAsync(pagePath, pageHtml, Encoding.UTF8);
 
-				return Result.Ok();
+				return Result.Success();
 			});
 
 			var results = await Task.WhenAll(tasks);
@@ -77,7 +77,7 @@ namespace TextBooker.BusinessLogic.Services
 			var (_, isFailure) = Result.Combine(results);
 			return isFailure
 				? Result.Failure<bool>("An error occurred when generating pages")
-				: Result.Ok(true);
+				: Result.Success(true);
 
 			string BuildPage(Page page, string siteTitle, string preparedTemplate)
 			{
@@ -128,7 +128,7 @@ namespace TextBooker.BusinessLogic.Services
 				html = html.Replace($"%{item.Name}%", item.Content);
 			}
 
-			return Result.Ok(html);
+			return Result.Success(html);
 
 			static string GetMenu(ICollection<Page> pages)
 			{
@@ -149,7 +149,7 @@ namespace TextBooker.BusinessLogic.Services
 				html.Append(template.BlockEnd);
 			}
 
-			return Result.Ok(html.ToString());
+			return Result.Success(html.ToString());
 		}
 
 		private Result CopyTemplateFiles(string sitePath, string templatePath)
@@ -157,7 +157,7 @@ namespace TextBooker.BusinessLogic.Services
 			try
 			{
 				DirectoryCopy(templatePath, sitePath, true);
-				return Result.Ok();
+				return Result.Success();
 			}
 			catch (Exception)
 			{
@@ -213,7 +213,7 @@ namespace TextBooker.BusinessLogic.Services
 					}
 				}
 
-				return Result.Ok();
+				return Result.Success();
 			}
 			catch (Exception)
 			{
@@ -239,14 +239,14 @@ namespace TextBooker.BusinessLogic.Services
 
 			return site.HasNoValue
 				? Result.Failure<Site>("Site not found")
-				: Result.Ok(site.Value);
+				: Result.Success(site.Value);
 		}
 
 		private Result Validate(string siteId, string userId)
 		{
 			return string.IsNullOrEmpty(siteId) && string.IsNullOrEmpty(userId)
 				? Result.Failure("Validation error, one or more fields are empty")
-				: Result.Ok();
+				: Result.Success();
 		}
 	}
 }

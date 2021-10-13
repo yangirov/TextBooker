@@ -1,4 +1,4 @@
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 using AutoMapper;
@@ -67,7 +67,7 @@ namespace TextBooker.BusinessLogic.Services
 			Result<UserInfoDto> MapUser(User user)
 			{
 				var userInfo = mapper.Map<UserInfoDto>(user);
-				return Result.Ok(userInfo);
+				return Result.Success(userInfo);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace TextBooker.BusinessLogic.Services
 				var user = await FindUserByEmail(dto.Email);
 				return user.HasValue
 					? Result.Failure<User>($"The user with this email already exists: {dto.Email}")
-					: Result.Ok();
+					: Result.Success();
 			}
 
 			async Task<Result<User>> RegisterUser()
@@ -101,13 +101,13 @@ namespace TextBooker.BusinessLogic.Services
 				db.Users.Add(user);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(user);
+				return Result.Success(user);
 			}
 
 			async Task<Result<bool>> SendMesssage(SignResponse response)
 			{
 				await mailSender.Send(EmailTemplateKeys.Invite, dto.Email, response);
-				return Result.Ok(true);
+				return Result.Success(true);
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace TextBooker.BusinessLogic.Services
 			{
 				var user = await FindUserByEmail(dto.Email);
 				return user.HasValue && user.Value.EmailConfirmed
-					? Result.Ok(user.Value)
+					? Result.Success(user.Value)
 					: Result.Failure<User>($"The user with this email was not found or not activated: {dto.Email}");
 			}
 
@@ -133,7 +133,7 @@ namespace TextBooker.BusinessLogic.Services
 				var (verified, needsUpgrade) = passwordHasher.Check(user.PasswordHash, dto.Password);
 				return ( !verified && !needsUpgrade )
 					? Result.Failure<User>($"Incorrect email or password: {dto.Email}")
-					: Result.Ok(user);
+					: Result.Success(user);
 			}
 		}
 
@@ -148,7 +148,7 @@ namespace TextBooker.BusinessLogic.Services
 			{
 				var user = await FindUserByEmail(email);
 				return user.HasValue
-					? Result.Ok(user.Value)
+					? Result.Success(user.Value)
 					: Result.Failure<User>($"The user with this email was not found or not activated: {email}");
 			}
 
@@ -156,7 +156,7 @@ namespace TextBooker.BusinessLogic.Services
 			{
 				var result = AuthenticationHelper.ValidateJwtToken(token, jwtSettings);
 				return result
-					? Result.Ok(user)
+					? Result.Success(user)
 					: Result.Failure<User>("Token is invalid");
 			}
 
@@ -167,7 +167,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Users.Update(user);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(true);
+				return Result.Success(true);
 			}
 		}
 
@@ -184,7 +184,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Users.Update(user);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(true);
+				return Result.Success(true);
 			}
 		}
 
@@ -199,7 +199,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Users.Remove(user);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(true);
+				return Result.Success(true);
 			}
 		}
 
@@ -211,7 +211,7 @@ namespace TextBooker.BusinessLogic.Services
 
 			return user.HasNoValue
 				? Result.Failure<User>($"The user with this identifier was not found: {userId}")
-				: Result.Ok(user.Value);
+				: Result.Success(user.Value);
 		}
 
 		public async Task<Maybe<User>> FindUserByEmail(string email)
@@ -222,7 +222,7 @@ namespace TextBooker.BusinessLogic.Services
 			var (_, isFailure, error) = Validate();
 			return isFailure
 				? Result.Failure<SignDto>(error)
-				: Result.Ok(dto);
+				: Result.Success(dto);
 
 			Result Validate()
 			{
@@ -239,7 +239,7 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			var token = AuthenticationHelper.GenerateJwtToken(user.Email, user.Id.ToString(), jwtSettings);
 			LogAudit($"Successful generate token: {user.Email}");
-			return Result.Ok(new SignResponse(token, user.Email, baseUrl));
+			return Result.Success(new SignResponse(token, user.Email, baseUrl));
 		}
 
 		private async Task<Result> RecaptchaVerify(SignDto dto)

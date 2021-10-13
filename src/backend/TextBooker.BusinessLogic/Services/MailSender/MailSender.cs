@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -64,16 +64,16 @@ namespace TextBooker.BusinessLogic.Services
 			var templateEntity = await db.EmailTemplates.SingleOrDefaultAsync(t => t.Id == templateId) ?? Maybe<EmailTemplate>.None;
 			return templateEntity.HasNoValue
 				? Result.Failure<EmailTemplate>($"The template with this identifier was not found: {(int)template}")
-				: Result.Ok(templateEntity.Value);
+				: Result.Success(templateEntity.Value);
 		}
 
 		private Result<Dictionary<string, object>> GetTemplateData<T>(T data)
-			=> Result.Ok(data.GetType()
+			=> Result.Success(data.GetType()
 							 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
 							 .ToDictionary(prop => prop.Name.ToLower(), prop => prop.GetValue(data, null)));
 
 		private Result<string> BuildMessage(EmailTemplate template, IDictionary<string, object> parameters)
-			=> Result.Ok(parameters.Aggregate(template.Body, (acc, item) => acc.Replace($"%{item.Key}%", item.Value.ToString())));
+			=> Result.Success(parameters.Aggregate(template.Body, (acc, item) => acc.Replace($"%{item.Key}%", item.Value.ToString())));
 
 		private async Task<Result> SendMessage(EmailTemplate template, string bodyMessage, IEnumerable<string> mailingList)
 		{
@@ -99,7 +99,7 @@ namespace TextBooker.BusinessLogic.Services
 				}
 
 				logger.Information("The email was successfully sent", message);
-				return Result.Ok();
+				return Result.Success();
 			}
 			catch (Exception e)
 			{

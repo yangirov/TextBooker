@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,14 +37,14 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Create)
 				.OnFailure(LogError);
 
-			Result<Site> Map(SiteDto site) => Result.Ok(mapper.Map<Site>(site));
+			Result<Site> Map(SiteDto site) => Result.Success(mapper.Map<Site>(site));
 
 			async Task<Result<string>> Create(Site entity)
 			{
 				db.Sites.Add(entity);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(entity.Id);
+				return Result.Success(entity.Id);
 			};
 		}
 
@@ -55,7 +55,7 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Map)
 				.OnFailure(LogError);
 
-			Result<SiteDto> Map(Site entity) => Result.Ok(mapper.Map<SiteDto>(entity));
+			Result<SiteDto> Map(Site entity) => Result.Success(mapper.Map<SiteDto>(entity));
 		}
 
 		public async Task<Result<SiteDto>> Update(SiteDto dto)
@@ -64,14 +64,14 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Update)
 				.OnFailure(LogError);
 
-			Result<Site> Map(SiteDto site) => Result.Ok(mapper.Map<Site>(site));
+			Result<Site> Map(SiteDto site) => Result.Success(mapper.Map<Site>(site));
 
 			async Task<Result<SiteDto>> Update(Site entity)
 			{
 				db.Sites.Update(entity);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(dto);
+				return Result.Success(dto);
 			};
 		}
 
@@ -87,7 +87,7 @@ namespace TextBooker.BusinessLogic.Services
 				db.Sites.Remove(site);
 				await db.SaveChangesAsync();
 
-				return Result.Ok(true);
+				return Result.Success(true);
 			}
 		}
 
@@ -98,12 +98,12 @@ namespace TextBooker.BusinessLogic.Services
 				.OnFailure(LogError);
 
 			async Task<Result<List<Site>>> FindSites()
-				=> Result.Ok(await db.Sites
+				=> Result.Success(await db.Sites
 					.Where(x => x.UserId == userId)
 					.OrderByDescending(x => x.UpdatedOn)
 					.ToListAsync());
 
-			Result<List<ProjectDto>> Map(List<Site> sites) => Result.Ok(mapper.Map<List<ProjectDto>>(sites));
+			Result<List<ProjectDto>> Map(List<Site> sites) => Result.Success(mapper.Map<List<ProjectDto>>(sites));
 		}
 
 		public async Task<Result<List<TemplateDto>>> GetTemplates()
@@ -112,9 +112,9 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Map)
 				.OnFailure(LogError);
 
-			async Task<Result<List<Template>>> GetTemplates() => Result.Ok(await db.Templates.OrderBy(t => t.Name).ToListAsync());
+			async Task<Result<List<Template>>> GetTemplates() => Result.Success(await db.Templates.OrderBy(t => t.Name).ToListAsync());
 
-			Result<List<TemplateDto>> Map(List<Template> templates) => Result.Ok(mapper.Map<List<TemplateDto>>(templates));
+			Result<List<TemplateDto>> Map(List<Template> templates) => Result.Success(mapper.Map<List<TemplateDto>>(templates));
 		}
 
 		public async Task<Result<List<TemplateKeyDto>>> GetTemplateKeys()
@@ -123,9 +123,9 @@ namespace TextBooker.BusinessLogic.Services
 				.Bind(Map)
 				.OnFailure(LogError);
 
-			async Task<Result<List<TemplateKey>>> GetTemplateKeys() => Result.Ok(await db.TemplateKeys.OrderBy(t => t.Id).ToListAsync());
+			async Task<Result<List<TemplateKey>>> GetTemplateKeys() => Result.Success(await db.TemplateKeys.OrderBy(t => t.Id).ToListAsync());
 
-			Result<List<TemplateKeyDto>> Map(List<TemplateKey> keys) => Result.Ok(mapper.Map<List<TemplateKeyDto>>(keys));
+			Result<List<TemplateKeyDto>> Map(List<TemplateKey> keys) => Result.Success(mapper.Map<List<TemplateKeyDto>>(keys));
 		}
 
 		private async Task<Result<Site>> FindSite(string siteId, string userId)
@@ -138,14 +138,14 @@ namespace TextBooker.BusinessLogic.Services
 
 			return site.HasNoValue
 				? Result.Failure<Site>("Site not found")
-				: Result.Ok(site.Value);
+				: Result.Success(site.Value);
 		}
 
 		private Result Validate(string siteId, string userId)
 		{
 			return string.IsNullOrEmpty(siteId) && string.IsNullOrEmpty(userId)
 				? Result.Failure("Validation error, one or more fields are empty")
-				: Result.Ok();
+				: Result.Success();
 		}
 	}
 }

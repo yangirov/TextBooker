@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -42,7 +42,7 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			var fileExists = CheckFileExists(dto);
 			if (fileExists.HasValue)
-				return Result.Ok(fileExists.Value);
+				return Result.Success(fileExists.Value);
 
 			return await FillDto(dto)
 				.Bind(UploadFile)
@@ -68,7 +68,7 @@ namespace TextBooker.BusinessLogic.Services
 			dto.Length = dto.File.Length;
 			dto.FilePath = StringUtils.GetFilePath(dto.SiteId, dto.FileName);
 
-			return Result.Ok(dto);
+			return Result.Success(dto);
 		}
 
 		private async Task<Result<FileUploadDto>> UploadFile(FileUploadDto dto)
@@ -84,7 +84,7 @@ namespace TextBooker.BusinessLogic.Services
 				using var fileStream = new FileStream(filePath, FileMode.Create);
 				await dto.File.CopyToAsync(fileStream);
 
-				return Result.Ok(dto);
+				return Result.Success(dto);
 			}
 			catch (Exception)
 			{
@@ -92,7 +92,7 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		private Result<SiteFile> Map(FileUploadDto dto) => Result.Ok(mapper.Map<SiteFile>(dto));
+		private Result<SiteFile> Map(FileUploadDto dto) => Result.Success(mapper.Map<SiteFile>(dto));
 
 		private async Task<Result<string>> SaveFileInfo(SiteFile entity)
 		{
@@ -100,7 +100,7 @@ namespace TextBooker.BusinessLogic.Services
 			await db.SaveChangesAsync();
 
 			var fileUrl = StringUtils.ConvertToUrl(entity.FilePath);
-			return Result.Ok(fileUrl);
+			return Result.Success(fileUrl);
 		}
 
 		private static string GetMD5Hash(IFormFile file)
