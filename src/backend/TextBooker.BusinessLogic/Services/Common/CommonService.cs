@@ -42,7 +42,7 @@ namespace TextBooker.BusinessLogic.Services
 			{
 				Version = versionService.Get(),
 				Name = config.GetValue<string>("SystemInfo:Name"),
-				AdminEmail = OptionsClient.GetData(config.GetValue<string>("SystemInfo:AdminEmail"))
+				AdminEmail = VaultClient.GetData(config.GetValue<string>("SystemInfo:AdminEmail"))
 			};
 		}
 

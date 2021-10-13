@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace TextBooker.Utils
 {
-	public static class OptionsClient
+	public static class VaultClient
 	{
 		public static string GetData(string data)
 		{
