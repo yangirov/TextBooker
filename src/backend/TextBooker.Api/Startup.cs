@@ -61,25 +61,25 @@ namespace TextBooker.Api
 
 			services.AddSingleton(Configuration);
 
-			var dbSettings = OptionsClient.GetData(Configuration.GetSection("Database").Get<DatabaseSettings>());
+			var dbSettings = VaultClient.GetData(Configuration.GetSection("Database").Get<DatabaseSettings>());
 			services.AddSingleton(dbSettings);
 
-			var jwtSettings = OptionsClient.GetData(Configuration.GetSection("Jwt").Get<JwtSettings>());
+			var jwtSettings = VaultClient.GetData(Configuration.GetSection("Jwt").Get<JwtSettings>());
 			services.AddSingleton(jwtSettings);
 
-			var emailSettings = OptionsClient.GetData(Configuration.GetSection("Email").Get<EmailSettings>());
+			var emailSettings = VaultClient.GetData(Configuration.GetSection("Email").Get<EmailSettings>());
 			services.AddSingleton(emailSettings);
 
-			var googleSettings = OptionsClient.GetData(Configuration.GetSection("Google").Get<GoogleSettings>());
+			var googleSettings = VaultClient.GetData(Configuration.GetSection("Google").Get<GoogleSettings>());
 			services.AddSingleton(googleSettings);
 
-			var fileSettings = OptionsClient.GetData(Configuration.GetSection("FileStore").Get<FileStoreSettings>());
+			var fileSettings = VaultClient.GetData(Configuration.GetSection("FileStore").Get<FileStoreSettings>());
 			services.AddSingleton(fileSettings);
 
 			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
 				.WriteTo.LokiHttp(
-					new NoAuthCredentials(OptionsClient.GetData(Configuration.GetValue<string>("Serilog:LokiUrl"))),
+					new NoAuthCredentials(VaultClient.GetData(Configuration.GetValue<string>("Serilog:LokiUrl"))),
 					new LogLabelProvider(Configuration, HostingEnvironment)
 				)
 				.Destructure.ByMaskingProperties("Password", "Token")
@@ -220,7 +220,7 @@ namespace TextBooker.Api
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});
 
-			var basePath = Path.Combine(OptionsClient.GetData(Configuration.GetValue<string>("FileStore:BasePath")));
+			var basePath = Path.Combine(VaultClient.GetData(Configuration.GetValue<string>("FileStore:BasePath")));
 			if (!Directory.Exists(basePath))
 				Directory.CreateDirectory(basePath);
 

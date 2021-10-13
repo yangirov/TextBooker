@@ -23,7 +23,7 @@ namespace TextBooker.DataAccess
 
 		private static string GetConnectionString()
 		{
-			var configuration = new ConfigurationBuilder()
+			var configuration = (IConfiguration)new ConfigurationBuilder()
 				.SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
 				.AddJsonFile("contextSettings.json", false, true)
 				.Build();
@@ -34,7 +34,7 @@ namespace TextBooker.DataAccess
 				DotNetEnv.Env.Load(envFilepath);
 			}
 
-			var dbSettings = OptionsClient.GetData(configuration.GetSection("Database").Get<DatabaseSettings>());
+			var dbSettings = VaultClient.GetData(configuration.GetSection("Database").Get<DatabaseSettings>());
 			return dbSettings.ConnectionString;
 		}
 	}
