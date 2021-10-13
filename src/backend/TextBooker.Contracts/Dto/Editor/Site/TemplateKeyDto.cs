@@ -1,6 +1,6 @@
-namespace TextBooker.Contracts.Dto
+﻿namespace TextBooker.Contracts.Dto
 {
-	public class TemplateKeyDto
+	public record TemplateKeyDto
 	{
 		public int Id { get; set; }
 

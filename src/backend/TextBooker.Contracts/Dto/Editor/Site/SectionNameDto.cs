@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class SectionNameDto
+	public record SectionNameDto
 	{
 		public string Id { get; set; }
 

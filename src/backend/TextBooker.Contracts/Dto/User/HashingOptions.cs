@@ -1,6 +1,6 @@
-namespace TextBooker.Contracts.Dto.User
+﻿namespace TextBooker.Contracts.Dto.User
 {
-	public class HashingOptions
+	public record HashingOptions
 	{
 		public int Iterations { get; set; } = 10000;
 	}

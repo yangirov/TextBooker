@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class Feedback
+	public record Feedback
 	{
 		[Required]
 		public string Name { get; set; }

@@ -7,7 +7,7 @@ using TextBooker.Contracts.Enums;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class FileUploadDto
+	public record FileUploadDto
 	{
 		[Required]
 		public IFormFile File { get; set; }

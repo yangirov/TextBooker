@@ -1,6 +1,6 @@
 namespace TextBooker.Contracts.Dto
 {
-	public class SystemInfo
+	public record SystemInfo
 	{
 		public string Version { get; set; }
 

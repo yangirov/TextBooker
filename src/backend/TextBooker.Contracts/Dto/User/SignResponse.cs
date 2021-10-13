@@ -1,6 +1,6 @@
-namespace TextBooker.Contracts.Dto.User
+﻿namespace TextBooker.Contracts.Dto.User
 {
-	public class SignResponse
+	public record SignResponse
 	{
 		public SignResponse(string token, string email, string host)
 		{

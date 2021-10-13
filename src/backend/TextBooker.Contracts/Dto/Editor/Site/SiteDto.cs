@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class SiteDto
+	public record SiteDto
 	{
 		public string Id { get; set; }
 
