@@ -123,7 +123,7 @@ export default {
 
       $form.validate(valid => {
         if (valid) {
-          this.$store('deploy/ftpDeploy', { ...ftpForm, siteId: site.id })
+          //this.$store('deploy/ftpDeploy', { ...ftpForm, siteId: site.id })
           this.closeModal()
         }
       })

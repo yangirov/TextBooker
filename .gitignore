@@ -13,11 +13,9 @@ bin_Test
 *.pubxml.user
 lib
 *.log
-deploy/*
 node_modules/*
 .idea
 .vscode
-deploy/
 .git
 .sonarqube
 .sonarlint

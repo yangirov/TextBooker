@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style lang="sass">
-/deep/ i
+i
   font-style: italic
 
 .el-upload

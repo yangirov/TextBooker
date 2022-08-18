@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-/deep/ .el-upload
+.el-upload
   border: 1px dashed #d9d9d9
   border-radius: 3px
   cursor: pointer
@@ -166,7 +166,7 @@ export default {
   &:hover
     border-color: #409EFF
 
-/deep/ .icon-uploader-icon
+.icon-uploader-icon
   font-size: 20px
   color: #8c939d
   width: 32px
