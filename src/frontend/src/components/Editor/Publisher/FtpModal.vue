@@ -10,6 +10,8 @@
       <h3>{{ $t(`tabs.publish.ways.ftp.name`) }}</h3>
     </div>
 
+    <p>Coming soon...</p>
+
     <div v-if="deployed">
       {{ $t(`tabs.publish.deployed`) }}
     </div>

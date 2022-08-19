@@ -3,7 +3,7 @@ const modal = {
   TWITTER_MODAL: 'TWITTER_MODAL',
   FTP_MODAL: 'FTP_MODAL',
   GITHUB_MODAL: 'GITHUB_MODAL',
-  NETLIFY_MODAL: 'NETLIFY_MODAL'
+  VERCEL_MODAL: 'VERCEL_MODAL'
 }
 
 export const {
@@ -11,7 +11,7 @@ export const {
   TWITTER_MODAL,
   FTP_MODAL,
   GITHUB_MODAL,
-  NETLIFY_MODAL
+  VERCEL_MODAL
 } = modal
 
 export default {

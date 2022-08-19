@@ -62,7 +62,7 @@ export const RUSSIAN_TRANSLATIONS = {
         details: 'Узнать больше',
         ftp: {
           name: 'FTP',
-          description: 'Загрузите сайт на свой сервер',
+          description: 'Скачайте архив с сайтом и загрузите на свой сервер',
           link: 'https://ru.wikipedia.org/wiki/File_Transfer_Protocol',
           host: 'Хост',
           port: 'Порт',
@@ -76,11 +76,11 @@ export const RUSSIAN_TRANSLATIONS = {
             'Cтатический хостинг сайтов, в котором HTML, CSS и JavaScript файлы берутся прямо из репозитория на GitHub.',
           link: 'https://pages.github.com/'
         },
-        netlify: {
-          name: 'Netlify',
+        vercel: {
+          name: 'Vercel',
           description:
             'Универсальная платформа для автоматизации современных веб-проектов.',
-          link: 'https://www.netlify.com/'
+          link: 'https://vercel.com/'
         }
       }
     }
@@ -109,7 +109,7 @@ export const RUSSIAN_TRANSLATIONS = {
       },
       {
         title: 'Публикация в интернете',
-        desc: 'Публикуйте сайты на FTP, Github Pages или Netlify.'
+        desc: 'Публикуйте сайты на FTP, Github Pages или Vercel.'
       }
     ]
   },

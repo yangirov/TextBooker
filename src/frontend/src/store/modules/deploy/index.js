@@ -1,19 +1,16 @@
-import api from '@/api'
-import { SET_STATE, setState } from '@/store/helpers'
-import { showSuccessNotify, showErrorNotify } from '@/utils'
-import i18n from '@/libs/VueI18n'
-import router from '@/router'
+import { SET_STATE } from '@/store/helpers'
 
 export default {
   namespaced: true,
   state: {
     loading: false,
+    deployed: false
   },
 
   getters: {
     loading: state => state.loading,
     data: (state, getters) => getters,
-    deployed: (state, deployed) => deployed
+    deployed: (state) => state.deployed
   },
 
   mutations: {

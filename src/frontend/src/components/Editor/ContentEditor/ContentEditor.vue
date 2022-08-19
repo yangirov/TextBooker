@@ -36,6 +36,7 @@ import api from '@/api'
 
 import ImageUpload from './ImageUpload.vue'
 import VueAceEditor from './VueAceEditor.vue'
+import {uploadImage} from "@/api/files";
 
 export default {
   components: {
@@ -103,17 +104,15 @@ export default {
 
     uploadImage() {
       const formData = new FormData()
-      formData.append('siteId', this.site.id)
-      formData.append('type', 2)
-      formData.append('file', this.file.raw)
+      formData.append('image', this.file.raw)
 
       api
-        .uploadFile(formData)
+        .uploadImage(formData)
         .then(res => {
           let position = this.$refs.editor.selection
           this.$refs.editor.exec(
             'insertHTML',
-            `<img src=${res.data}>`,
+            `<img src=${res.data.data.image.url}>`,
             position
           )
         })

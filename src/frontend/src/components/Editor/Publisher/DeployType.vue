@@ -79,8 +79,8 @@ export default {
   &.ftp-icon
     font-size: 1.2em
     margin: 4px 0 0 2px
-  &.netlify
-    background-image: url('~@/assets/netlify.svg')
+  &.vercel
+    background-image: url('~@/assets/vercel.svg')
   &.github
     background-image: url('~@/assets/github.png')
 </style>

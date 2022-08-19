@@ -66,7 +66,7 @@ export const ENGLISH_TRANSLATIONS = {
         details: 'To learn more',
         ftp: {
           name: 'FTP',
-          description: 'Upload site directly to your server.',
+          description: 'Download archive with your website and upload to your server.',
           link: 'https://en.wikipedia.org/wiki/File_Transfer_Protocol',
           host: 'Host',
           port: 'Port',
@@ -80,11 +80,11 @@ export const ENGLISH_TRANSLATIONS = {
             'GitHub Pages is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub.',
           link: 'https://pages.github.com/'
         },
-        netlify: {
-          name: 'Netlify',
+        vercel: {
+          name: 'Vercel',
           description:
-            'Netlify is an all-in-one platform for automating modern web projects.',
-          link: 'https://www.netlify.com/'
+            'Vercel is an all-in-one platform for automating modern web projects.',
+          link: 'https://vercel.com/'
         }
       }
     }
@@ -113,7 +113,7 @@ export const ENGLISH_TRANSLATIONS = {
       },
       {
         title: 'Deploy',
-        desc: 'Publish on FTP, Github Pages, Netlify.'
+        desc: 'Publish on FTP, Github Pages, Vercel.'
       }
     ]
   },

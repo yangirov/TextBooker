@@ -12,14 +12,14 @@
 
     <el-divider></el-divider>
 
-    <DeployType deploy-type="github" icon="github" @deploy="githubDeploy">
-      <GithubModal />
-    </DeployType>
+<!--    <DeployType deploy-type="github" icon="github" @deploy="githubDeploy">-->
+<!--      <GithubModal />-->
+<!--    </DeployType>-->
 
-    <el-divider></el-divider>
+<!--    <el-divider></el-divider>-->
 
-    <DeployType deploy-type="netlify" icon="netlify" @deploy="netlifyDeploy">
-      <NetlifyModal />
+    <DeployType deploy-type="vercel" icon="vercel" @deploy="vercelDeploy">
+      <VercelModal />
     </DeployType>
   </div>
 </template>
@@ -28,22 +28,22 @@
 import DeployType from './DeployType.vue'
 import FtpModal from './FtpModal.vue'
 import GithubModal from './GithubModal.vue'
-import NetlifyModal from './NetlifyModal.vue'
+import VercelModal from './VercelModal.vue'
 
-import { FTP_MODAL, GITHUB_MODAL, NETLIFY_MODAL } from '@/store/modals'
+import { FTP_MODAL, GITHUB_MODAL, VERCEL_MODAL } from '@/store/modals'
 
 export default {
   data: () => ({
     FTP_MODAL,
     GITHUB_MODAL,
-    NETLIFY_MODAL
+    VERCEL_MODAL
   }),
 
   components: {
     DeployType,
     FtpModal,
-    GithubModal,
-    NetlifyModal
+    // GithubModal,
+    VercelModal
   },
 
   methods: {
@@ -53,8 +53,8 @@ export default {
     githubDeploy() {
       this.$modal.open(GITHUB_MODAL)
     },
-    netlifyDeploy() {
-      this.$modal.open(NETLIFY_MODAL)
+    vercelDeploy() {
+      this.$modal.open(VERCEL_MODAL)
     }
   }
 }
