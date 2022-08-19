@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-
+using TextBooker.Common;
 using TextBooker.DataAccess.Entities;
-using TextBooker.Utils;
 
 namespace TextBooker.DataAccess
 {

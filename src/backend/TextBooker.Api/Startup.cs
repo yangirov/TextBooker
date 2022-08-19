@@ -22,16 +22,15 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
 using Serilog;
 using Serilog.Sinks.Loki;
 
 using TextBooker.Api.Infrastructure;
 using TextBooker.BusinessLogic;
 using TextBooker.BusinessLogic.Services;
+using TextBooker.Common;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
-using TextBooker.Utils;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace TextBooker.Api
@@ -156,7 +155,7 @@ namespace TextBooker.Api
 					.GetReferencedAssemblies()
 					.Union(new AssemblyName[] { currentAssembly.GetName() })
 					.Select(a => Path.Combine(Path.GetDirectoryName(currentAssembly.Location), $"{a.Name}.xml"))
-					.Where(f => File.Exists(f)).ToArray();
+					.Where(File.Exists).ToArray();
 
 				Array.ForEach(xmlDocs, (d) =>
 				{
@@ -220,7 +219,8 @@ namespace TextBooker.Api
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});
 
-			var basePath = Path.Combine(VaultClient.GetData(Configuration.GetValue<string>("FileStore:BasePath")));
+			var filestorePath = Configuration.GetValue<string>("FileStore:BasePath");
+			var basePath = Path.Combine(VaultClient.GetData(filestorePath));
 			if (!Directory.Exists(basePath))
 				Directory.CreateDirectory(basePath);
 

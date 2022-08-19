@@ -1,10 +1,13 @@
+using System;
+using System.IO;
 using System.Linq;
-
+using System.Reflection;
 using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Formatters.Prometheus;
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace TextBooker.Api
@@ -42,8 +45,17 @@ namespace TextBooker.Api
 							endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters.First(p => p is MetricsPrometheusTextOutputFormatter);
 						};
 					})
+				.UseContentRoot(Directory.GetCurrentDirectory())
 				.ConfigureWebHostDefaults(builder =>
 				{
+					builder.ConfigureAppConfiguration(x =>
+					{
+						x.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+						x.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+						x.AddEnvironmentVariables();
+						x.Build();
+					});
+
 					builder.UseStartup<Startup>();
 				});
 		}

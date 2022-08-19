@@ -1,7 +1,6 @@
 using System.IO;
-using System.Linq;
 
-namespace TextBooker.Utils
+namespace TextBooker.Common
 {
 	public static class StringUtils
 	{

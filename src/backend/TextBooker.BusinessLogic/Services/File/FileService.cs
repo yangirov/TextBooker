@@ -11,12 +11,11 @@ using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Http;
 
 using Serilog;
-
+using TextBooker.Common;
 using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
-using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {

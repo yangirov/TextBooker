@@ -10,11 +10,10 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 
 using Serilog;
-
+using TextBooker.Common;
 using TextBooker.Common.Config;
 using TextBooker.DataAccess;
 using TextBooker.DataAccess.Entities;
-using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {
@@ -87,7 +86,7 @@ namespace TextBooker.BusinessLogic.Services
 				html = html.Replace("%Description%", page.Description ?? site.Description);
 				html = html.Replace("%PageTitle%", page.Title);
 				html = html.Replace("%PageContent%", page.Content);
-				
+
 				var folderPath = StringUtils.ConvertToUrl(Path.Combine("sites", site.Id));
 				html = html.Replace($"{folderPath}/", string.Empty);
 

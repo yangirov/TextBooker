@@ -8,7 +8,6 @@ COPY ["TextBooker.Api/TextBooker.Api.csproj", "TextBooker.Api/"]
 COPY ["TextBooker.BusinessLogic/TextBooker.BusinessLogic.csproj", "TextBooker.BusinessLogic/"]
 COPY ["TextBooker.DataAccess/TextBooker.DataAccess.csproj", "TextBooker.DataAccess/"]
 COPY ["TextBooker.Common/TextBooker.Common.csproj", "TextBooker.Common/"]
-COPY ["TextBooker.Utils/TextBooker.Utils.csproj", "TextBooker.Utils/"]
 COPY ["TextBooker.Contracts/TextBooker.Contracts.csproj", "TextBooker.Contracts/"]
 RUN dotnet restore "TextBooker.Api/TextBooker.Api.csproj"
 COPY . .

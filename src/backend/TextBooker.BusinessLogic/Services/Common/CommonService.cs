@@ -1,21 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 using CSharpFunctionalExtensions;
 
-using FluentValidation;
-
 using Microsoft.Extensions.Configuration;
 
 using Serilog;
 
 using TextBooker.BusinessLogic.Infrastructure;
+using TextBooker.Common;
 using TextBooker.Common.Config;
 using TextBooker.Contracts.Dto;
 using TextBooker.Contracts.Enums;
-using TextBooker.Utils;
 
 namespace TextBooker.BusinessLogic.Services
 {

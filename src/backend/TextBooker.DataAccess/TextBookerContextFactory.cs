@@ -4,9 +4,8 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-
+using TextBooker.Common;
 using TextBooker.Common.Config;
-using TextBooker.Utils;
 
 namespace TextBooker.DataAccess
 {
