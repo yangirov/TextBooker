@@ -20,7 +20,7 @@ export const getTemplateKeys = async () =>
   (await axios.get('/editor/template-keys')).data
 
 export const generateSite = async siteId =>
-  (await axios.get(`/editor/generate?siteId=${siteId}`, siteId)).data
+  (await axios.get(`/editor/generate?siteId=${siteId}`)).data
 
 const sites = {
   addSite,

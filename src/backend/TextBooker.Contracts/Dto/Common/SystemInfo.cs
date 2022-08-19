@@ -7,5 +7,7 @@ namespace TextBooker.Contracts.Dto
 		public string Name { get; set; }
 
 		public string AdminEmail { get; set; }
+
+		public string FrontendAppUrl { get; set; }
 	}
 }

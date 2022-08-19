@@ -74,13 +74,14 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			try
 			{
+				// TODO: use custom storage, like https://api.imgbb.com/
 				var filePath = Path.Combine(fileStoreSettings.BasePath, dto.FilePath);
 				var directoryPath = Path.GetDirectoryName(filePath);
 
 				if (!Directory.Exists(directoryPath))
 					Directory.CreateDirectory(directoryPath);
 
-				using var fileStream = new FileStream(filePath, FileMode.Create);
+				await using var fileStream = new FileStream(filePath, FileMode.Create);
 				await dto.File.CopyToAsync(fileStream);
 
 				return Result.Success(dto);

@@ -7,6 +7,10 @@
     {
       "source": "/sites/:path*",
       "destination": "https://textbooker.herokuapp.com/sites/:path*"
+    },
+    {
+      "source": "/files/:path*",
+      "destination": "https://textbooker-filestore.herokuapp.com/:path*"
     }
   ]
 }

@@ -14,6 +14,7 @@ using Serilog;
 
 using TextBooker.BusinessLogic.Infrastructure;
 using TextBooker.Common.Config;
+using TextBooker.Contracts.Dto;
 using TextBooker.Contracts.Dto.User;
 using TextBooker.Contracts.Enums;
 using TextBooker.DataAccess;
@@ -41,7 +42,7 @@ namespace TextBooker.BusinessLogic.Services
 			IMailSender mailSender,
 			JwtSettings jwtSettings,
 			GoogleSettings googleOptions,
-			BaseSettings baseSettings,
+			SystemInfoSettings systemInfoSettings,
 			IHttpClientFactory clientFactory,
 			IHttpContextAccessor httpContextAccessor
 		) : base(logger)
@@ -54,8 +55,8 @@ namespace TextBooker.BusinessLogic.Services
 			this.clientFactory = clientFactory;
 			httpContext = httpContextAccessor.HttpContext;
 
-			baseUrl = baseSettings != null && baseSettings.FrontendAppUrl.Length > 0
-				? baseSettings.FrontendAppUrl
+			baseUrl = systemInfoSettings != null && systemInfoSettings.FrontendAppUrl.Length > 0
+				? systemInfoSettings.FrontendAppUrl
 				: $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}";
 
 			var hashOptions = new HashingOptions();

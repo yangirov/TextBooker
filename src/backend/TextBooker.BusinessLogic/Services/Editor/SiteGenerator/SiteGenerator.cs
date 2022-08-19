@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,16 +22,19 @@ namespace TextBooker.BusinessLogic.Services
 	{
 		private readonly TextBookerContext db;
 		private readonly FileStoreSettings fileStoreSettings;
+		private readonly SystemInfoSettings systemInfoSettings;
 
 		public SiteGenerator(
 			ILogger logger,
 			TextBookerContext db,
-			FileStoreSettings fileStoreSettings
+			FileStoreSettings fileStoreSettings,
+			SystemInfoSettings systemInfoSettings
 		) : base(logger)
         {
 			this.db = db;
 			this.fileStoreSettings = fileStoreSettings;
-		}
+			this.systemInfoSettings = systemInfoSettings;
+        }
 
 		public async Task<Result<bool>> Generate(string siteId, string userId)
 		{
@@ -97,6 +101,8 @@ namespace TextBooker.BusinessLogic.Services
 		private async Task<Result<string>> BuildTemplate(Site site, string templatePath, ICollection<SectionName> sectionNames, string preparedBlocks)
 		{
 			var html = await File.ReadAllTextAsync($"{templatePath}/blank.html");
+
+			html = html.Replace($"%IndexLink%", "index.html");
 
 			html = html.Replace($"%MainMenu%", GetMenu(site.Pages.Where(x => x.InMainMenu).ToArray()));
 			html = html.Replace($"%SidebarMenu%", GetMenu(site.Pages.Where(x => x.InAsideMenu).ToArray()));
@@ -202,6 +208,9 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			try
 			{
+				if (!Directory.Exists(sitePath))
+					Directory.CreateDirectory(sitePath);
+
 				var folders = Directory.GetDirectories(sitePath, "*", SearchOption.TopDirectoryOnly);
 
 				foreach (var folder in folders)
@@ -214,13 +223,13 @@ namespace TextBooker.BusinessLogic.Services
 
 				return Result.Success();
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				return Result.Failure($"An error occurred while clearing the site folder");
+				return Result.Failure($"An error occurred while clearing the site folder + {ex.Message}");
 			}
 		}
 
-		private string GetTemplatePath(string templateName) => Path.Combine(fileStoreSettings.BasePath, "themes", templateName, "tocopy");
+		private string GetTemplatePath(string templateName) => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "themes", templateName, "tocopy");
 
 		private Template GetTemplate(int templateId) => db.Templates.FirstOrDefault(x => x.Id == templateId);
 
