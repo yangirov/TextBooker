@@ -226,6 +226,7 @@ namespace TextBooker.Api
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{
+				c.RoutePrefix = string.Empty;
 				var swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
 				c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1.0/swagger.json", Configuration.GetValue<string>("SystemInfo:Name"));
 			});

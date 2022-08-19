@@ -12,6 +12,7 @@ namespace TextBooker.Api.Controllers
 	[ApiController]
 	[Route("file")]
 	[Produces("application/json")]
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public class FilesController : BaseController
 	{
 		private readonly IFileService filesService;

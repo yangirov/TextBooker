@@ -16,7 +16,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<None Update="themes\**"  CopyToOutputDirectory="PreserveNewest"  />
+		<None Update="themes\**" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
   <ItemGroup>
