@@ -1,6 +1,6 @@
 import axiosInstance from 'axios'
 
-const baseURL = process.env.VUE_APP_HOST
+const baseURL = process.env.NODE_ENV == 'production' ? 'api/' : process.env.VUE_APP_HOST
 
 const axios = axiosInstance.create({
   baseURL,

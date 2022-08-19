@@ -19,7 +19,7 @@ node_modules/*
 .git
 .sonarqube
 .sonarlint
-logs/
+logs/*
 dist/
 .env
 .idea

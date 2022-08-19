@@ -91,7 +91,13 @@ namespace TextBooker.Api
 				{
 					options.Filters.Add(typeof(ModelValidationFilter));
 				})
-				.AddCors()
+				.AddCors(o => o.AddPolicy("AllowAnyOrigin",
+					builder =>
+					{
+						builder.AllowAnyOrigin()
+							.AllowAnyMethod()
+							.AllowAnyHeader();
+					}))
 				.AddControllersAsServices()
 				.AddFormatterMappings()
 				.AddNewtonsoftJson()
@@ -230,10 +236,7 @@ namespace TextBooker.Api
 				HttpsCompression = HttpsCompressionMode.Compress
 			});
 
-			app.UseCors(builder => builder
-				.AllowAnyOrigin()
-				.AllowAnyMethod()
-				.AllowAnyHeader());
+			app.UseCors("AllowAnyOrigin");
 
 			app.UseResponseCompression();
 
