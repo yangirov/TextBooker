@@ -130,6 +130,8 @@ namespace TextBooker.Api
 				options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 			}, dbSettings.PoolSize);
 
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 			services
 				.AddHealthChecks()
 				.AddDbContextCheck<TextBookerContext>();
