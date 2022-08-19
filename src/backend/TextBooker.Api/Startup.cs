@@ -75,6 +75,9 @@ namespace TextBooker.Api
 			var fileSettings = VaultClient.GetData(Configuration.GetSection("FileStore").Get<FileStoreSettings>());
 			services.AddSingleton(fileSettings);
 
+			var baseSettings = VaultClient.GetData(Configuration.GetSection("SystemInfo").Get<BaseSettings>());
+			services.AddSingleton(baseSettings);
+
 			var logger = new LoggerConfiguration()
 				.ReadFrom.Configuration(Configuration)
 				.WriteTo.LokiHttp(

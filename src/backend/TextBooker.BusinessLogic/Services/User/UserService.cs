@@ -41,6 +41,7 @@ namespace TextBooker.BusinessLogic.Services
 			IMailSender mailSender,
 			JwtSettings jwtSettings,
 			GoogleSettings googleOptions,
+			BaseSettings baseSettings,
 			IHttpClientFactory clientFactory,
 			IHttpContextAccessor httpContextAccessor
 		) : base(logger)
@@ -52,7 +53,10 @@ namespace TextBooker.BusinessLogic.Services
 			this.googleOptions = googleOptions;
 			this.clientFactory = clientFactory;
 			httpContext = httpContextAccessor.HttpContext;
-			baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}";
+
+			baseUrl = baseSettings != null && baseSettings.FrontendAppUrl.Length > 0
+				? baseSettings.FrontendAppUrl
+				: $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}";
 
 			var hashOptions = new HashingOptions();
 			passwordHasher = new PasswordHasher(hashOptions);
