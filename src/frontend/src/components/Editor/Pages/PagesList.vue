@@ -18,7 +18,7 @@
         :title="$t('common.deleteWarning')"
         :confirmButtonText="$t('common.yes')"
         :cancelButtonText="$t('common.no')"
-        @onConfirm="deletePage"
+        @confirm="deletePage"
         icon="el-icon-info"
         iconColor="red"
       >

@@ -39,7 +39,7 @@
             :title="$t('common.deleteWarning')"
             :confirmButtonText="$t('common.yes')"
             :cancelButtonText="$t('common.no')"
-            @onConfirm="handleDelete(scope.row)"
+            @confirm="handleDelete(scope.row)"
             icon="el-icon-info"
             iconColor="red"
           >

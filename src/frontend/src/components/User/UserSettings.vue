@@ -24,7 +24,7 @@
           :title="$t('user.deleteWarning')"
           :confirmButtonText="$t('common.yes')"
           :cancelButtonText="$t('common.no')"
-          @onConfirm="deleteUser"
+          @confirm="deleteUser"
         >
           <el-button slot="reference" type="danger">
             {{ $t('user.delete') }}
