@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://textbooker.herokuapp.com/:path*"
+    },
+    {
+      "source": "/sites/:path*",
+      "destination": "https://textbooker.herokuapp.com/sites/:path*"
     }
   ]
 }
