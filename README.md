@@ -10,10 +10,10 @@
 - Editor
   - Сreate pages and blocks with rich-text editing
   - Real-time preview
-- Deploy
+- Deploy (WIP)
   - FTP
   - Github Pages
-  - Netlify
+  - Vercel
 
 ## Guide
 
