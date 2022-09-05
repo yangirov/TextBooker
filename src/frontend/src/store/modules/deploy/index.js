@@ -1,16 +1,18 @@
-import { SET_STATE } from '@/store/helpers'
+import {SET_STATE, setState} from '@/store/helpers'
+import api from "@/api";
 
 export default {
   namespaced: true,
   state: {
     loading: false,
-    deployed: false
+    ftpStatus: false,
+    vercelStatus: false
   },
 
   getters: {
     loading: state => state.loading,
     data: (state, getters) => getters,
-    deployed: (state) => state.deployed
+    vercelStatus: (state) => state.vercelStatus,
   },
 
   mutations: {
@@ -18,6 +20,8 @@ export default {
   },
 
   actions: {
-
+    async downloadSite({ commit }, payload) {
+      await api.downloadSite(payload);
+    },
   }
 }

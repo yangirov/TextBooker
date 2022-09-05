@@ -34,7 +34,6 @@ export const ENGLISH_TRANSLATIONS = {
     },
     pages: {
       name: 'Pages',
-      title: 'Page title',
       defaultPageName: 'Page',
       editor: 'Editor',
       settings: 'Settings',
@@ -113,7 +112,7 @@ export const ENGLISH_TRANSLATIONS = {
       },
       {
         title: 'Deploy',
-        desc: 'Publish on FTP, Github Pages, Vercel.'
+        desc: 'Publish on FTP or Vercel.'
       }
     ]
   },
@@ -186,7 +185,8 @@ export const ENGLISH_TRANSLATIONS = {
     lang: 'Language',
     width: 'Width',
     height: 'Height',
-    theme: 'Theme'
+    theme: 'Theme',
+    download: 'Download',
   },
   twitter: {
     feedTitle: 'Twitter feed',

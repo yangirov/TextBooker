@@ -208,18 +208,8 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			try
 			{
-				if (!Directory.Exists(sitePath))
-					Directory.CreateDirectory(sitePath);
-
-				var folders = Directory.GetDirectories(sitePath, "*", SearchOption.TopDirectoryOnly);
-
-				foreach (var folder in folders)
-				{
-					if (Directory.Exists(folder) && !folder.Contains("assets"))
-					{
-						Directory.Delete(folder, true);
-					}
-				}
+				if (Directory.Exists(sitePath))
+					Directory.Delete(sitePath, true);
 
 				return Result.Success();
 			}

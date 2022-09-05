@@ -26,3 +26,4 @@ dist/
 .history
 sites/
 .DS_Store
+.vercel

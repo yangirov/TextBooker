@@ -109,7 +109,7 @@ export const RUSSIAN_TRANSLATIONS = {
       },
       {
         title: 'Публикация в интернете',
-        desc: 'Публикуйте сайты на FTP, Github Pages или Vercel.'
+        desc: 'Публикуйте сайты на FTP или Vercel.'
       }
     ]
   },
@@ -184,7 +184,8 @@ export const RUSSIAN_TRANSLATIONS = {
     lang: 'Язык',
     width: 'Ширина',
     height: 'Высота',
-    theme: 'Тема'
+    theme: 'Тема',
+    download: 'Скачать',
   },
   twitter: {
     feedTitle: 'Твиттер-лента',

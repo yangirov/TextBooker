@@ -74,7 +74,6 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			try
 			{
-				// TODO: use custom storage, like https://api.imgbb.com/
 				var filePath = Path.Combine(fileStoreSettings.BasePath, dto.FilePath);
 				var directoryPath = Path.GetDirectoryName(filePath);
 
