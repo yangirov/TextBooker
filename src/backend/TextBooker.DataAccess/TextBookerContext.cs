@@ -21,11 +21,45 @@ namespace TextBooker.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			BuildSite(builder);
 			BuildIdentity(builder);
 			BuildEmailTemplate(builder);
 			BuildSiteTemplate(builder);
 
 			DataSeeder.AddData(builder);
+		}
+
+		private void BuildSite(ModelBuilder builder)
+		{
+			builder.Entity<Site>()
+				.HasMany(s => s.Pages)
+				.WithOne(c => c.Site)
+				.HasForeignKey(c => c.SiteId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<Site>()
+				.HasMany(s => s.Blocks)
+				.WithOne(c => c.Site)
+				.HasForeignKey(c => c.SiteId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<Site>()
+				.HasMany(s => s.Files)
+				.WithOne(c => c.Site)
+				.HasForeignKey(c => c.SiteId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<Site>()
+				.HasMany(s => s.UserScripts)
+				.WithOne(c => c.Site)
+				.HasForeignKey(c => c.SiteId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<Site>()
+				.HasMany(s => s.SectionNames)
+				.WithOne(c => c.Site)
+				.HasForeignKey(c => c.SiteId)
+				.OnDelete(DeleteBehavior.Cascade);
 		}
 
 		private void BuildIdentity(ModelBuilder builder)

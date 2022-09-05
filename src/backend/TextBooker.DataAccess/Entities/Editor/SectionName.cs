@@ -11,6 +11,8 @@ namespace TextBooker.DataAccess.Entities
 
 		public int TemplateKeyId { get; set; }
 
+		public string SiteId { get; set; }
+
 		public Site Site { get; set; }
 	}
 }

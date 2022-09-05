@@ -20,16 +20,19 @@ namespace TextBooker.BusinessLogic.Services
 	{
 		private readonly IMapper mapper;
 		private readonly TextBookerContext db;
+		private readonly ISiteGenerator siteGenerator;
 
 		public SiteSettingsService(
 			IMapper mapper,
 			ILogger logger,
-			TextBookerContext db
+			TextBookerContext db,
+			ISiteGenerator siteGenerator
 		) : base(logger)
         {
 			this.mapper = mapper;
 			this.db = db;
-		}
+			this.siteGenerator = siteGenerator;
+        }
 
 		public async Task<Result<string>> Create(SiteDto dto)
 		{
@@ -79,8 +82,17 @@ namespace TextBooker.BusinessLogic.Services
 		{
 			return await Validate(siteId, userId)
 				.Bind(async () => await FindSite(siteId, userId))
+				.Bind(DeleteSiteFolder)
 				.Bind(DeleteSite)
 				.OnFailure(LogError);
+
+			async Task<Result<Site>> DeleteSiteFolder(Site site)
+			{
+				var sitePath = siteGenerator.GetSitePath(siteId);
+				siteGenerator.ClearSiteFolder(sitePath);
+
+				return Result.Success(site);
+			}
 
 			async Task<Result<bool>> DeleteSite(Site site)
 			{

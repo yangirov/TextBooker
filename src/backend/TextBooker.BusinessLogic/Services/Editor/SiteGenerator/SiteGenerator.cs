@@ -204,7 +204,7 @@ namespace TextBooker.BusinessLogic.Services
 			}
 		}
 
-		private Result ClearSiteFolder(string sitePath)
+		public Result ClearSiteFolder(string sitePath)
 		{
 			try
 			{
@@ -223,7 +223,7 @@ namespace TextBooker.BusinessLogic.Services
 
 		private Template GetTemplate(int templateId) => db.Templates.FirstOrDefault(x => x.Id == templateId);
 
-		private string GetSitePath(string siteId) => Path.Combine(fileStoreSettings.BasePath, "sites", siteId);
+		public string GetSitePath(string siteId) => Path.Combine(fileStoreSettings.BasePath, "sites", siteId);
 
 		private async Task<Result<Site>> GetSite(string siteId, string userId)
 		{
