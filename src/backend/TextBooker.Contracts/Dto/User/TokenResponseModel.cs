@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
@@ -7,7 +7,7 @@ namespace TextBooker.Contracts.Dto
 	/// <summary>
 	/// Response Model from Google Recaptcha V3 Verify API
 	/// </summary>
-	public class TokenResponseModel
+	public record TokenResponseModel
 	{
 		[JsonProperty("success")]
 		public bool Success { get; set; }

@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
 namespace TextBooker.Contracts.Dto
 {
-	public class ProjectDto
+	public record ProjectDto
 	{
 		public string Id { get; set; }
 

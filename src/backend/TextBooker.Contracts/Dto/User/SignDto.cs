@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TextBooker.Contracts.Dto.User
 {
-	public class SignDto
+	public record SignDto
 	{
 		public SignDto() { }
 

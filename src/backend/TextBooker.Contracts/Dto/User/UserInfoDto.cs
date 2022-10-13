@@ -1,6 +1,6 @@
-namespace TextBooker.Contracts.Dto.User
+﻿namespace TextBooker.Contracts.Dto.User
 {
-	public class UserInfoDto
+	public record UserInfoDto
 	{
 		public string Username { get; set; }
 
