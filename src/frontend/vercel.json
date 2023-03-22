@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://textbooker.herokuapp.com/:path*"
+      "destination": "http://ovz1.j24663117.m397m.vps.myjino.ru/:path*"
     },
     {
       "source": "/sites/:path*",
-      "destination": "https://textbooker.herokuapp.com/sites/:path*"
+      "destination": "http://ovz1.j24663117.m397m.vps.myjino.ru/sites/:path*"
     },
     {
       "source": "/files/:path*",
-      "destination": "https://textbooker-filestore.herokuapp.com/:path*"
+      "destination": "http://ovz1.j24663117.m397m.vps.myjino.ru/:path*"
     }
   ]
 }
