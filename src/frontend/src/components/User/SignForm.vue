@@ -42,6 +42,8 @@
       </el-form-item>
     </el-form>
   </div>
+  
+  <div style="font-size: 14px; color: #ccc;">demo@demo.com / yoV4F368$cn&</div>
 </template>
 
 <script>
