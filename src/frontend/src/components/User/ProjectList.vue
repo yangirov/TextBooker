@@ -21,12 +21,6 @@
         width="200px"
       ></el-table-column>
 
-      <el-table-column
-        prop="description"
-        :label="$t('common.description')"
-        width="300px"
-      ></el-table-column>
-
       <el-table-column align="right">
         <template slot-scope="scope">
           <el-button
